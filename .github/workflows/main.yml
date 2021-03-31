@@ -5,7 +5,7 @@ on:
   pull_request:
     branches:
       - master
-name: 🚀 Deploy website on push
+name: 🚀 Deploy website
 jobs:
   web-deploy:
     name: 🎉 Deploy
@@ -14,20 +14,30 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v2.3.2
 
-      - name: 🔗 Install dependencies
+      - name: 🔑 Setup SSH private repositories access
+        uses: webfactory/ssh-agent@v0.4.1
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: 🎶 Composer install
+        if: steps.composer-cache.outputs.cache-hit != 'true'
+        run: composer install --no-interaction --no-progress
+
+      - name: 🔗 NPM install
+        if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm install
 
-      - name: 🔨 Build Project
+      - name: 🔨 Build project
         run: npm run build
-        working-directory: client
 
-      - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@4.0.0
-        with:
-          server: fifaurban.savana-hosting.cz
-          username: fifaurban
-          password: ${{ secrets.ftp_password }}
-          server-dir: /dev.hopmantriatlon.cz/
+      - name: 📂 Deploy to server
+        uses: easingthemes/ssh-deploy@v2.1.5
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.HOSTING_SSH_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
+          TARGET: /www/dev.hopmantriatlon.cz/
 
       - name: 🗑️ Remove Cache
         uses: JesseTG/rm@v1.0.2

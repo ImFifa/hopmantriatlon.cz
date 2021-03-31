@@ -4,28 +4,30 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a7f592c29faa410540542540b19a8556",
+    "content-hash": "31cb4c43db70c0b81da29d34878842aa",
     "packages": [
         {
             "name": "brick/date-time",
-            "version": "0.2.2",
+            "version": "0.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/brick/date-time.git",
-                "reference": "174680cd771fcf222660653b240565dea5f87e18"
+                "reference": "213d02bf8e6b1d200ca7db69cebfa34a68f6f9b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/brick/date-time/zipball/174680cd771fcf222660653b240565dea5f87e18",
-                "reference": "174680cd771fcf222660653b240565dea5f87e18",
+                "url": "https://api.github.com/repos/brick/date-time/zipball/213d02bf8e6b1d200ca7db69cebfa34a68f6f9b2",
+                "reference": "213d02bf8e6b1d200ca7db69cebfa34a68f6f9b2",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1|^8.0"
+                "ext-json": "*",
+                "php": "^7.1 || ^8.0"
             },
             "require-dev": {
                 "php-coveralls/php-coveralls": "^2.2",
-                "phpunit/phpunit": "^7.5.15"
+                "phpunit/phpunit": "^7.5.15 || ^8.0 || ^9.0",
+                "vimeo/psalm": "4.4.1"
             },
             "suggest": {
                 "ext-timezonedb": "This PECL extension provides up-to-date timezone information"
@@ -44,13 +46,14 @@
             "keywords": [
                 "brick",
                 "date",
+                "datetime",
                 "time"
             ],
             "support": {
                 "issues": "https://github.com/brick/date-time/issues",
-                "source": "https://github.com/brick/date-time/tree/0.2.2"
+                "source": "https://github.com/brick/date-time/tree/0.2.3"
             },
-            "time": "2020-07-30T22:28:54+00:00"
+            "time": "2021-02-26T14:50:25+00:00"
         },
         {
             "name": "contributte/console",
@@ -189,16 +192,16 @@
         },
         {
             "name": "latte/latte",
-            "version": "v2.10.2",
+            "version": "v2.10.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/latte.git",
-                "reference": "2f8dd896472b8a2f2069934f128a02566631d876"
+                "reference": "dd2c58863e830c22a2c6b85af63f37b829d255df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/latte/zipball/2f8dd896472b8a2f2069934f128a02566631d876",
-                "reference": "2f8dd896472b8a2f2069934f128a02566631d876",
+                "url": "https://api.github.com/repos/nette/latte/zipball/dd2c58863e830c22a2c6b85af63f37b829d255df",
+                "reference": "dd2c58863e830c22a2c6b85af63f37b829d255df",
                 "shasum": ""
             },
             "require": {
@@ -264,9 +267,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/latte/issues",
-                "source": "https://github.com/nette/latte/tree/v2.10.2"
+                "source": "https://github.com/nette/latte/tree/v2.10.3"
             },
-            "time": "2021-02-08T08:16:26+00:00"
+            "time": "2021-02-22T11:17:13+00:00"
         },
         {
             "name": "librette/presenter-factory",
@@ -496,16 +499,16 @@
         },
         {
             "name": "nette/caching",
-            "version": "v3.1.0",
+            "version": "v3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/caching.git",
-                "reference": "60281abf366c4ab76e9436dc1bfe2e402db18b67"
+                "reference": "3e771c589dee414724be473c24ad16dae50c1960"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/caching/zipball/60281abf366c4ab76e9436dc1bfe2e402db18b67",
-                "reference": "60281abf366c4ab76e9436dc1bfe2e402db18b67",
+                "url": "https://api.github.com/repos/nette/caching/zipball/3e771c589dee414724be473c24ad16dae50c1960",
+                "reference": "3e771c589dee414724be473c24ad16dae50c1960",
                 "shasum": ""
             },
             "require": {
@@ -514,7 +517,7 @@
                 "php": ">=7.2 <8.1"
             },
             "require-dev": {
-                "latte/latte": "^2.9",
+                "latte/latte": "^2.10",
                 "nette/di": "^v3.0",
                 "nette/tester": "^2.0",
                 "phpstan/phpstan": "^0.12",
@@ -561,9 +564,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/caching/issues",
-                "source": "https://github.com/nette/caching/tree/v3.1.0"
+                "source": "https://github.com/nette/caching/tree/v3.1.1"
             },
-            "time": "2020-12-30T23:39:33+00:00"
+            "time": "2021-03-06T14:07:38+00:00"
         },
         {
             "name": "nette/component-model",
@@ -1000,22 +1003,22 @@
         },
         {
             "name": "nette/mail",
-            "version": "v3.1.5",
+            "version": "v3.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/mail.git",
-                "reference": "e072486ef2dbb533189f36a53c020f06b7659f4f"
+                "reference": "d5035afcb733ff76b353b8a126a1a6fd560005de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/mail/zipball/e072486ef2dbb533189f36a53c020f06b7659f4f",
-                "reference": "e072486ef2dbb533189f36a53c020f06b7659f4f",
+                "url": "https://api.github.com/repos/nette/mail/zipball/d5035afcb733ff76b353b8a126a1a6fd560005de",
+                "reference": "d5035afcb733ff76b353b8a126a1a6fd560005de",
                 "shasum": ""
             },
             "require": {
                 "ext-iconv": "*",
                 "nette/utils": "^3.1",
-                "php": ">=7.1"
+                "php": ">=7.1 <8.1"
             },
             "conflict": {
                 "nette/di": "<3.0-stable"
@@ -1068,26 +1071,25 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/mail/issues",
-                "source": "https://github.com/nette/mail/tree/v3.1.5"
+                "source": "https://github.com/nette/mail/tree/v3.1.6"
             },
-            "time": "2020-11-02T16:08:27+00:00"
+            "time": "2021-02-24T20:29:52+00:00"
         },
         {
             "name": "nette/neon",
-            "version": "v3.2.1",
+            "version": "v3.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/neon.git",
-                "reference": "a5b3a60833d2ef55283a82d0c30b45d136b29e75"
+                "reference": "e4ca6f4669121ca6876b1d048c612480e39a28d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/neon/zipball/a5b3a60833d2ef55283a82d0c30b45d136b29e75",
-                "reference": "a5b3a60833d2ef55283a82d0c30b45d136b29e75",
+                "url": "https://api.github.com/repos/nette/neon/zipball/e4ca6f4669121ca6876b1d048c612480e39a28d5",
+                "reference": "e4ca6f4669121ca6876b1d048c612480e39a28d5",
                 "shasum": ""
             },
             "require": {
-                "ext-iconv": "*",
                 "ext-json": "*",
                 "php": ">=7.1"
             },
@@ -1134,9 +1136,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/neon/issues",
-                "source": "https://github.com/nette/neon/tree/master"
+                "source": "https://github.com/nette/neon/tree/v3.2.2"
             },
-            "time": "2020-07-31T12:28:05+00:00"
+            "time": "2021-02-28T12:30:32+00:00"
         },
         {
             "name": "nette/nette",
@@ -1215,16 +1217,16 @@
         },
         {
             "name": "nette/php-generator",
-            "version": "v3.5.2",
+            "version": "v3.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/php-generator.git",
-                "reference": "41dcc5d1cb322835e5950a76515166c90923c6b7"
+                "reference": "119f01a7bd590469cb01b538f20a125a28853626"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/php-generator/zipball/41dcc5d1cb322835e5950a76515166c90923c6b7",
-                "reference": "41dcc5d1cb322835e5950a76515166c90923c6b7",
+                "url": "https://api.github.com/repos/nette/php-generator/zipball/119f01a7bd590469cb01b538f20a125a28853626",
+                "reference": "119f01a7bd590469cb01b538f20a125a28853626",
                 "shasum": ""
             },
             "require": {
@@ -1277,22 +1279,22 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/php-generator/issues",
-                "source": "https://github.com/nette/php-generator/tree/v3.5.2"
+                "source": "https://github.com/nette/php-generator/tree/v3.5.3"
             },
-            "time": "2021-01-19T13:02:23+00:00"
+            "time": "2021-02-24T18:40:21+00:00"
         },
         {
             "name": "nette/robot-loader",
-            "version": "v3.3.1",
+            "version": "v3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/robot-loader.git",
-                "reference": "15c1ecd0e6e69e8d908dfc4cca7b14f3b850a96b"
+                "reference": "3973cf3970d1de7b30888fd10b92dac9e0c2fd82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/robot-loader/zipball/15c1ecd0e6e69e8d908dfc4cca7b14f3b850a96b",
-                "reference": "15c1ecd0e6e69e8d908dfc4cca7b14f3b850a96b",
+                "url": "https://api.github.com/repos/nette/robot-loader/zipball/3973cf3970d1de7b30888fd10b92dac9e0c2fd82",
+                "reference": "3973cf3970d1de7b30888fd10b92dac9e0c2fd82",
                 "shasum": ""
             },
             "require": {
@@ -1309,7 +1311,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.3-dev"
+                    "dev-master": "3.4-dev"
                 }
             },
             "autoload": {
@@ -1344,9 +1346,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/robot-loader/issues",
-                "source": "https://github.com/nette/robot-loader/tree/v3.3.1"
+                "source": "https://github.com/nette/robot-loader/tree/v3.4.0"
             },
-            "time": "2020-09-15T15:14:17+00:00"
+            "time": "2021-03-07T15:12:01+00:00"
         },
         {
             "name": "nette/routing",
@@ -1475,26 +1477,26 @@
         },
         {
             "name": "nette/schema",
-            "version": "v1.2.0",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/schema.git",
-                "reference": "9962564311f4affebd63f9cab014ab69266306ce"
+                "reference": "f5ed39fc96358f922cedfd1e516f0dadf5d2be0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/schema/zipball/9962564311f4affebd63f9cab014ab69266306ce",
-                "reference": "9962564311f4affebd63f9cab014ab69266306ce",
+                "url": "https://api.github.com/repos/nette/schema/zipball/f5ed39fc96358f922cedfd1e516f0dadf5d2be0d",
+                "reference": "f5ed39fc96358f922cedfd1e516f0dadf5d2be0d",
                 "shasum": ""
             },
             "require": {
-                "nette/utils": "^3.1.4",
+                "nette/utils": "^3.1.4 || ^4.0",
                 "php": ">=7.1 <8.1"
             },
             "require-dev": {
-                "nette/tester": "^2.2",
+                "nette/tester": "^2.3 || ^2.4",
                 "phpstan/phpstan-nette": "^0.12",
-                "tracy/tracy": "^2.3"
+                "tracy/tracy": "^2.7"
             },
             "type": "library",
             "extra": {
@@ -1531,9 +1533,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/schema/issues",
-                "source": "https://github.com/nette/schema/tree/v1.2.0"
+                "source": "https://github.com/nette/schema/tree/v1.2.1"
             },
-            "time": "2021-01-21T14:49:23+00:00"
+            "time": "2021-03-04T17:51:11+00:00"
         },
         {
             "name": "nette/security",
@@ -1891,16 +1893,16 @@
         },
         {
             "name": "nextras/orm",
-            "version": "v4.0.1",
+            "version": "v4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nextras/orm.git",
-                "reference": "4e27857df38d4e65b06dd214df2b043174b5bb03"
+                "reference": "6763e43055946ec9f0ebd684918fffedd1cdb451"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nextras/orm/zipball/4e27857df38d4e65b06dd214df2b043174b5bb03",
-                "reference": "4e27857df38d4e65b06dd214df2b043174b5bb03",
+                "url": "https://api.github.com/repos/nextras/orm/zipball/6763e43055946ec9f0ebd684918fffedd1cdb451",
+                "reference": "6763e43055946ec9f0ebd684918fffedd1cdb451",
                 "shasum": ""
             },
             "require": {
@@ -1963,7 +1965,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nextras/orm/issues",
-                "source": "https://github.com/nextras/orm/tree/v4.0.1"
+                "source": "https://github.com/nextras/orm/tree/v4.0.2"
             },
             "funding": [
                 {
@@ -1971,7 +1973,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-09T17:34:39+00:00"
+            "time": "2021-03-26T22:52:10+00:00"
         },
         {
             "name": "orisai/auth",
@@ -1979,12 +1981,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/orisai/auth.git",
-                "reference": "eb267f353a87ea635f0154f92394f304e1ff284d"
+                "reference": "145f41f70499db55bac762ce9c4cdef3684df96a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orisai/auth/zipball/eb267f353a87ea635f0154f92394f304e1ff284d",
-                "reference": "eb267f353a87ea635f0154f92394f304e1ff284d",
+                "url": "https://api.github.com/repos/orisai/auth/zipball/145f41f70499db55bac762ce9c4cdef3684df96a",
+                "reference": "145f41f70499db55bac762ce9c4cdef3684df96a",
                 "shasum": ""
             },
             "require": {
@@ -2048,7 +2050,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-02-12T10:57:15+00:00"
+            "time": "2021-03-24T18:22:23+00:00"
         },
         {
             "name": "orisai/exceptions",
@@ -2122,12 +2124,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/orisai/nette-di.git",
-                "reference": "81cd7cd3ed3d810a444588ec8cb44b42a8ffdbe8"
+                "reference": "a2b8b507e94bc93e889aa46deb4fd399f622f48b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orisai/nette-di/zipball/81cd7cd3ed3d810a444588ec8cb44b42a8ffdbe8",
-                "reference": "81cd7cd3ed3d810a444588ec8cb44b42a8ffdbe8",
+                "url": "https://api.github.com/repos/orisai/nette-di/zipball/a2b8b507e94bc93e889aa46deb4fd399f622f48b",
+                "reference": "a2b8b507e94bc93e889aa46deb4fd399f622f48b",
                 "shasum": ""
             },
             "require": {
@@ -2187,7 +2189,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-02-15T12:45:20+00:00"
+            "time": "2021-03-24T18:30:43+00:00"
         },
         {
             "name": "orisai/utils",
@@ -2195,12 +2197,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/orisai/utils.git",
-                "reference": "c6b514b0c89d14d49137a41962ae5dc4becccdd1"
+                "reference": "2f55dc299ea38d400c635d883baecfef43dd392d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orisai/utils/zipball/c6b514b0c89d14d49137a41962ae5dc4becccdd1",
-                "reference": "c6b514b0c89d14d49137a41962ae5dc4becccdd1",
+                "url": "https://api.github.com/repos/orisai/utils/zipball/2f55dc299ea38d400c635d883baecfef43dd392d",
+                "reference": "2f55dc299ea38d400c635d883baecfef43dd392d",
                 "shasum": ""
             },
             "require": {
@@ -2255,31 +2257,26 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-01-06T09:18:45+00:00"
+            "time": "2021-03-24T18:32:19+00:00"
         },
         {
             "name": "psr/container",
-            "version": "1.0.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/container.git",
-                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f"
+                "reference": "8622567409010282b7aeebe4bb841fe98b58dcaf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/container/zipball/b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
-                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/8622567409010282b7aeebe4bb841fe98b58dcaf",
+                "reference": "8622567409010282b7aeebe4bb841fe98b58dcaf",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": ">=7.2.0"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "Psr\\Container\\": "src/"
@@ -2292,7 +2289,7 @@
             "authors": [
                 {
                     "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
+                    "homepage": "https://www.php-fig.org/"
                 }
             ],
             "description": "Common Container Interface (PHP FIG PSR-11)",
@@ -2306,9 +2303,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-fig/container/issues",
-                "source": "https://github.com/php-fig/container/tree/master"
+                "source": "https://github.com/php-fig/container/tree/1.1.1"
             },
-            "time": "2017-02-14T16:28:37+00:00"
+            "time": "2021-03-05T17:36:06+00:00"
         },
         {
             "name": "simple-cms/box-module",
@@ -2316,11 +2313,10 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:K2D-CZ/box.git",
-                "reference": "527b50b06543b63bbdf95ae5e33b0ae4ba490911"
+                "reference": "09c776e6a25c4f2dec1e420cdab356597db4c9a2"
             },
             "require": {
-                "php": ">= 7.4",
-                "simple-cms/core-module": "^2.0.0"
+                "php": ">= 7.4"
             },
             "type": "library",
             "autoload": {
@@ -2336,7 +2332,7 @@
                 "cms",
                 "nette"
             ],
-            "time": "2021-01-31T02:11:29+00:00"
+            "time": "2021-03-23T02:49:06+00:00"
         },
         {
             "name": "simple-cms/core-module",
@@ -2344,7 +2340,7 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:K2D-CZ/core.git",
-                "reference": "82a177688ee2eaa79019c537091633305b4ab46d"
+                "reference": "e08dbcdb2af0432294fa40479151af4751fdaf61"
             },
             "require": {
                 "contributte/console": "^0.8.0",
@@ -2373,7 +2369,7 @@
                 "cms",
                 "nette"
             ],
-            "time": "2021-02-11T03:10:31+00:00"
+            "time": "2021-03-22T01:38:44+00:00"
         },
         {
             "name": "simple-cms/file-module",
@@ -2381,7 +2377,7 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:K2D-CZ/file.git",
-                "reference": "08fd39ea86b849e236521e69c196b1897f370e93"
+                "reference": "886007e6dc53549bf5378e690f54782f7407b371"
             },
             "require": {
                 "php": ">= 7.4"
@@ -2400,20 +2396,74 @@
                 "cms",
                 "nette"
             ],
-            "time": "2021-02-11T03:21:09+00:00"
+            "time": "2021-02-24T15:23:23+00:00"
+        },
+        {
+            "name": "simple-cms/gallery-module",
+            "version": "v2.x-dev",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:K2D-CZ/gallery.git",
+                "reference": "d0676382845ed0ae75e7845736a71fa96bd8bb7d"
+            },
+            "require": {
+                "php": ">= 7.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "K2D\\Gallery\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "SimpleCMS - Gallery Module",
+            "keywords": [
+                "cms",
+                "nette"
+            ],
+            "time": "2021-03-01T02:40:37+00:00"
+        },
+        {
+            "name": "simple-cms/news-module",
+            "version": "v2.x-dev",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:K2D-CZ/news.git",
+                "reference": "45c69f8b63a89d1fbf08ac1bb8fda52bf02e3616"
+            },
+            "require": {
+                "php": ">= 7.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "K2D\\News\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "SimpleCMS - News Module",
+            "keywords": [
+                "cms",
+                "nette"
+            ],
+            "time": "2021-03-01T02:55:56+00:00"
         },
         {
             "name": "symfony/console",
-            "version": "v5.2.3",
+            "version": "v5.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "89d4b176d12a2946a1ae4e34906a025b7b6b135a"
+                "reference": "35f039df40a3b335ebf310f244cb242b3a83ac8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/89d4b176d12a2946a1ae4e34906a025b7b6b135a",
-                "reference": "89d4b176d12a2946a1ae4e34906a025b7b6b135a",
+                "url": "https://api.github.com/repos/symfony/console/zipball/35f039df40a3b335ebf310f244cb242b3a83ac8d",
+                "reference": "35f039df40a3b335ebf310f244cb242b3a83ac8d",
                 "shasum": ""
             },
             "require": {
@@ -2481,7 +2531,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v5.2.3"
+                "source": "https://github.com/symfony/console/tree/v5.2.6"
             },
             "funding": [
                 {
@@ -2497,7 +2547,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-28T22:06:19+00:00"
+            "time": "2021-03-28T09:42:18+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -2568,7 +2618,7 @@
         },
         {
             "name": "symfony/dotenv",
-            "version": "v5.2.3",
+            "version": "v5.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dotenv.git",
@@ -2618,7 +2668,7 @@
                 "environment"
             ],
             "support": {
-                "source": "https://github.com/symfony/dotenv/tree/v5.2.3"
+                "source": "https://github.com/symfony/dotenv/tree/v5.2.4"
             },
             "funding": [
                 {
@@ -3203,16 +3253,16 @@
         },
         {
             "name": "symfony/string",
-            "version": "v5.2.3",
+            "version": "v5.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/string.git",
-                "reference": "c95468897f408dd0aca2ff582074423dd0455122"
+                "reference": "ad0bd91bce2054103f5eaa18ebeba8d3bc2a0572"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/string/zipball/c95468897f408dd0aca2ff582074423dd0455122",
-                "reference": "c95468897f408dd0aca2ff582074423dd0455122",
+                "url": "https://api.github.com/repos/symfony/string/zipball/ad0bd91bce2054103f5eaa18ebeba8d3bc2a0572",
+                "reference": "ad0bd91bce2054103f5eaa18ebeba8d3bc2a0572",
                 "shasum": ""
             },
             "require": {
@@ -3266,7 +3316,7 @@
                 "utf8"
             ],
             "support": {
-                "source": "https://github.com/symfony/string/tree/v5.2.3"
+                "source": "https://github.com/symfony/string/tree/v5.2.6"
             },
             "funding": [
                 {
@@ -3282,7 +3332,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-25T15:14:59+00:00"
+            "time": "2021-03-17T17:12:15+00:00"
         },
         {
             "name": "tracy/tracy",
@@ -3640,16 +3690,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.77",
+            "version": "0.12.82",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "1f10b8c8d118d01e7b492f9707999d456be5812c"
+                "reference": "3920f0fb0aff39263d3a4cb0bca120a67a1a6a11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/1f10b8c8d118d01e7b492f9707999d456be5812c",
-                "reference": "1f10b8c8d118d01e7b492f9707999d456be5812c",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/3920f0fb0aff39263d3a4cb0bca120a67a1a6a11",
+                "reference": "3920f0fb0aff39263d3a4cb0bca120a67a1a6a11",
                 "shasum": ""
             },
             "require": {
@@ -3680,7 +3730,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.77"
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.82"
             },
             "funding": [
                 {
@@ -3696,7 +3746,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-02-17T16:22:19+00:00"
+            "time": "2021-03-19T06:08:17+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
@@ -3751,16 +3801,16 @@
         },
         {
             "name": "phpstan/phpstan-nette",
-            "version": "0.12.14",
+            "version": "0.12.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-nette.git",
-                "reference": "16a1457e21ebcf910d733fbaa7c0ba9c86686f31"
+                "reference": "7fda19691b464b1f0a3e42fa34c2c363e7404c77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-nette/zipball/16a1457e21ebcf910d733fbaa7c0ba9c86686f31",
-                "reference": "16a1457e21ebcf910d733fbaa7c0ba9c86686f31",
+                "url": "https://api.github.com/repos/phpstan/phpstan-nette/zipball/7fda19691b464b1f0a3e42fa34c2c363e7404c77",
+                "reference": "7fda19691b464b1f0a3e42fa34c2c363e7404c77",
                 "shasum": ""
             },
             "require": {
@@ -3809,9 +3859,9 @@
             "description": "Nette Framework class reflection extension for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-nette/issues",
-                "source": "https://github.com/phpstan/phpstan-nette/tree/0.12.14"
+                "source": "https://github.com/phpstan/phpstan-nette/tree/0.12.16"
             },
-            "time": "2021-01-05T10:04:46+00:00"
+            "time": "2021-03-04T13:58:46+00:00"
         },
         {
             "name": "phpstan/phpstan-strict-rules",
@@ -3983,21 +4033,22 @@
         },
         {
             "name": "staabm/annotate-pull-request-from-checkstyle",
-            "version": "1.4.0",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/staabm/annotate-pull-request-from-checkstyle.git",
-                "reference": "88a16cf5fae6d31ae38a4518ec1bf10e71137e04"
+                "reference": "ef8c1e14a1274e53c720bf393bba0ed9434443d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/staabm/annotate-pull-request-from-checkstyle/zipball/88a16cf5fae6d31ae38a4518ec1bf10e71137e04",
-                "reference": "88a16cf5fae6d31ae38a4518ec1bf10e71137e04",
+                "url": "https://api.github.com/repos/staabm/annotate-pull-request-from-checkstyle/zipball/ef8c1e14a1274e53c720bf393bba0ed9434443d4",
+                "reference": "ef8c1e14a1274e53c720bf393bba0ed9434443d4",
                 "shasum": ""
             },
             "require": {
+                "ext-libxml": "*",
                 "ext-simplexml": "*",
-                "php": "^7.0 || ^8.0"
+                "php": "^5.3 || ^7.0 || ^8.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.16.1"
@@ -4017,7 +4068,7 @@
             ],
             "support": {
                 "issues": "https://github.com/staabm/annotate-pull-request-from-checkstyle/issues",
-                "source": "https://github.com/staabm/annotate-pull-request-from-checkstyle/tree/1.4.0"
+                "source": "https://github.com/staabm/annotate-pull-request-from-checkstyle/tree/1.5.0"
             },
             "funding": [
                 {
@@ -4025,7 +4076,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-09-26T11:36:44+00:00"
+            "time": "2021-03-13T09:58:02+00:00"
         }
     ],
     "aliases": [],
@@ -4033,7 +4084,9 @@
     "stability-flags": {
         "simple-cms/box-module": 20,
         "simple-cms/core-module": 20,
-        "simple-cms/file-module": 20
+        "simple-cms/file-module": 20,
+        "simple-cms/news-module": 20,
+        "simple-cms/gallery-module": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

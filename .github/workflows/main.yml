@@ -1,0 +1,35 @@
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+name: 🚀 Deploy website on push
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v2.3.2
+
+      - name: 🔗 Install dependencies
+        run: npm install
+
+      - name: 🔨 Build Project
+        run: npm run build
+        working-directory: client
+
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        with:
+          server: fifaurban.savana-hosting.cz
+          username: fifaurban
+          password: ${{ secrets.ftp_password }}
+          server-dir: /dev.hopmantriatlon.cz/
+
+      - name: 🗑️ Remove Cache
+        uses: JesseTG/rm@v1.0.2
+        with:
+          path: /dev.hopmantriatlon.cz/temp/cache

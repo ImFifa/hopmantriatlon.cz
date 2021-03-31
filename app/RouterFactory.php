@@ -17,8 +17,16 @@ class RouterFactory
 		$router->withModule('Admin')
 			->addRoute('admin/<presenter>/<action>[/<id>]', 'Homepage:default');
 
-		$router->withModule('Front')
-			->addRoute('[<lang=cs (cs)>/]<presenter>/<action>', 'Homepage:default');
+		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]', 'Homepage:default');
+		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]team', 'Homepage:team');
+		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]kontakt', 'Homepage:contact');
+
+		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]aktuality', 'News:default');
+		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]aktualita/<slug>', 'News:show');
+
+		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]<slug>', 'Event:default');
+		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]<slug>/galerie', 'Event:gallery');
+		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]<slug>/vysledky', 'Event:results');
 
 		return $router;
 	}

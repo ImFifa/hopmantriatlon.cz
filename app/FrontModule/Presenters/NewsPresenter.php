@@ -2,7 +2,7 @@
 
 namespace App\FrontModule\Presenters;
 
-class HomepagePresenter extends BasePresenter
+class NewsPresenter extends BasePresenter
 {
 
 	public function renderDefault(): void
@@ -10,12 +10,7 @@ class HomepagePresenter extends BasePresenter
 
 	}
 
-	public function renderTeam(): void
-	{
-
-	}
-
-	public function renderContact(): void
+	public function renderShow(): void
 	{
 
 	}

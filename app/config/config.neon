@@ -1,0 +1,15 @@
+php:
+	date.timezone: Europe/Prague
+	output_buffering: 4096
+
+application:
+	errorPresenter: Front:Error
+	mapping:
+		*: App\*Module\Presenters\*Presenter
+
+services:
+	router: App\RouterFactory::createRouter()
+
+parameters:
+	customTemplatesDir: %appDir%/FrontModule/templates/
+

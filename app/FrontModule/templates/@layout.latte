@@ -1,0 +1,27 @@
+{templateType K2D\Core\Template\BaseTemplate}
+
+{block #main}
+
+	{include #content}
+
+	<div class="copyright">
+		<a href="https://www.k2d.cz/" target="_blank" class="text-decoration-none" rel="noreferrer noopener">
+			<span class="sr-only">K2D.CZ - Logo</span>
+			<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 141.73 125.29">
+				<path d="M138.47,122.18H66.89c-0.77,0-1.25-0.83-0.87-1.5l35.77-62c0.38-0.67,1.35-0.67,1.73,0l35.8,62C139.72,121.34,139.23,122.18,138.47,122.18z"/>
+				<path d="M2.4,120.68l9.19-15.91c0.29-0.51,0.96-0.66,1.44-0.32l22.77,15.91c0.8,0.56,0.41,1.82-0.57,1.82H3.27C2.5,122.18,2.02,121.34,2.4,120.68z"/>
+				<path d="M52.57,122.06l-38.1-20.21c-0.5-0.27-0.68-0.89-0.4-1.38L70,3.61c0.38-0.67,1.35-0.67,1.73,0l28.63,49.58c0.19,0.33,0.18,0.73-0.03,1.05l-44.31,67.48c-0.18,0.28-0.5,0.45-0.84,0.45h-2.15C52.87,122.18,52.71,122.14,52.57,122.06z"/>
+			</svg>
+		</a>
+		<br />
+		Webové stránky na míru od <a href="https://www.k2d.cz/" target="_blank" rel="noreferrer noopener">K2D.CZ</a>
+	</div>
+{/block}
+
+{block #head}
+	<link rel="stylesheet" href="{$basePath}/dist/front.bundle.css?{filemtime(WWW . '/dist/front.bundle.css')}" type="text/css">
+{/block}
+
+{block #foot}
+	<script src="{$basePath}/dist/front.bundle.js?{filemtime(WWW . '/dist/front.bundle.js')}" type="text/javascript"></script>
+{/block}

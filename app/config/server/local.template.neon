@@ -1,0 +1,26 @@
+application:
+	catchExceptions: false
+
+database:
+	dsn: 'mysql:host=127.0.0.1;dbname='
+	user:
+	password:
+
+dbal:
+	driver: mysqli
+	host: 127.0.0.1
+	database:
+	username:
+	password:
+	connectionTz: 'auto-offset'
+
+#mail:
+#	smtp: true
+#	host:
+#	username: %email.user%
+#	password:
+#	secure: ssl
+
+parameters:
+	email:
+		user:

@@ -1,0 +1,90 @@
+{block #title}
+    {$product === null ? 'Přidat produkt' : ('Upravit ' . $product['title'] )}
+{/block}
+
+{block #buttons}
+    <a href="#" class="btn btn-primary" onclick="triggerClick('.btn-save')">Uložit</a>
+    <a n:if="isset($product)" n:href=":Front:Product:show $product['slug']" class="btn btn-info">Zobrazit na webu</a>
+    <a n:href="default" class="btn btn-light"><i class="fa fa-arrow-left"></i> Zpět</a>
+{/block}
+
+{block #content}
+
+    <div class="container-fluid bg-white">
+        <div class="row">
+            <div class="col-lg-8">
+                {snippet cover}
+                    {form productForm}
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="form-group">
+                                    {label title}{/label}
+                                    {input title class => 'form-control'}
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    {label gallery_id}{/label}
+                                    {input gallery_id class => 'form-control'}
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    {label image}{/label}
+                                    {input image class => 'form-control'}
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <h4 class="mt-5">{label content}{/label}</h4>
+                                    <hr>
+                                    {input content}
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-4">
+                                {input save class => 'btn btn-primary btn-save'}
+                            </div>
+                            <div class="form-group col-lg-8 text-right pt-2">
+                                <div class="custom-control custom-checkbox">
+                                    <input n:name="public" class="custom-control-input">
+                                    <label n:name="public" class="custom-control-label">Zveřejnit</label>
+                                </div>
+                            </div>
+                        </div>
+                    {/form}
+                {/snippet}
+            </div>
+            <div class="col-lg-4">
+                <div class="mb-2">
+                    Náhledový obrázek
+                </div>
+                {if isset($product) && $product['cover'] != ""}
+                    {var $imageLink = "upload/products/" . $product['id'] . "/" . $product['cover']}
+                    <img class="img-fluid" src="{$basePath}/{$imageLink}?v={time()}" alt="" />
+                    <div class="text-center mt-3">
+                        <a href="{$imageLink|cropper:$vars->newAspectRatio}" class="btn btn-outline-primary">Upravit obrázek</a>
+                        <a n:if="isset($product) && $product['cover'] != ''" n:href="deleteImage! $product['id']"
+                                data-confirm="modal"
+                                data-confirm-title="Smazání obrázku"
+                                data-confirm-text="Opravdu chcete smazat tento obrázek?"
+                                data-ajax="off"
+                                class="btn btn-outline-danger">
+                            Smazat obrázek
+                        </a>
+                    </div>
+                {else}
+                    <div class="alert alert-info">
+                        <div class="icon">
+                            <i class="mdi mdi-information"></i>
+                        </div>
+                        <div class="message">
+                            Náhledový obrázek není nahrán
+                        </div>
+                    </div>
+                {/if}
+            </div>
+        </div>
+    </div>
+{/block}

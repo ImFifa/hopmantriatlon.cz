@@ -1,0 +1,19 @@
+{block #title}
+	<i class="icon mdi mdi-run"></i> Závody
+{/block}
+
+{block #buttons}
+	{ifset $events}
+		{foreach $events as $event}
+			<a n:href="Event:edit $event->slug" class="ml-2 btn btn-success">
+				<i class="icon mdi mdi-{$event->icon}"></i> {$event->name}
+			</a>
+		{/foreach}
+	{else}
+		<h3>V databázi neexistuje jediný závod.</h3>
+	{/ifset}
+{/block}
+
+{block content}
+
+{/block}

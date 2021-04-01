@@ -1,0 +1,106 @@
+@include media-breakpoint-up(sm) {
+
+}
+
+@include media-breakpoint-up(md) {
+	.sponsor-list {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+}
+
+@include media-breakpoint-up(lg) {
+	.main-header {
+		position: absolute;
+		height: 600px;
+		z-index: 0;
+	}
+
+	.navbar {
+		background: unset;
+	}
+
+	.navbar-bg {
+		background: $white;
+		box-shadow: 0 0 1px 1px rgba($gray-100, 8%);
+
+		.navbar-brand img {
+			max-height: 60px;
+		}
+		.nav-link {
+			color: $darkgray !important;
+			font-size: 1rem;
+
+			&:hover {
+				color: $gray-100 !important;
+				background: $primary;
+			}
+		}
+	}
+
+
+	.upcoming-events {
+		margin-top: 470px;
+		grid-template-columns: 1fr 1fr 1fr;
+		grid-gap: 0;
+
+		header {
+			position: absolute;
+			left: 15px;
+			top: -78px;
+			color: $white;
+
+			h1 {
+				text-shadow: 2px 2px 2px $gray-700;
+			}
+		}
+
+		.triathlon {
+			background-color: lighten($gray-100, 5%);
+		}
+
+		.halfmarathon, .triathlon, .advent {
+			overflow: hidden;
+
+			a {
+				img {
+					filter: brightness(85%);
+					transition: all .25s ease-in-out;
+				}
+
+				&:hover img {
+					filter: brightness(105%);
+				}
+			}
+
+			img {
+				max-height: unset;
+				height: 260px;
+			}
+		}
+	}
+
+	.article-list {
+		grid-template-columns: 1fr 1fr 1fr;
+		grid-gap: 2rem;
+	}
+
+	.sponsor-list {
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	}
+
+	.hopman-numbers-list {
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+	}
+
+	.latest-news, .sponsors, .hopman-numbers {
+		padding: 4rem 0;
+		margin-top: 4rem;
+		margin-bottom: 4rem;
+	}
+}
+
+@include media-breakpoint-up(xl) {
+	.article-list {
+		grid-gap: 4rem;
+	}
+}

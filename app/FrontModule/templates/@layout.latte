@@ -1,7 +1,7 @@
 {templateType K2D\Core\Template\BaseTemplate}
 
 {block #main}
-	<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+	<nav id="navbar" class="navbar navbar-expand-lg fixed-top navbar-dark">
 		<div class="container">
 			<a class="navbar-brand" n:href="Homepage:">
 				<img src="{$basePath}/dist/img/hopman_logo.png" alt="Hopman - logo">
@@ -10,8 +10,8 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarToggler">
-				<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-					<li class="nav-item active">
+				<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+					<li class="nav-item">
 						<a class="nav-link" n:href="Event: pulmaraton">Půlmaraton</a>
 					</li>
 					<li class="nav-item">
@@ -31,13 +31,11 @@
 		</div>
 	</nav>
 
-	<header class="main-header">
-		<div class="container">
-			<h1>HOPMAN 2021</h1>
-		</div>
-	</header>
+	<span id="top"></span>
 
 	{include #content}
+
+	<a href="#top" id="scrollTopBtn" class="scroll-top scroll"><i class="fas fa-arrow-alt-circle-up"></i></a>
 
 	<footer>
 		<section class="author">
@@ -61,6 +59,8 @@
 	<meta name="theme-color" content="#ffffff">
 
 	<link rel="stylesheet" href="{$basePath}/dist/front.bundle.css?{filemtime(WWW . '/dist/front.bundle.css')}" type="text/css">
+	<!-- FONT AWESOME -->
+	<script src="https://kit.fontawesome.com/150cafc137.js" crossorigin="anonymous"></script>
 {/block}
 
 {block #foot}

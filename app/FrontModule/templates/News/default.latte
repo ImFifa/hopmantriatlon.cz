@@ -2,9 +2,41 @@
 	<header class="secondary-header" style="background-image: url('{$basePath}/dist/img/header/tri_header.jpg')">
 	</header>
 
-	<section class="news-page">
-		<div class="container">
-			<h1 n:block="title">Aktuality</h1>
-		</div>
+	<section class="news-page container">
+			<h1 n:block="title" class="mb-4">Aktuality</h1>
+
+			<div n:ifset="$news" class="article-list">
+				{foreach $news as $new}
+					<article>
+						<a class="article-link" n:href="News:show $new->slug">
+							<header>
+								<img n:ifset="$new->cover" src="{$basePath}/upload/news/{$new->id}/{$new->cover}" alt="{$new->title}">
+								<time datetime="{$new->created|date:'Y-m-d'}">{$new->created|date:'d. m. Y'}</time>
+								<h3>{$new->title}</h3>
+							</header>
+							<section n:ifset="$new->perex">{$new->perex|noescape}</section>
+						</a>
+					</article>
+				{/foreach}
+			</div>
+
+			<div n:ifset="$news" class="pagination">
+				{if !$paginator->isFirst()}
+					<a class="mr-3" n:href="default 1">První</a>
+					<a class="mr-3" n:href="default $paginator->page-1">Předchozí</a>
+				{/if}
+
+				<span>Stránka {$paginator->page} z {$paginator->pageCount}</span>
+
+				{if !$paginator->isLast()}
+					<a class="ml-3" n:href="default $paginator->page+1">Další</a>
+					<a class="ml-3" n:href="default $paginator->pageCount">Poslední</a>
+				{/if}
+			</div>
+
+			<article n:if="$news === NULL">
+				<h4>Na webu aktuálně nejsou žádné zveřejněné aktuality.</h4>
+				<a class="btn btn-primary mt-3" n:href="Homepage:">Zpět na úvodní stránku</a>
+			</article>
 	</section>
 {/block}

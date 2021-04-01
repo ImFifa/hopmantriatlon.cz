@@ -9,9 +9,14 @@ application:
 
 services:
 	router: App\RouterFactory::createRouter()
+	repository: App\Service\ProjectModelRepository
+	- App\Model\EventModel
 
 parameters:
 	customTemplatesDir: %appDir%/FrontModule/templates/
+	admin:
+		menu:
+			Závody: [':Admin:Event:', run]
 
 migrations:
 	driver: mysql

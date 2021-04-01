@@ -17,7 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
 	if (headerCarousel) {
 		// carousel interval
 		$("#headerCarousel").carousel({
-			interval: 10300
+			interval: 10300,
+			pause: false
 		});
 
 		// carousel progress bar

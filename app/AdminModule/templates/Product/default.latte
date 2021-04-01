@@ -1,0 +1,13 @@
+{block #title}
+    <i class="icon mdi mdi-category"></i> Produkty
+{/block}
+
+{block #buttons}
+    <a n:href="Product:edit" class="btn btn-success">Přidat produkt</a>
+{/block}
+
+{block content}
+    <div class="m-admin-fix bg-white pb-2">
+        {control productGrid}
+    </div>
+{/block}

@@ -28,90 +28,49 @@
 			<h1>SÉRIE HOPMAN 2021!</h1>
 		</header>
 
-		<article class="halfmarathon">
-			<a n:href="Event: pulmaraton"><img src="{$basePath}/dist/img/header/pul_header.jpg" alt="Žatecký půlmaraton"></a>
-			<section>
-				<h3>Půlmaraton</h3>
-				<time datetime="2021-04-17">17. dubna</time>
-				<footer>
-					<a href="#" class="btn btn-primary">Propozice</a>
-					<a href="#" class="btn btn-secondary">Registrace</a>
-				</footer>
-			</section>
-		</article>
-		<article class="triathlon">
-			<a n:href="Event: triatlon"><img src="{$basePath}/dist/img/header/tri_header.jpg" alt="Hopman triatlon"></a>
-			<section>
-				<h3>Triatlon</h3>
-				<time datetime="2021-07-03">3. července</time>
-				<footer>
-					<a href="#" class="btn btn-primary">Propozice</a>
-					<a href="#" class="btn btn-secondary">Registrace</a>
-				</footer>
-			</section>
-		</article>
-		<article class="advent">
-			<a n:href="Event: adventni-beh"><img src="{$basePath}/dist/img/header/adv_header.jpg" alt="Adventní běh"></a>
-			<section>
-				<h3>Adventní běh</h3>
-				<time datetime="2021-11-27">27. listopadu</time>
-				<footer>
-					<a href="#" class="btn btn-primary">Propozice</a>
-					<a href="#" class="btn btn-secondary">Registrace</a>
-				</footer>
-			</section>
-		</article>
+		{ifset $events}
+			{foreach $events as $event}
+				<article class="{$event->class}">
+					<a n:href="Event: $event->slug"><img src="{$basePath}/{$event->header_image}" alt="{$event->name}"></a>
+					<section>
+						<h3><small>#{$event->type}</small>{$event->name}</h3>
+						<div class="date">Datum konání: <time datetime="{$event->date|date:"Y-m-d"}">{$event->date|date:"d. m. Y"}</time></div>
+						<div class="status">Stav: <span style="background-color: {$event->status->color|noescape}">{$event->status->value}</span></div>
+						<p n:ifset="$event->description">{$event->description}</p>
+						<footer>
+							<a n:href="Event: $event->slug" class="btn btn-primary">Detail závodu</a>
+						</footer>
+					</section>
+				</article>
+			{/foreach}
+		{/ifset}
 	</section>
 
-	<section class="latest-news">
+	<section n:ifset="$news" class="latest-news">
 		<div class="container">
 
 			<h2>Aktuality</h2>
 
+			<a n:href="News:" class="archive-link btn btn-outline-secondary">Archiv aktualit</a>
+
 			<div class="article-list">
+				{foreach $news as $new}
 				<article>
+					<a class="article-link" n:href="News:show $new->slug">
 					<header>
-						<img class="img-fluid" src="{$basePath}/dist/img/pul_header3.jpg" alt="Žatecký půlmaraton 2021">
-						<time datetime="2018-03-31">31. března</time>
-						<h3>Žatecký půlmaraton bude!</h3>
+						<img n:ifset="$new->cover" class="img-fluid" src="{$basePath}/upload/news/{$new->id}/{$new->cover}" alt="{$new->title}">
+						<time datetime="{$new->created|date:'Y-m-d'}">{$new->created|date:'d. m. Y'}</time>
+						<h3>{$new->title}</h3>
 					</header>
-					<section>
-						<p>Půlmaraton proběhne v původně plánovaném termínu - tedy 17. dubna.</p>
-						<p>Abychom dodrželi bezpečnostní opatření z důvodu pandemie covid19, bude se startovat intervalově a po závodě se nebude konat vyhlašování výsledků</p>
+					<section n:ifset="$new->perex">
+						{$new->perex|noescape}
 					</section>
-					<footer>
-						<a href="#" class="btn btn-secondary">Zobrazit více</a>
+					<footer n:ifset="$files">
+{*						<a n:href="News:show $new->slug" class="btn btn-secondary">Zobrazit více</a>*}
 					</footer>
+					</a>
 				</article>
-
-				<article>
-					<header>
-						<img class="img-fluid" src="{$basePath}/dist/img/hopman.jpg" alt="Hopman 2021">
-						<time datetime="2021-02-14">14. února</time>
-						<h3>Jak bude vypadat Hopman v roce 2021?</h3>
-					</header>
-					<section>
-						<p>V letošním roce bychom v dubnu rádi uspořádali tradiční Žatecký půlmaraton, začátkem července Hopman triatlon na Nechranicích (sprint a olympisjký) a první adventní neděli oblíbený Adventní běh.<br>
-							Doufejme, že nám to situace dovolí a budeme se moci opět sejít na startovní čáře. O všem Vás budeme včas informovat.</p>
-					</section>
-					<footer>
-						<a href="#" class="btn btn-secondary">Zobrazit více</a>
-					</footer>
-				</article>
-
-				<article>
-					<header>
-						<img class="img-fluid" src="{$basePath}/dist/img/adv_header4.jpg" alt="Adventní běh 2020">
-						<time datetime="2020-11-25">25. listopadu</time>
-						<h3>Adventní běh 2020</h3>
-					</header>
-					<section>
-						<p>Ahoj, PES je 3, tak půjdeme za týden do akce. Adventní běh bude letos nezávodní formou s tradičním svařákem 5.12.2020. Může nás být najednou pohromadě až 50 a alkohol venku už bude možné konzumovat. Časový program výběhu bude rozložený mezi 15 - 18 hodinu a vybíhat budeme průběžně podle příchodu běžců. Zvažte, kdo chce běhat za světla a kdo si naopak bude chtít vyzkoušet čelovku a užít plně nasvícené vyzdobené město.</p>
-					</section>
-					<footer>
-						<a href="#" class="btn btn-secondary">Zobrazit více</a>
-					</footer>
-				</article>
+				{/foreach}
 			</div>
 		</div>
 	</section>
@@ -121,53 +80,58 @@
 
 			<ul class="sponsor-list">
 				<li>
-					<a href="#">
-						<img src="{$basePath}/dist/img/sponsor/grape.jpg" alt="Grape">
+					<a href="http://www.bohemiahop.cz/cz/">
+						<img src="{$basePath}/dist/img/sponsor/bohemia_hop.png" alt="Bohemia Hop">
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="https://www.chchp.cz/chram-chmele-a-piva/">
+						<img src="{$basePath}/dist/img/sponsor/chchp.png" alt="CHCHP">
+					</a>
+				</li>
+				<li>
+					<a href="https://www.grapesc.cz/">
+						<img src="{$basePath}/dist/img/sponsor/grape.png" alt="Grape SC, a.s.">
+					</a>
+				</li>
+				<li>
+					<a href="https://dast.ustecko.com/">
 						<img src="{$basePath}/dist/img/sponsor/k-dast.png" alt="K-Dast">
 					</a>
 				</li>
 				<li>
-					<a href="#">
-						<img src="{$basePath}/dist/img/sponsor/bohemia_hop.jpg" alt="Bohemia Hop">
+					<a href="https://www.kempnechranice.cz/">
+						<img src="{$basePath}/dist/img/sponsor/cscn.png" alt="Czech Sailing Centre Nechranice">
 					</a>
 				</li>
 				<li>
-					<a href="#">
-						<img src="{$basePath}/dist/img/sponsor/grape.jpg" alt="Grape">
+					<a href="http://www.zateckypivovar.cz/">
+						<img src="{$basePath}/dist/img/sponsor/pivovarzatec.png" alt="Žatecký pivovar">
 					</a>
 				</li>
 				<li>
-					<a href="#">
-						<img src="{$basePath}/dist/img/sponsor/k-dast.png" alt="K-Dast">
+					<a href="https://www.unetickypivovar.cz/">
+						<img src="{$basePath}/dist/img/sponsor/unetickypivovar.png" alt="Únětický pivovar">
 					</a>
 				</li>
 				<li>
-					<a href="#">
-						<img src="{$basePath}/dist/img/sponsor/bohemia_hop.jpg" alt="Bohemia Hop">
+					<a href="http://damm.cz/">
+						<img src="{$basePath}/dist/img/sponsor/damm.png" alt="DAMM">
 					</a>
 				</li>
 				<li>
-					<a href="#">
-							<img src="{$basePath}/dist/img/sponsor/grape.jpg" alt="Grape">
+					<a href="https://www.yankeesvicky.cz/">
+						<img src="{$basePath}/dist/img/sponsor/yankee.png" alt="Yankee Candle">
 					</a>
 				</li>
 				<li>
-					<a href="#">
-						<img src="{$basePath}/dist/img/sponsor/k-dast.png" alt="K-Dast">
+					<a href="http://www.holidaycentrum.cz/cs/penzion-ubytovani">
+						<img src="{$basePath}/dist/img/sponsor/holidaycentrum.png" alt="Holiday Centrum Vikletice">
 					</a>
 				</li>
 				<li>
-					<a href="#">
-						<img src="{$basePath}/dist/img/sponsor/bohemia_hop.jpg" alt="Bohemia Hop">
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<img src="{$basePath}/dist/img/sponsor/grape.jpg" alt="Grape">
+					<a href="https://www.cyklofriede.cz/">
+						<img src="{$basePath}/dist/img/sponsor/friede.png" alt="Cyklo Friede">
 					</a>
 				</li>
 			</ul>
@@ -177,20 +141,20 @@
 		<h2>Hopman v číslech</h2>
 		<ul class="hopman-numbers-list">
 			<li>
+				<svg id="Capa_1" enable-background="new 0 0 505.1 505.1" height="512" viewBox="0 0 505.1 505.1" width="512" xmlns="http://www.w3.org/2000/svg"><g><g><path d="m77.4 292.3 26.8 40.9 40.9 26.8 33.3-19.2 19.2-33.3-39-53.2-53.2-39c-8.9 24.5-19.1 52.5-28 77z" fill="#fee05b"/><path d="m212.8 427.7c9.3-3.4 67.6-24.6 77-28l-39-53.2-53.2-39c-5.9 5.9-46.3 46.3-52.5 52.5l26.8 40.9z" fill="#fec258"/><path d="m49.4 369.3 14.5 28.7 28.7 14.5 33.3-19.2 19.2-33.3c-7.5-7.5-60.3-60.3-67.7-67.7-8.9 24.5-19.1 52.5-28 77z" fill="#ff6b6b"/><path d="m135.8 455.7c24.5-8.9 52.5-19.1 77-28-18.3-18.3-56.9-56.9-67.7-67.7-5.9 5.9-46.3 46.3-52.5 52.5l14.5 28.7z" fill="#ff3d7d"/><g id="XMLID_63_"><path d="m445.1 30c0-3 0-27 0-30h30v30c-10.5 0-19.5 0-30 0z" fill="#5ecbf1"/></g><g id="XMLID_61_"><path d="m475.1 60c0-10.5 0-19.5 0-30h30v30c-10.5 0-19.5 0-30 0z" fill="#4793ff"/></g><g id="XMLID_60_"><path d="m445.1 90c0-3 0-27 0-30h30v30c-10.5 0-19.5 0-30 0z" fill="#4793ff"/></g><g id="XMLID_51_"><path d="m190.1 60c0-10.5 0-19.5 0-30h30v30c-10.5 0-19.5 0-30 0z" fill="#fee05b"/></g><g id="XMLID_47_"><path d="m160.1 90c0-3 0-27 0-30h30v30c-10.5 0-19.5 0-30 0z" fill="#fee05b"/></g><g id="XMLID_39_"><path d="m233.3 160.6c-4.2-4.2-21-21-21.2-21.2 10.7-10.7 10.7-28.1 0-38.8 4.2-4.2 21-21 21.2-21.2 22.4 22.4 22.4 58.8 0 81.2z" fill="#5ecbf1"/></g><g id="XMLID_1_"><path d="m305.7 130.6c-4.2-4.2-21-21-21.2-21.2 5.2-5.2 9.8-9.8 15-15 19-19 19-49.8 0-68.8 7.4-7.4 13.8-13.8 21.2-21.2 30.7 30.7 30.7 80.6 0 111.2-1.6 1.5 5.5-5.5-15 15z" fill="#bee75e"/></g><path d="m269.5 214.4 10.6 10.6 67.1-52.9 52.9-67.1c-.2-.2-9.5-9.5-10.6-10.6-32.4 32.3-101.2 101.2-120 120z" fill="#a2e3f1"/><path d="m0 505.1 53.4-39.2 39.2-53.4c-5.3-5.3-32.3-32.3-43.2-43.2-2.8 7.5-46.7 128.2-49.4 135.8z" fill="#fee05b"/><path d="m105.4 215.3 92.2 92.2 38.6-24.5 24.5-38.6c-3.4-3.4-118.2-118.2-121.7-121.7-3.8 10.7-29.7 81.9-33.6 92.6z" fill="#ff6b6b"/><g fill="#ff3d7d"><path d="m445.1 315c0-3 0-27 0-30h30v30c-10.5 0-19.5 0-30 0z"/><path d="m475.1 345c0-10.5 0-19.5 0-30h30v30c-10.5 0-19.5 0-30 0z"/><path d="m415.1 345c0-10.5 0-19.5 0-30h30v30c-10.5 0-19.5 0-30 0z"/><path d="m445.1 375c0-3 0-27 0-30h30v30c-10.5 0-19.5 0-30 0z"/></g><path d="m365.7 293c-.4-.4-19.1-19.1-21.2-21.2 22.4-22.4 58.8-22.4 81.2 0-4.2 4.2-21 21-21.2 21.2-10.7-10.7-28.1-10.7-38.8 0z" fill="#4793ff"/><path d="m395.7 220.6c-7.4-7.4-13.8-13.8-21.2-21.2 5.2-5.2 9.8-9.8 15-15 30.7-30.7 80.5-30.7 111.2 0-4.2 4.2-21 21-21.2 21.2-19-19-49.8-19-68.8 0-1.5 1.5-13.5 13.5-15 15z" fill="#8ee26b"/><path d="m0 505.1c16.5-6 119.2-43.4 135.8-49.4-15.1-15.1-28.1-28.1-43.2-43.2-10.5 10.5-82 82-92.6 92.6z" fill="#fec258"/><path d="m289.8 399.7c9.9-3.6 82.6-30 92.6-33.7-3.4-3.4-118.2-118.2-121.7-121.7-7 7-56.2 56.2-63.1 63.1 11 11.1 81.1 81.3 92.2 92.3z" fill="#ff3d7d"/><path d="m290.7 235.6c32.3-32.3 101.2-101.2 120-120-.2-.2-9.5-9.5-10.6-10.6-32.3 32.3-101.2 101.2-120 120 .2.2 9.5 9.5 10.6 10.6z" fill="#5ecbf1"/></g><path d="m160.1 30c0-3 0-27 0-30h30v30c-10.5 0-19.5 0-30 0z" fill="#fee05b"/><path d="m130.1 60c0-10.5 0-19.5 0-30h30v30c-10.5 0-19.5 0-30 0z" fill="#fee05b"/><path d="m415.1 60c0-10.5 0-19.5 0-30h30v30c-10.5 0-19.5 0-30 0z" fill="#5ecbf1"/></g></svg>
+				<h4>{$hopmanYears}<small>Ročníků</small></h4>
+			</li>
+			<li>
 				<svg id="Capa_1" enable-background="new 0 0 509.946 509.946" height="512" viewBox="0 0 509.946 509.946" width="512" xmlns="http://www.w3.org/2000/svg"><g><path d="m169.116 0c-10.976 0-79.328 0-90.333 0 6.494 9.984 110.553 169.969 117.047 179.953l29.571 10 29.572-10 10-20.203-10-30.725c-10.434-15.68-75.402-113.313-85.857-129.025z" fill="#ff6b6b"/><path d="m255.83 130.312c-.067-.101-.924-1.388-.857-1.287v50.928l16.887 10 16.887-10-9.552-30.953z" fill="#ff3d7d"/><path d="m254.973 129.025c11.817 17.819 21.957 33.11 33.773 50.928l13.542 10 13.542-10c6.398-9.984 108.919-169.946 115.333-179.953-10.977 0-79.328 0-90.333 0-10.435 15.681-75.402 113.313-85.857 129.025z" fill="#c1126b"/><path d="m210.512 257.027-14.682-3.762c0-19.937 0-61.678 0-73.313h59.143l10 15-10 15c-10.192 0-18.951 0-29.143 0v32.62z" fill="#fee05b"/><path d="m301.147 257.027 14.682-3.762c0-19.937 0-61.678 0-73.313-21.297 0-39.56 0-60.856 0v30h30.857v32.62z" fill="#fec258"/><path d="m120.461 374.585c0 74.27 60.177 134.893 134.512 135.357l10-135.357-10-135.356c-74.266.462-134.512 61.019-134.512 135.356z" fill="#fec258"/><path d="m391.197 374.585c0-75.129-61.425-135.867-136.225-135.356v270.714c74.827.51 136.225-60.257 136.225-135.358z" fill="#fd996b"/><path d="m150.461 374.585c0 57.737 46.729 104.894 104.512 105.357l10-105.357-10-105.357c-57.724.463-104.512 47.562-104.512 105.357z" fill="#fee05b"/><path d="m361.197 374.585c0-58.022-47.278-105.759-106.225-105.356v210.714c58.644.4 106.225-47.046 106.225-105.358z" fill="#fec258"/><path d="m240.83 314.953v33.651c-1.585-.915 2.117 1.222-29.781-17.193-5.246 9.086-9.754 16.894-15 25.98 2.865 1.654 26.852 15.503 29.781 17.194-2.342 1.352-26.233 15.146-29.143 16.826 5.246 9.086 9.754 16.894 15 25.98 2.342-1.353 26.233-15.146 29.143-16.826v34.387h14.143l10-60-10-60c-4.946.001-9.197.001-14.143.001z" fill="#fec258"/><path d="m270.83 400.566c1.551.896-2.072-1.196 29.142 16.825 5.246-9.086 9.754-16.894 15-25.98-3.037-1.753-26.154-15.1-29.143-16.826 3.063-1.768 26.667-15.397 29.78-17.194-5.246-9.086-9.754-16.894-15-25.98-1.585.915 2.117-1.222-29.78 17.193 0-11.769 0-21.882 0-33.651-5.546 0-10.311 0-15.857 0v120h15.857c.001-12.026.001-22.36.001-34.387z" fill="#fd996b"/></g></svg>
-				<h4>38<small>Závodů</small></h4>
+				<h4>{$hopmanCompetitions}<small>Závodů</small></h4>
 			</li>
 			<li>
 				<svg id="Capa_1" enable-background="new 0 0 480 480" height="512" viewBox="0 0 480 480" width="512" xmlns="http://www.w3.org/2000/svg"><g><path d="m240 330-37.5-10-37.5 10v150h75c0-10.492 0-19.508 0-30l10-60z" fill="#5ecbf1"/><path d="m315 450c0-44.289 0-78.428 0-120l-37.5-10-37.5 10v120z" fill="#4793ff"/><path d="m45 480h-30v-150l15-10 15 10z" fill="#eea472"/><path d="m435 480h30c0-10.128 0-139.871 0-150l-15-10-15 10z" fill="#d48760"/><path d="m165 180v60l37.5 10 37.5-10 10-60-10-60c-14.981 0-30.019 0-45 0z" fill="#4793ff"/><path d="m285 120c-14.981 0-30.019 0-45 0v120l37.5 10 37.5-10c0-7.259 0-52.693 0-60z" fill="#466bf6"/><path d="m195 131.459v-11.459l-75-28.604v-61.396h-60v105l105 45c18.386-9.193 30-27.985 30-48.541z" fill="#fee05b"/><path d="m360 91.396c-9.118 3.478-65.859 25.118-75 28.604v11.459c0 20.555 11.613 39.348 30 48.541 12.708-5.446 92.208-39.518 105-45 0-28.278 0-88.527 0-105-7.259 0-52.693 0-60 0z" fill="#fec258"/><path d="m197.594 102.406c10.864 10.865 25.864 17.594 42.406 17.594l10-60-10-60c-16.542 0-31.542 6.729-42.406 17.594-23.452 23.45-23.47 61.344 0 84.812z" fill="#ffccbd"/><path d="m300 60c0-33.083-26.915-60-60-60v120c33.083 0 60-26.915 60-60z" fill="#ffbda9"/><path d="m15 240v90h225l10-45-10-45c-15.192 0-209.806 0-225 0z" fill="#ff6b6b"/><path d="m465 240c-15.192 0-209.806 0-225 0v90h225c0-10.889 0-79.039 0-90z" fill="#ff3d7d"/></g></svg>
-				<h4>7963<small>Účastníků</small></h4>
+				<h4>{$hopmanParticipants}<small>Účastníků</small></h4>
 			</li>
 			<li>
 				<svg id="Capa_1" enable-background="new 0 0 509.509 509.509" height="512" viewBox="0 0 509.509 509.509" width="512" xmlns="http://www.w3.org/2000/svg"><g><path d="m381.754 389.967c-3.236 0-39.454 0-46.769 0l-12.231-15 18.527-15h40.473c16.542 0 30-13.456 30-30 0-10.128 0-139.87 0-150-15.985 0-49.148 0-63.048 0l-25.952-15 22.343-15h96.657v180c0 33.084-26.915 60-60 60z" fill="#bebcdd"/><path d="m118.968 321.222-21.213-1.213-8.47 8.779c2.282 10.021 38.874 170.678 41.162 180.721h86.309l10-30-10-45.001z" fill="#f9f9f9"/><path d="m338.956 110.919c-1.879-10.114-3.495-18.806-5.374-28.92-4.843 12.284-13.66 22.686-25.036 29.512l-91.792 322.998v45 30h86.314c18.104-63.74 38.486-132.644 45.91-200.063 7.432-67.478 1.73-131.53-10.022-198.527z" fill="#e2dff4"/><path d="m216.754 120.009-92.25-5.25-5.532 206.459c.018.101 12.764 79.906 21.672 113.291h76.11l10-144.5z" fill="#fec258"/><path d="m165.254 13.186c-23.438-18.793-57.59-17.708-79.709 4.695-10.979 11.12-17.791 26.45-17.791 43.134v238.994c0 16.568 13.431 30 30 30 16.568 0 30-13.432 30-30 0-10.128 0-139.871 0-150 0-16.568 13.431-30 30-30h59l15-59.17-15-59.171c-17.602-4.217-36.633-.403-51.5 11.518z" fill="#fee05b"/><path d="m309.422 116.182c-.021-.111-.926-4.983-.868-4.673l-91.8 8.499v314.5h76.186c10.024-37.265 17.849-70.498 22.89-103.39 9.118-59.483 9.981-121.456-6.408-214.936z" fill="#fd996b"/><path d="m240.254 13.186c-6.888-5.522-14.898-9.456-23.5-11.519v118.341h61c16.391 0 31.246-6.572 42.075-17.226 23.279-22.9 24.107-60.287 1.167-84.231-21.752-22.702-56.68-24.661-80.742-5.365z" fill="#fec258"/></g></svg>
-				<h4>4563<small>Litrů piva</small></h4>
-			</li>
-			<li>
-				<svg id="Capa_1" enable-background="new 0 0 505.1 505.1" height="512" viewBox="0 0 505.1 505.1" width="512" xmlns="http://www.w3.org/2000/svg"><g><g><path d="m77.4 292.3 26.8 40.9 40.9 26.8 33.3-19.2 19.2-33.3-39-53.2-53.2-39c-8.9 24.5-19.1 52.5-28 77z" fill="#fee05b"/><path d="m212.8 427.7c9.3-3.4 67.6-24.6 77-28l-39-53.2-53.2-39c-5.9 5.9-46.3 46.3-52.5 52.5l26.8 40.9z" fill="#fec258"/><path d="m49.4 369.3 14.5 28.7 28.7 14.5 33.3-19.2 19.2-33.3c-7.5-7.5-60.3-60.3-67.7-67.7-8.9 24.5-19.1 52.5-28 77z" fill="#ff6b6b"/><path d="m135.8 455.7c24.5-8.9 52.5-19.1 77-28-18.3-18.3-56.9-56.9-67.7-67.7-5.9 5.9-46.3 46.3-52.5 52.5l14.5 28.7z" fill="#ff3d7d"/><g id="XMLID_63_"><path d="m445.1 30c0-3 0-27 0-30h30v30c-10.5 0-19.5 0-30 0z" fill="#5ecbf1"/></g><g id="XMLID_61_"><path d="m475.1 60c0-10.5 0-19.5 0-30h30v30c-10.5 0-19.5 0-30 0z" fill="#4793ff"/></g><g id="XMLID_60_"><path d="m445.1 90c0-3 0-27 0-30h30v30c-10.5 0-19.5 0-30 0z" fill="#4793ff"/></g><g id="XMLID_51_"><path d="m190.1 60c0-10.5 0-19.5 0-30h30v30c-10.5 0-19.5 0-30 0z" fill="#fee05b"/></g><g id="XMLID_47_"><path d="m160.1 90c0-3 0-27 0-30h30v30c-10.5 0-19.5 0-30 0z" fill="#fee05b"/></g><g id="XMLID_39_"><path d="m233.3 160.6c-4.2-4.2-21-21-21.2-21.2 10.7-10.7 10.7-28.1 0-38.8 4.2-4.2 21-21 21.2-21.2 22.4 22.4 22.4 58.8 0 81.2z" fill="#5ecbf1"/></g><g id="XMLID_1_"><path d="m305.7 130.6c-4.2-4.2-21-21-21.2-21.2 5.2-5.2 9.8-9.8 15-15 19-19 19-49.8 0-68.8 7.4-7.4 13.8-13.8 21.2-21.2 30.7 30.7 30.7 80.6 0 111.2-1.6 1.5 5.5-5.5-15 15z" fill="#bee75e"/></g><path d="m269.5 214.4 10.6 10.6 67.1-52.9 52.9-67.1c-.2-.2-9.5-9.5-10.6-10.6-32.4 32.3-101.2 101.2-120 120z" fill="#a2e3f1"/><path d="m0 505.1 53.4-39.2 39.2-53.4c-5.3-5.3-32.3-32.3-43.2-43.2-2.8 7.5-46.7 128.2-49.4 135.8z" fill="#fee05b"/><path d="m105.4 215.3 92.2 92.2 38.6-24.5 24.5-38.6c-3.4-3.4-118.2-118.2-121.7-121.7-3.8 10.7-29.7 81.9-33.6 92.6z" fill="#ff6b6b"/><g fill="#ff3d7d"><path d="m445.1 315c0-3 0-27 0-30h30v30c-10.5 0-19.5 0-30 0z"/><path d="m475.1 345c0-10.5 0-19.5 0-30h30v30c-10.5 0-19.5 0-30 0z"/><path d="m415.1 345c0-10.5 0-19.5 0-30h30v30c-10.5 0-19.5 0-30 0z"/><path d="m445.1 375c0-3 0-27 0-30h30v30c-10.5 0-19.5 0-30 0z"/></g><path d="m365.7 293c-.4-.4-19.1-19.1-21.2-21.2 22.4-22.4 58.8-22.4 81.2 0-4.2 4.2-21 21-21.2 21.2-10.7-10.7-28.1-10.7-38.8 0z" fill="#4793ff"/><path d="m395.7 220.6c-7.4-7.4-13.8-13.8-21.2-21.2 5.2-5.2 9.8-9.8 15-15 30.7-30.7 80.5-30.7 111.2 0-4.2 4.2-21 21-21.2 21.2-19-19-49.8-19-68.8 0-1.5 1.5-13.5 13.5-15 15z" fill="#8ee26b"/><path d="m0 505.1c16.5-6 119.2-43.4 135.8-49.4-15.1-15.1-28.1-28.1-43.2-43.2-10.5 10.5-82 82-92.6 92.6z" fill="#fec258"/><path d="m289.8 399.7c9.9-3.6 82.6-30 92.6-33.7-3.4-3.4-118.2-118.2-121.7-121.7-7 7-56.2 56.2-63.1 63.1 11 11.1 81.1 81.3 92.2 92.3z" fill="#ff3d7d"/><path d="m290.7 235.6c32.3-32.3 101.2-101.2 120-120-.2-.2-9.5-9.5-10.6-10.6-32.3 32.3-101.2 101.2-120 120 .2.2 9.5 9.5 10.6 10.6z" fill="#5ecbf1"/></g><path d="m160.1 30c0-3 0-27 0-30h30v30c-10.5 0-19.5 0-30 0z" fill="#fee05b"/><path d="m130.1 60c0-10.5 0-19.5 0-30h30v30c-10.5 0-19.5 0-30 0z" fill="#fee05b"/><path d="m415.1 60c0-10.5 0-19.5 0-30h30v30c-10.5 0-19.5 0-30 0z" fill="#5ecbf1"/></g></svg>
-				<h4><span class="infinity">∞</span><small>Radosti</small></h4>
+				<h4>{$hopmanBeers}<small>Cílových piv</small></h4>
 			</li>
 		</ul>
 	</section>

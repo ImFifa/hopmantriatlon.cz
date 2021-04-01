@@ -3,8 +3,28 @@
 	</header>
 
 	<section class="new-page">
-		<div class="container">
-			<h1 n:block="title">Aktualita</h1>
-		</div>
+		<article n:ifset="$new" class="new-container container">
+			<header>
+				<time datetime="{$new->created|date:'Y-m-d'}">{$new->created|date:'d. m. Y'}</time>
+				<h1 n:block="title">{$new->title}</h1>
+				<img n:ifset="$new->cover" src="{$basePath}/upload/news/{$new->id}/{$new->cover}" alt="{$new->title}">
+			</header>
+			<section n:ifset="$new->content">{$new->content|noescape}</section>
+			<footer>
+				<article n:ifset="$nextNew">
+					<a n:href="News:show $nextNew->slug">
+						<img n:ifset="$nextNew->cover" src="{$basePath}/upload/news/{$nextNew->id}/{$nextNew->cover}" alt="{$nextNew->title}">
+						<h5><small>Následující:</small> {$nextNew->title}</h5>
+					</a>
+				</article>
+				<article n:ifset="$prevNew">
+					<a n:href="News:show $prevNew->slug">
+						<img n:ifset="$prevNew->cover" src="{$basePath}/upload/news/{$prevNew->id}/{$prevNew->cover}" alt="{$prevNew->title}">
+						<h5><small>Předchozí:</small> {$prevNew->title}</h5>
+					</a>
+				</article>
+			</footer>
+			<a n:href="News:" class="mt-3 btn btn-outline-secondary">Archiv aktualit</a>
+		</article>
 	</section>
 {/block}

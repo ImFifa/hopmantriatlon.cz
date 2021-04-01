@@ -37,8 +37,8 @@
 		"simple-cms/box-module": "v2.x-dev",
 		"simple-cms/core-module": "v2.x-dev",
 		"simple-cms/file-module": "v2.x-dev",
-		"simple-cms/news-module": "v2.x-dev",
 		"simple-cms/gallery-module": "v2.x-dev",
+		"simple-cms/news-module": "v2.x-dev",
 		"symfony/dotenv": "^5.1",
 		"tracy/tracy": "^2.7.6"
 	},

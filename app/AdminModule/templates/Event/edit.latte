@@ -1,0 +1,29 @@
+{templateType K2D\Core\Template\BaseTemplate}
+{varType Nette\Database\Table\ActiveRow|null $new}
+
+{block #title}
+	Úprava závodu {$event->name}
+{/block}
+
+{block #buttons}
+	<a href="#" class="btn btn-primary" onclick="triggerClick('.btn-save')">
+		Uložit
+	</a>
+	<a n:if="$event" n:href=":Front:Event:default $event->slug" class="btn btn-info" target="_blank">
+		Zobrazit na webu
+	</a>
+	<a n:href="default" class="btn btn-light">
+		Zpět
+	</a>
+{/block}
+
+{block content}
+	<div class="m-admin-fix bg-white pb-2">
+		<ul>
+			<li>{$event->name}</li>
+			<li>{$event->slug}</li>
+			<li>{$event->id}</li>
+			<li>{$event->type}</li>
+		</ul>
+	</div>
+{/block}

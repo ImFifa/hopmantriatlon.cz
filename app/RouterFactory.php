@@ -14,8 +14,7 @@ class RouterFactory
 	{
 		$router = new RouteList();
 
-		$router->withModule('Admin')
-			->addRoute('admin/<presenter>/<action>[/<id>]', 'Homepage:default');
+		$router->withModule('Admin')->addRoute('admin/<presenter>/<action>[/<id>]', 'Homepage:default');
 
 		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]', 'Homepage:default');
 		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]team', 'Homepage:team');

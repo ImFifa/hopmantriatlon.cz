@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "31cb4c43db70c0b81da29d34878842aa",
+    "content-hash": "2134be3f94e327268bdd40cce7e9419c",
     "packages": [
         {
             "name": "brick/date-time",
@@ -4085,8 +4085,8 @@
         "simple-cms/box-module": 20,
         "simple-cms/core-module": 20,
         "simple-cms/file-module": 20,
-        "simple-cms/news-module": 20,
-        "simple-cms/gallery-module": 20
+        "simple-cms/gallery-module": 20,
+        "simple-cms/news-module": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

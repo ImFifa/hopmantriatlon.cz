@@ -13,3 +13,14 @@ services:
 parameters:
 	customTemplatesDir: %appDir%/FrontModule/templates/
 
+migrations:
+	driver: mysql
+	dbal: nette
+	withDummyData: %debugMode%
+	groups:
+		custom.structure:
+			directory: %appDir%/migrations/structure
+		custom.data:
+			directory: %appDir%/migrations/data
+		custom.data.basic:
+			directory: %appDir%/migrations/data/basic

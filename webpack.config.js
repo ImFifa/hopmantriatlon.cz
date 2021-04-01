@@ -30,6 +30,7 @@ module.exports = {
 	entry: {
 		admin: path.join(ROOT_PATH, "vendor/simple-cms/core-module/assets/src/admin.js"),
 		bridge: path.join(ROOT_PATH, "vendor/simple-cms/core-module/assets/src/bridge.js"),
+		analytics: path.join(ROOT_PATH, "vendor/simple-cms/analytics-module/assets/src/google/analytics.js"),
 		front: path.join(ROOT_PATH, "app/assets/src/front.js"),
 	},
 	output: {

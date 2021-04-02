@@ -1,10 +1,28 @@
 {block #content}
-	<header class="secondary-header" style="background-image: url('{$basePath}/dist/img/header/tri_header.jpg')">
+	{block #og}
+		<meta property="og:title" content="{$event->name} | HOPMAN">
+		<meta property="og:url" content="{$baseUrl}{plink this}" />
+		<meta property="og:type" content="website">
+		<meta property="og:image" content="{$baseUrl}/
+		{ifset $event->og_image}
+			{$event->og_image}
+		{else}
+			{$vars->og_image}
+		{/ifset}">
+		<meta property="og:description" content="
+		{ifset $event->description}
+			{$event->description|truncate:100}
+		{else}
+			{$vars->description}
+		{/ifset}">
+	{/block}
+
+	<header class="secondary-header" style="background-image: url('{$basePath}/{$event->header_image}')">
 	</header>
 
-	<section class="event-page">
+	<section class="page-section event-page">
 		<div class="container">
-			<h1 n:block="title">Stránka závodu</h1>
+			<h1 n:block="title">{$event->name}</h1>
 		</div>
 	</section>
 {/block}

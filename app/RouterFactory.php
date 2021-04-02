@@ -19,6 +19,10 @@ class RouterFactory
 		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]', 'Homepage:default');
 		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]team', 'Homepage:team');
 		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]kontakt', 'Homepage:contact');
+		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]clenove-teamu', 'Homepage:members');
+		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]archiv', 'Homepage:archive');
+		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]napsali-o-nas', 'Homepage:about');
+		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]mapa-stranek', 'Homepage:sitemap');
 
 		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]aktuality', 'News:default');
 		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]aktualita/<slug>', 'News:show');
@@ -26,6 +30,8 @@ class RouterFactory
 		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]<slug>', 'Event:default');
 		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]<slug>/galerie', 'Event:gallery');
 		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]<slug>/vysledky', 'Event:results');
+		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]<slug>/registrace', 'Event:registration');
+		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]<slug>/startovni-listina', 'Event:startlist');
 
 		return $router;
 	}

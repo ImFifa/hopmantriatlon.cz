@@ -1,8 +1,16 @@
 @include media-breakpoint-up(sm) {
-
+	.article-list {
+		article {
+			padding-right: unset;
+		}
+	}
 }
 
 @include media-breakpoint-up(md) {
+
+	.contact-list {
+		grid-template-columns: 1fr 1fr;
+	}
 
 	.latest-news {
 		.container {
@@ -23,18 +31,59 @@
 
 	.sponsor-list {
 		grid-template-columns: 1fr 1fr 1fr;
+
+		img {
+			max-width: 150px;
+			max-height: 150px;
+		}
 	}
+
+	footer.main-footer {
+		.container {
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+
+	.galerie {
+		grid-template-columns: 220px 220px 220px;
+
+		a {
+			img {
+				width: 100%;
+				height: 220px;
+			}
+		}
+	}
+
 
 }
 
 @include media-breakpoint-up(lg) {
+
+	.navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:focus {
+		color: rgba($white, 1);
+	}
+	.navbar-dark .navbar-nav .nav-link {
+		color: rgba($white, .9);
+		letter-spacing: .05rem;
+	}
+
+	.progress-bar {
+		margin: 0 15px;
+		height: 5px;
+		top: -5px;
+		width: calc(100% - 30px);
+	}
+
 	.main-header {
+		margin-top: 0;
 		position: absolute;
 		height: 700px;
 		z-index: 0;
 	}
 
 	.secondary-header {
+		margin-top: 0;
 		margin-bottom: 4rem;
 	}
 
@@ -62,14 +111,16 @@
 
 
 	.upcoming-events {
+		position: relative;
 		margin-top: 570px;
 		grid-template-columns: 1fr 1fr 1fr;
 		grid-gap: 0;
+		padding-top: unset;
 
 		header {
 			position: absolute;
 			left: 15px;
-			top: -80px;
+			top: -79px;
 			padding: 15px 30px;
 			background: $primary;
 			color: $white;
@@ -138,19 +189,83 @@
 		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 	}
 
-	.hopman-numbers-list {
-		grid-template-columns: 1fr 1fr 1fr 1fr;
+	.contact-list {
+		grid-template-columns: 1fr 1fr 1fr;
 	}
 
-	.latest-news, .sponsors, .hopman-numbers {
+	.hopman-numbers-list {
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+
+		li {
+			svg {
+				max-width: 80px;
+				max-height: 80px;
+			}
+		}
+	}
+
+	.page-section {
 		padding: 4rem 0;
 		margin-top: 4rem;
 		margin-bottom: 4rem;
 	}
+
+	footer.main-footer {
+		.container {
+			grid-template-columns: 1fr 2fr 1fr;
+			grid-gap: 2.5rem;
+
+			.footer-races {
+				margin-top: 70px;
+				grid-template-columns: 1fr 1fr 1fr;
+				grid-gap: 1.5rem;
+			}
+
+			.footer-socials {
+				margin-top: 70px;
+			}
+
+			.footer-links {
+				li {
+					display: inline-block;
+					margin: .2rem;
+				}
+			}
+		}
+	}
+
+	.galerie {
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	}
 }
 
 @include media-breakpoint-up(xl) {
+	.contact-list {
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+	}
+
 	.article-list {
 		grid-gap: 4rem;
+	}
+
+	.galerie {
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+	}
+
+	.hopman-numbers-list {
+		li {
+			svg {
+				max-width: 90px;
+				max-height: 90px;
+			}
+
+			h4 {
+				font-size: 2.7rem;
+
+				small {
+					font-size: 1.2rem;
+				}
+			}
+		}
 	}
 }

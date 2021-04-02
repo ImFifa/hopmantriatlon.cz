@@ -1,6 +1,7 @@
 html, body {
 	overflow-x: hidden;
 	background: $gray-200;
+	font-size: 16px;
 }
 
 h1, h2, .btn {
@@ -20,6 +21,7 @@ h3 {
 .main-header {
 	position: relative;
 	height: 300px;
+	margin-top: 100px;
 	z-index: 1;
 	background: #0d0d0d;
 
@@ -45,8 +47,9 @@ h3 {
 }
 
 .secondary-header {
+	margin-top: 100px;
 	position: relative;
-	height: 400px;
+	height: 450px;
 	width: 100vw;
 	margin-bottom: 2rem;
 	background-size: cover;
@@ -63,7 +66,7 @@ h3 {
 }
 
 .navbar {
-	background: $primary;
+	background: $white;
 	transition: all .25s ease-in-out;
 
 	.nav-link {
@@ -81,11 +84,11 @@ h3 {
 
 .progress-bar {
 	position: absolute;
-	top: -5px;
+	z-index: 10;
+	top: 392px;
 	left: 0;
-	height: 5px;
-	margin: 0 15px;
-	width: calc(100% - 30px);
+	height: 8px;
+	width: 100%;
 
 	&__fill {
 		width: 0;
@@ -99,11 +102,10 @@ h3 {
 }
 
 .upcoming-events {
-	margin-top: 40px;
+	padding-top: 2rem;
 	display: grid;
 	grid-template-columns: 1fr;
 	grid-gap: 1.5rem;
-	position: relative;
 
 	.halfmarathon, .triathlon, .advent {
 		padding: 0;
@@ -112,7 +114,7 @@ h3 {
 
 		section {
 			width: 100%;
-			padding: 2rem 3rem;
+			padding: 1.5rem 3rem;
 			display: flex;
 			flex-direction: column;
 			align-items: flex-start;
@@ -126,23 +128,40 @@ h3 {
 
 
 		h3 {
-			margin: .5rem 0 .3rem 0;
+			margin: 0 0 .3rem 0;
 			padding: 0;
+			font-size: 1.9rem;
 			text-transform: uppercase;
 
 			small {
 				font-size: 1rem;
 				color: $gray-600;
 				margin-bottom: .2rem;
-				letter-spacing: .1rem;
+				letter-spacing: .2rem;
 				display: block;
 			}
 		}
 
-		time {
-			font-size: 1.2rem;
-			margin: 0;
+		.date {
+			display: block;
+			background: rgba($gray-300, .2);
+			padding:  .6rem 3rem;
+
+			i {
+				margin-right: .3rem;
+				font-size: 1.5rem;
+			}
+			time {
+				font-weight: 700;
+				font-size: 1.3rem;
+				margin: 0;
+
+				small {
+					margin-right: .5rem;
+				}
+			}
 		}
+
 
 		.status {
 			span {
@@ -196,6 +215,7 @@ h3 {
 	article {
 		transition: all .2s ease-in-out;
 		align-self: start;
+		padding-right: 3rem;
 
 		.article-link {
 			color: unset;
@@ -303,8 +323,8 @@ h3 {
 	img {
 		transition: all .25s ease-in-out;
 		filter: grayscale(100%);
-		max-width: 150px;
-		max-height: 150px;
+		max-width: 120px;
+		max-height: 120px;
 
 		&:hover {
 			transform: scale(1.1);
@@ -334,26 +354,62 @@ h3 {
 		flex-direction: column;
 
 		svg {
-			max-width: 90px;
-			max-height: 90px;
+			max-width: 70px;
+			max-height: 70px;
 		}
 
 		h4 {
 			text-transform: uppercase;
 			text-align: center;
-			font-size: 2.8rem;
+			font-size: 2.3rem;
 			margin-top: 1rem;
 			font-weight: 700;
 
 			small {
-				font-size: 1.2rem;
+				font-size: 1.1rem;
 				display: block;
 			}
 		}
 	}
 }
 
-.latest-news, .sponsors, .hopman-numbers {
+.contact-list {
+	margin: 2rem 0;
+	list-style-type: none;
+	padding-left: unset;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-gap: 2rem;
+
+	li {
+		h2 {
+			margin: 1.5rem 0 0 0;
+			padding: 0;
+			font-size: 1.7rem;
+		}
+		h3 {
+			font-size: 1.1rem;
+		}
+		img {
+			max-width: 280px;
+			width: 100%;
+		}
+		address {
+			font-size: 1.2rem;
+
+			h6 {
+				margin: 1rem 0 0 0;
+			}
+			i {
+				text-align: center;
+				width: 20px;
+				margin-right: .5rem;
+			}
+		}
+	}
+}
+
+.page-section {
 	padding: 3rem 0;
 	margin-top: 3rem;
 	margin-bottom: 3rem;
@@ -371,8 +427,67 @@ h3 {
 	}
 }
 
-footer {
-	margin-top: 3rem;
+footer.main-footer {
+	padding-left: 2rem;
+	padding-right: 2rem;
+	margin-top: 2rem;
+	background: $gray-100;
+
+	.container {
+		padding: 2rem 0;
+		align-self: start;
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-gap: 2rem;
+
+		img {
+			height: 70px;
+			width: auto;
+		}
+		ul {
+			list-style-type: none;
+			padding-left: unset;
+		}
+
+		a {
+			padding: .2rem;
+		}
+
+		.footer-races {
+			display: grid;
+			grid-template-columns: 1fr;
+
+			ul {
+				display: flex;
+				justify-content: flex-start;
+				align-items: flex-start;
+				flex-direction: row;
+				flex-wrap: wrap;
+
+				li {
+					padding: .2rem;
+					margin: .1rem;
+				}
+			}
+		}
+
+		.footer-socials {
+
+			ul {
+				li {
+					font-size: 1.1rem;
+					padding: .4rem;
+
+					i {
+						font-size: 1.3rem;
+						width: 30px;
+						text-align: center;
+						margin-right: .5rem;
+					}
+				}
+			}
+		}
+	}
 
 	.author {
 		display: flex;
@@ -380,7 +495,7 @@ footer {
 		align-items: center;
 		flex-direction: column;
 		padding: 2rem 0;
-		background-color: $gray-100;
+		background-color: lighten($gray-100, 3%);
 		color: $gray-500;
 
 		svg {
@@ -394,6 +509,35 @@ footer {
 			&:hover {
 				fill: $gray-800;
 			}
+		}
+	}
+}
+
+.galerie {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: .5rem;
+
+	a {
+		transition: all .25s ease-in-out;
+		filter: brightness(95%);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		img {
+			width: 100%;
+			height: 100%;
+			max-height: 220px;
+			object-fit: cover;
+			object-position: center;
+		}
+
+		&:hover {
+			z-index: 100;
+			box-shadow: 0 0 10px 2px rgba($gray-600, .6);
+			filter: brightness(105%);
+			transform: scale(1.05);
 		}
 	}
 }
@@ -425,4 +569,23 @@ footer {
 	transform: translate3d(0, 0, 0);
 }
 
+.gdpr {
+	width: 100%;
+	max-width: 450px;
+	position: fixed;
+	right: 1rem;
+	bottom: 1rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-start;
+	padding: 1.5rem;
+	color: $darkgray;
+	background-color: $white;
+	z-index: 1000;
 
+	i {
+		color: $brown;
+		font-size: 1.5rem;
+	}
+}

@@ -3,6 +3,8 @@
 namespace App\FrontModule\Presenters;
 
 use App\Model\EventModel;
+use K2D\Gallery\Models\GalleryModel;
+use K2D\Gallery\Models\ImageModel;
 use K2D\News\Models\NewModel;
 
 class HomepagePresenter extends BasePresenter
@@ -12,6 +14,9 @@ class HomepagePresenter extends BasePresenter
 
 	/** @inject */
 	public NewModel $newsModel;
+
+	/** @inject */
+	public ImageModel $imageModel;
 
 	public function renderDefault(): void
 	{
@@ -27,12 +32,32 @@ class HomepagePresenter extends BasePresenter
 
 	public function renderTeam(): void
 	{
-
+		$this->template->images = $this->imageModel->getImagesByGallery(1);
 	}
 
 	public function renderContact(): void
 	{
 
+	}
+
+	public function renderArchive(): void
+	{
+
+	}
+
+	public function renderAbout(): void
+	{
+
+	}
+
+	public function renderMembers(): void
+	{
+
+	}
+
+	public function renderSitemap(): void
+	{
+		$this->template->events = $this->eventModel->getEvents();
 	}
 
 }

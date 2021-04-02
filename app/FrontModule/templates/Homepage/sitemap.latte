@@ -1,0 +1,41 @@
+{block #content}
+	<header class="secondary-header" style="background-image: url('{$basePath}/dist/img/header/sitemap_header2.jpg')">
+	</header>
+	<section class="page-section sitemap-page">
+		<div class="container">
+			<h1 n:block="title">Mapa stránek</h1>
+
+			<ul>
+				<li>
+					<a n:href="Homepage:">Úvodní stránka</a>
+					<ul>
+						{ifset $events}
+							{foreach $events as $event}
+								<li>
+									<a n:href="Event: $event->slug">{$event->name}</a>
+									<ul>
+										<li><a n:href="Event:#propozice $event->slug">Propozice</a></li>
+										<li><a n:href="Event:registration $event->slug">Registrace</a></li>
+										<li><a n:href="Event:startlist $event->slug">Startovní listina</a></li>
+										<li><a n:href="Event:results $event->slug">Výsledky</a></li>
+										<li><a n:href="Event:gallery $event->slug">Galerie</a></li>
+										<li><a n:href="Event:#mapy $event->slug">Mapy</a></li>
+									</ul>
+								</li>
+							{/foreach}
+						{/ifset}
+						<li>
+							<a n:href="Homepage:team">Team</a>
+							<ul>
+								<li><a n:href="Homepage:team">Členové</a></li>
+								<li><a n:href="Homepage:about">Napsali o nás</a></li>
+								<li><a n:href="Homepage:archive">Archiv</a></li>
+							</ul>
+						</li>
+						<li><a n:href="Homepage:contact">Kontakt</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</section>
+{/block}

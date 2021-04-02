@@ -35,4 +35,9 @@ class HomepagePresenter extends BasePresenter
 
 	}
 
+	public function renderArchive(): void
+	{
+
+	}
+
 }

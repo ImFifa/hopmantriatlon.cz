@@ -1,6 +1,7 @@
 html, body {
 	overflow-x: hidden;
 	background: $gray-200;
+	font-size: 16px;
 }
 
 h1, h2, .btn {
@@ -353,6 +354,42 @@ h3 {
 	}
 }
 
+.contact-list {
+	margin: 2rem 0;
+	list-style-type: none;
+	padding-left: unset;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-gap: 2rem;
+
+	li {
+		h2 {
+			margin: 1.5rem 0 0 0;
+			padding: 0;
+			font-size: 1.7rem;
+		}
+		h3 {
+			font-size: 1.1rem;
+		}
+		img {
+			max-width: 280px;
+			width: 100%;
+		}
+		address {
+			font-size: 1.2rem;
+
+			h6 {
+				margin: 1rem 0 0 0;
+			}
+			i {
+				text-align: center;
+				width: 20px;
+				margin-right: .5rem;
+			}
+		}
+	}
+}
+
 .latest-news, .sponsors, .hopman-numbers {
 	padding: 3rem 0;
 	margin-top: 3rem;
@@ -372,7 +409,52 @@ h3 {
 }
 
 footer {
-	margin-top: 3rem;
+	margin-top: 2rem;
+	background: $gray-100;
+
+	.container {
+		padding: 2rem 0;
+		align-self: start;
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-gap: 2rem;
+
+		img {
+			height: 70px;
+			width: auto;
+		}
+		ul {
+			list-style-type: none;
+			padding-left: unset;
+		}
+
+		.footer-races {
+			margin-top: 70px;
+
+			.footer-races-list {
+				display: grid;
+				grid-template-columns: 1fr;
+				grid-gap: 1rem;
+
+				ul {
+					display: flex;
+					justify-content: flex-start;
+					align-items: flex-start;
+					flex-direction: row;
+					flex-wrap: wrap;
+
+					li {
+						padding: .2rem;
+						margin: .1rem;
+					}
+				}
+			}
+		}
+
+		.footer-socials {
+			margin-top: 70px;
+		}
+	}
 
 	.author {
 		display: flex;
@@ -380,7 +462,7 @@ footer {
 		align-items: center;
 		flex-direction: column;
 		padding: 2rem 0;
-		background-color: $gray-100;
+		background-color: lighten($gray-100, 3%);
 		color: $gray-500;
 
 		svg {

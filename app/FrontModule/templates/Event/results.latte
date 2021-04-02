@@ -1,10 +1,10 @@
 {block #content}
-	<header class="secondary-header" style="background-image: url('{$basePath}/dist/img/header/tri_header.jpg')">
+	<header class="secondary-header" style="background-image: url('{$basePath}/{$event->header_image}')">
 	</header>
 
 	<section class="results-page">
 		<div class="container">
-			<h1 n:block="title">Výsledky</h1>
+			<h1 n:block="title">{$event->name} <small>Výsledky</small></h1>
 		</div>
 	</section>
 {/block}

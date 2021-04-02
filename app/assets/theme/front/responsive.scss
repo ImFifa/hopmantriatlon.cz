@@ -4,6 +4,10 @@
 
 @include media-breakpoint-up(md) {
 
+	.contact-list {
+		grid-template-columns: 1fr 1fr;
+	}
+
 	.latest-news {
 		.container {
 			position: relative;
@@ -23,6 +27,12 @@
 
 	.sponsor-list {
 		grid-template-columns: 1fr 1fr 1fr;
+	}
+
+	footer {
+		.container {
+			grid-template-columns: 1fr 1fr;
+		}
 	}
 
 }
@@ -138,6 +148,10 @@
 		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 	}
 
+	.contact-list {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+
 	.hopman-numbers-list {
 		grid-template-columns: 1fr 1fr 1fr 1fr;
 	}
@@ -147,9 +161,19 @@
 		margin-top: 4rem;
 		margin-bottom: 4rem;
 	}
+
+	footer {
+		.container {
+			grid-template-columns: 1fr 2fr 1fr;
+		}
+	}
 }
 
 @include media-breakpoint-up(xl) {
+	.contact-list {
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+	}
+
 	.article-list {
 		grid-gap: 4rem;
 	}

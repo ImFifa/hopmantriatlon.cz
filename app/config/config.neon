@@ -11,12 +11,18 @@ services:
 	router: App\RouterFactory::createRouter()
 	repository: App\Service\ProjectModelRepository
 	- App\Model\EventModel
+	admin.dashboard.eventpanel: App\AdminModule\Dashboard\EventPanel\EventPanelFactory
 
 parameters:
 	customTemplatesDir: %appDir%/FrontModule/templates/
 	admin:
 		menu:
 			Závody: [':Admin:Event:', run]
+		dashboard:
+				EventPanel:
+					service: admin.dashboard.eventpanel
+					size: 3
+					order: 50
 
 migrations:
 	driver: mysql

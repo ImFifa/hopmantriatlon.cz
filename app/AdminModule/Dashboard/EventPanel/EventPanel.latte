@@ -1,0 +1,21 @@
+<div class="card shadow border-0 h-100">
+	<div class="card-body">
+		<h5 class="card-title">Modul závody</h5>
+		<p class="card-text">
+			{if $count === 0}
+				Doposud nebyla vytvořena žádná novinka
+			{else}
+				V aplikaci se nachází {$count} {$count|plural:'závod':'závody':'závodů'}<br />
+            {/if}
+			{if $lastNew}
+				Aktualizace proběhla {$lastNew->updated|date:'j.n.Y'}
+			{/if}
+		</p>
+	</div>
+	<div n:ifset="$events" class="card-footer bg-white border-0 pt-0">
+		{foreach $events as $event}
+			<a href="{plink :Admin:Event:edit $event->slug}" class="btn btn-outline-success btn-sm"><i class="icon mdi mdi-{$event->icon}"></i> {$event->name}</a>
+		{/foreach}
+
+	</div>
+</div>

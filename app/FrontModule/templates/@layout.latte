@@ -12,6 +12,9 @@
 			<div class="collapse navbar-collapse" id="navbarToggler">
 				<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
 					<li class="nav-item">
+						<a class="nav-link" n:href="Homepage:">Úvod</a>
+					</li>
+					<li class="nav-item">
 						<a class="nav-link" n:href="Event: pulmaraton">Půlmaraton</a>
 					</li>
 					<li class="nav-item">
@@ -37,55 +40,71 @@
 
 	<a href="#top" id="scrollTopBtn" class="scroll-top scroll"><i class="fas fa-arrow-alt-circle-up"></i></a>
 
-	<footer>
+	<footer class="main-footer">
 		<div class="container">
 			<section class="footer-links">
 				<div class="footer-hopman">
 					<a class="navbar-brand" n:href="Homepage:">
 						<img src="{$basePath}/dist/img/hopman_logo.png" alt="Hopman - logo">
 					</a>
-					<p n:ifset="$vars->description">{$vars->description}</p>
+					<p n:ifset="$desc">{$desc|noescape}</p>
 					<ul>
 						<li><a n:href="Event:default pulmaraton">Žatecký půlmaraton</a></li>
 						<li><a n:href="Event:default triatlon">Hopman triatlon</a></li>
 						<li><a n:href="Event:default adventni-beh">Adventní běh</a></li>
 						<li><a n:href="Homepage:team">Hopman team</a></li>
-						<li><a n:href="Homepage:contact">Kontakt</a></li>
+						<li><a n:href="News:">Aktuality</a></li>
+						<li><a n:href="Homepage:team">Hopman team</a></li>
+						<li><a n:href="Homepage:members">Členové teamu</a></li>
+						<li><a n:href="Homepage:about">Napsali o nás</a></li>
 						<li><a n:href="Homepage:archive">Archiv</a></li>
+						<li><a n:href="Homepage:sitemap">Mapa stránek</a></li>
 					</ul>
 				</div>
 			</section>
 
 			<section class="footer-races">
-				<h4>Závody 2021</h4>
-				<div class="footer-races-list">
-					<ul class="halfmarathon-list">
-						<li><h5>Žatecký půlmaraton</h5></li>
+				<div class="halfmarathon-list">
+					<h5>Žatecký půlmaraton</h5>
+					<ul>
+						<li><a n:href="Event:#propozice pulmaraton">Propozice</a></li>
+						<li><a n:href="Event:registration pulmaraton">Registrace</a></li>
+						<li><a n:href="Event:startlist pulmaraton">Startovní listina</a></li>
 						<li><a n:href="Event:results pulmaraton">Výsledky</a></li>
 						<li><a n:href="Event:gallery pulmaraton">Galerie</a></li>
-						<li><a n:href="Event:registration pulmaraton">Registrace</a></li>
+						<li><a n:href="Event:#mapy pulmaraton">Mapy</a></li>
 					</ul>
-					<ul class="triathlon-list">
-						<li><h5>Hopman triatlon</h5></li>
+				</div>
+				<div class="triathlon-list">
+					<h5>Hopman triatlon</h5>
+					<ul>
+						<li><a n:href="Event:#propozice triatlon">Propozice</a></li>
+						<li><a n:href="Event:registration triatlon">Registrace</a></li>
+						<li><a n:href="Event:startlist triatlon">Startovní listina</a></li>
 						<li><a n:href="Event:results triatlon">Výsledky</a></li>
 						<li><a n:href="Event:gallery triatlon">Galerie</a></li>
-						<li><a n:href="Event:registration triatlon">Registrace</a></li>
+						<li><a n:href="Event:#mapy pulmaraton">Mapy</a></li>
 					</ul>
-					<ul class="advent-list">
-						<li><h5>Adventní běh</h5></li>
+				</div>
+				<div class="advent-list">
+					<h5>Adventní běh</h5>
+					<ul>
+						<li><a n:href="Event:#propozice adventni-beh">Propozice</a></li>
+						<li><a n:href="Event:registration adventni-beh">Registrace</a></li>
+						<li><a n:href="Event:startlist adventni-beh">Startovní listina</a></li>
 						<li><a n:href="Event:results adventni-beh">Výsledky</a></li>
 						<li><a n:href="Event:gallery adventni-beh">Galerie</a></li>
-						<li><a n:href="Event:registration adventni-beh">Registrace</a></li>
+						<li><a n:href="Event:#mapy pulmaraton">Mapy</a></li>
 					</ul>
 				</div>
 			</section>
 
 			<section class="footer-socials">
-				<h4>Sociální sítě</h4>
+				<h4>Jsme na sociálních sítích</h4>
 				<ul>
-					<li n:ifset="$vars->facebook"><a href="{$vars->instagram}"><i class="fab fa-facebook"></i> Facebook</a></li>
-					<li n:ifset="$vars->instagram"><a href="{$vars->instagram}"><i class="fab fa-instagram"></i> Instagram</a></li>
-					<li n:ifset="$vars->youtube"><a href="{$vars->instagram}"><i class="fab fa-youtube"></i> YouTube</a></li>
+					<li n:ifset="$fb"><a href="{$fb}"><i class="fab fa-facebook"></i> Facebook</a></li>
+					<li n:ifset="$ig"><a href="{$ig}"><i class="fab fa-instagram"></i> Instagram</a></li>
+					<li n:ifset="$yt"><a href="{$yt}"><i class="fab fa-youtube"></i> YouTube</a></li>
 				</ul>
 			</section>
 		</div>
@@ -97,6 +116,16 @@
 			Webové stránky na míru
 		</section>
 	</footer>
+
+	<section class="gdpr" n:if="empty($_COOKIE[gdpr])">
+		<p>Tento web používá k poskytování služeb a analýze návštěvnosti soubory cookie. Používáním tohoto webu s tím souhlasíte.</p>
+
+		<footer class="mt-3">
+			<button class="btn btn-info">V pořádku</button>
+			<a target="_blank" class="btn btn-light" href="https://www.google.com/policies/technologies/cookies/">Další informace <i class="fas fa-cookie-bite"></i></a>
+		</footer>
+	</section>
+	<noscript><style>.gdpr { display:none }</style></noscript>
 {/block}
 
 {block #head}

@@ -1,9 +1,20 @@
 {block #content}
-	<header class="secondary-header" style="background-image: url('{$basePath}/dist/img/header/tri_header.jpg')">
+	<header class="secondary-header" style="background-image: url('{$basePath}/dist/img/header/team_header.jpg')">
 	</header>
-	<section class="team-page">
+	<section class="team-page page-section">
 		<div class="container">
 			<h1 n:block="title">Team</h1>
+
+			<section n:ifset="$images" class="team-gallery">
+				<h2>Galerie Teamu</h2>
+				<div class="galerie">
+					{foreach $images as $image}
+						<a href="{$basePath}/upload/galleries/1/{$image->name}" data-lightbox="gallery" data-name="{$image->name}">
+							<img src="{$basePath}/upload/galleries/1/thumbs/{$image->name}" class="lazyload" alt="{$image->title}">
+						</a>
+					{/foreach}
+				</div>
+			</section>
 		</div>
 	</section>
 {/block}

@@ -32,10 +32,13 @@
 			{foreach $events as $event}
 				<article class="{$event->class}">
 					<a n:href="Event: $event->slug"><img src="{$basePath}/{$event->header_image}" alt="{$event->name}"></a>
+					<div class="date">
+						<i class="far fa-calendar-alt"></i>
+						<time datetime="{$event->date|date:"Y-m-d"}"><small>{$event->date|weekDay},</small>{$event->date|dayMonth}</time>
+					</div>
 					<section>
 						<h3><small>#{$event->type}</small>{$event->name}</h3>
-						<div class="date">Datum konání: <time datetime="{$event->date|date:"Y-m-d"}">{$event->date|date:"d. m. Y"}</time></div>
-						<div class="status">Stav: <span style="background-color: {$event->status->color|noescape}">{$event->status->value}</span></div>
+
 						<p n:ifset="$event->description">{$event->description}</p>
 						<footer>
 							<a n:href="Event: $event->slug" class="btn btn-primary">Detail závodu</a>
@@ -46,12 +49,12 @@
 		{/ifset}
 	</section>
 
-	<section n:ifset="$news" class="latest-news">
+	<section n:ifset="$news" class="page-section latest-news">
 		<div class="container">
 
 			<h2>Aktuality</h2>
 
-			<a n:href="News:" class="archive-link btn btn-outline-secondary">Archiv aktualit</a>
+			<a n:href="News:" class="archive-link btn btn-outline-secondary">Starší aktuality</a>
 
 			<div class="article-list">
 				{foreach $news as $new}
@@ -75,7 +78,7 @@
 		</div>
 	</section>
 
-	<section class="sponsors container">
+	<section class="page-section sponsors container">
 			<h2>Podporují nás</h2>
 
 			<ul class="sponsor-list">
@@ -137,7 +140,7 @@
 			</ul>
 	</section>
 
-	<section class="hopman-numbers container">
+	<section class="page-section hopman-numbers container">
 		<h2>Hopman v číslech</h2>
 		<ul class="hopman-numbers-list">
 			<li>

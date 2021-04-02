@@ -29,4 +29,9 @@ class EventPresenter extends BasePresenter
 		$this->template->event = $this->eventModel->getEvent($slug);
 	}
 
+	public function renderStartlist($slug): void
+	{
+		$this->template->event = $this->eventModel->getEvent($slug);
+	}
+
 }

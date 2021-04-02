@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d73e0cf6d61d6ccb65599d5e200932c4",
+    "content-hash": "f2a62b489e8908b51e28f2896b3fb3c1",
     "packages": [
         {
             "name": "brick/date-time",
@@ -611,6 +611,62 @@
                 "source": "https://github.com/guzzle/psr7/tree/1.8.1"
             },
             "time": "2021-03-21T16:25:00+00:00"
+        },
+        {
+            "name": "h4kuna/date-filter",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/h4kuna/date-filter.git",
+                "reference": "f808dfb9521490fddf534c458416b397666c584f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/h4kuna/date-filter/zipball/f808dfb9521490fddf534c458416b397666c584f",
+                "reference": "f808dfb9521490fddf534c458416b397666c584f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">= 7.1",
+                "symfony/polyfill-php73": "^1.10"
+            },
+            "require-dev": {
+                "latte/latte": "~2.0",
+                "nette/application": "~3.0",
+                "nette/bootstrap": "~3.0",
+                "nette/tester": "^2.1",
+                "phpstan/phpstan": "^0.11",
+                "tracy/tracy": "^2.6"
+            },
+            "suggest": {
+                "latte/latte": "If you want to use Nette extension in templates.",
+                "nette/application": "If you want to use Nette extension in templates.",
+                "nette/bootstrap": "If you want to use Nette extension in templates."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "h4kuna\\DateFilter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Milan Matějček",
+                    "email": "milan.matejcek@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Add option define own filters based on date for latte.",
+            "homepage": "https://github.com/h4kuna/date-filter",
+            "support": {
+                "issues": "https://github.com/h4kuna/date-filter/issues",
+                "source": "https://github.com/h4kuna/date-filter/tree/v1.0.0"
+            },
+            "time": "2020-03-04T10:20:01+00:00"
         },
         {
             "name": "latte/latte",
@@ -5216,12 +5272,12 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "simple-cms/analytics-module": 20,
         "simple-cms/box-module": 20,
         "simple-cms/core-module": 20,
         "simple-cms/file-module": 20,
         "simple-cms/gallery-module": 20,
-        "simple-cms/news-module": 20,
-        "simple-cms/analytics-module": 20
+        "simple-cms/news-module": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

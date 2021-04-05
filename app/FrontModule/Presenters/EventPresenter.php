@@ -119,7 +119,7 @@ class EventPresenter extends BasePresenter
 		$form->addInteger('year_of_birth', 'Rok narození')
 			->addRule(Form::MAX_LENGTH, 'Maximálné délka jsou %s znaky', 4)
 			->addRule(Form::MAX,'Děti mladší 15ti let se nemohou zaregistrovat.',2003)
-			->addRule(Form::MAX,'Vážně je Vám víc než 100 let? :-)',1921)
+			->addRule(Form::MIN,'Vážně je Vám víc než 100 let? :-)',1921)
 			->setRequired('Musíte uvést Váš rok narození');
 
 		$form->addText('team', 'Oddíl/město')

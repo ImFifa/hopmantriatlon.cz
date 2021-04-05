@@ -33,6 +33,7 @@ class RouterFactory
 		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]<slug>/registrace', 'Event:registration');
 		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]<slug>/startovni-listina', 'Event:startlist');
 
+		$router->withModule('Front')->addRoute('[<lang=cs [a-z]{2}>/]<presenter>/<action>', 'Error:404');
 		return $router;
 	}
 

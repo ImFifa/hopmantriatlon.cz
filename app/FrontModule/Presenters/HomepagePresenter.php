@@ -24,10 +24,15 @@ class HomepagePresenter extends BasePresenter
 		$this->template->news = $this->newsModel->getPublicNews('cs')->limit(3);
 
 		$vars = $this->configuration;
-		$this->template->hopmanYears = $vars->hopmanNumbersYears;
-		$this->template->hopmanCompetitions = $vars->hopmanNumbersCompetitions;
-		$this->template->hopmanParticipants = $vars->hopmanNumbersParticipants;
-		$this->template->hopmanBeers = $vars->hopmanNumbersBeers;
+		$hopmanNumbersActive = $vars->hopmanNumbersActive;
+
+		if ($hopmanNumbersActive != '0') {
+			$this->template->hopmanNumbersActive = $hopmanNumbersActive;
+			$this->template->hopmanYears = $vars->hopmanNumbersYears;
+			$this->template->hopmanCompetitions = $vars->hopmanNumbersCompetitions;
+			$this->template->hopmanParticipants = $vars->hopmanNumbersParticipants;
+			$this->template->hopmanBeers = $vars->hopmanNumbersBeers;
+		}
 	}
 
 	public function renderTeam(): void

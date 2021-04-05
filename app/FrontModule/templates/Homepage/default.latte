@@ -34,7 +34,7 @@
 					<a n:href="Event: $event->slug"><img src="{$basePath}/{$event->header_image}" alt="{$event->name}"></a>
 					<div class="date">
 						<i class="far fa-calendar-alt"></i>
-						<time datetime="{$event->date|date:"Y-m-d"}"><small>{$event->date|weekDay},</small>{$event->date|dayMonth}</time>
+						<time datetime="{$event->date|date:"Y-m-d"}">{$event->date|dayMonth}, <small>{$event->date|weekDay}</small></time>
 					</div>
 					<section>
 						<h3><small>#{$event->type}</small>{$event->name}</h3>
@@ -61,8 +61,8 @@
 				<article>
 					<a class="article-link" n:href="News:show $new->slug">
 					<header>
+						<time datetime="{$new->created|date:'Y-m-d'}">{$new->created|dayMonthYear}</time>
 						<img n:ifset="$new->cover" class="img-fluid" src="{$basePath}/upload/news/{$new->id}/{$new->cover}" alt="{$new->title}">
-						<time datetime="{$new->created|date:'Y-m-d'}">{$new->created|date:'d. m. Y'}</time>
 						<h3>{$new->title}</h3>
 					</header>
 					<section n:ifset="$new->perex">
@@ -140,7 +140,7 @@
 			</ul>
 	</section>
 
-	<section class="page-section hopman-numbers container">
+	<section n:ifset="$hopmanNumbersActive" class="page-section hopman-numbers container">
 		<h2>Hopman v číslech</h2>
 		<ul class="hopman-numbers-list">
 			<li>

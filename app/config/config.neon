@@ -11,6 +11,8 @@ services:
 	router: App\RouterFactory::createRouter()
 	repository: App\Service\ProjectModelRepository
 	- App\Model\EventModel
+	- App\Model\CompetitionModel
+	- App\Model\CompetitorModel
 	admin.dashboard.eventpanel: App\AdminModule\Dashboard\EventPanel\EventPanelFactory
 
 parameters:

@@ -4,7 +4,77 @@
 
 	<section class="page-section gallery-page">
 		<div class="container">
+			<a n:href="Event: $event->slug" class="btn btn-outline-secondary mb-3">Zpět na stránku závodu</a>
 			<h1 n:block="title">{$event->name} <small>Registrace</small></h1>
+
+			{foreach $flashes as $flash}
+				<div class="alert alert-{$flash->type}" role="alert">
+					{$flash->message}
+				</div>
+			{/foreach}
+
+			{if $event->slug != 'pulmaraton'}
+				<h3>Stránka je právě v tvorbě</h3>
+			{else}
+				{form signUpForm, class => 'signUpForm row'}
+					{input event_id class => 'form-control input-hidden', value => $event->id}
+					<div class="col-lg-12">
+						<div class="form-group">
+							{label name}{/label}
+								{input name class => 'form-control'}
+						</div>
+					</div>
+
+					<div class="col-lg-12">
+						<div class="form-group">
+							{label surname}{/label}
+								{input surname class => 'form-control'}
+						</div>
+					</div>
+
+					<div class="col-lg-4">
+						<div class="form-group">
+							{label year_of_birth}{/label}
+								{input year_of_birth class => 'form-control'}
+						</div>
+					</div>
+
+					<div class="col-lg-12">
+						<div class="form-group">
+							{label sex}{/label}
+							{input sex class => 'form-control form-control-sm'}
+						</div>
+					</div>
+
+					<div class="col-lg-12">
+						<div class="form-group">
+							{label distance}{/label}
+							{input distance class => 'form-control form-control-sm'}
+						</div>
+					</div>
+
+					<div class="col-lg-12">
+						<div class="form-group">
+							{label team}{/label}
+								{input team class => 'form-control'}
+							<small>Toto pole je volitelné</small>
+						</div>
+					</div>
+
+					<div class="col-lg-12">
+						<div class="form-group">
+							{label email}{/label}
+								{input email class => 'form-control'}
+						</div>
+					</div>
+
+					<div class="col-lg-6">
+						<div class="form-group">
+							{input submit class => 'btn btn-primary'}
+						</div>
+					</div>
+				{/form}
+			{/if}
 		</div>
 	</section>
 {/block}

@@ -3,8 +3,13 @@ vendor
 node_modules
 temp/*
 log/*
+Dockerfile
+.data
+.docker
+docker-compose.yml
 app/config/server/local.neon
 app/config/google_service_account.json
 www/upload/*
 www/dist/*
+www/info.php
 /resources

@@ -37,9 +37,9 @@ jobs:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
-          TARGET: /www/hopmantriatlon.filipurban.cz/
+          TARGET: /www/hopmantriatlon.cz/
 
       - name: 🗑️ Remove Cache
         uses: JesseTG/rm@v1.0.2
         with:
-          path: /hopmantriatlon.filipurban.cz/temp/cache
+          path: /hopmantriatlon.cz/temp/cache

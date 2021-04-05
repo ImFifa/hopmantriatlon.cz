@@ -20,9 +20,89 @@
 	<header class="secondary-header" style="background-image: url('{$basePath}/{$event->header_image}')">
 	</header>
 
+	{if $event->slug === 'pulmaraton'}
+	<nav class="nav container event-nav">
+	  <a class="nav-link active" href="{$basePath}/files/pulmaraton21.pdf"><i class="fas fa-file"></i> Propozice</a>
+	  <a class="nav-link" n:href="Event:registration $event->slug"><i class="fas fa-file-signature"></i> Registrace</a>
+	  <a class="nav-link" n:href="Event:startlist $event->slug"><i class="fas fa-users"></i> Startovní listina</a>
+	  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-trophy"></i> Výsledky</a>
+	  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-images"></i> Galerie</a>
+	  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-map"></i> Mapy</a>
+	</nav>
+	{else}
+	<nav class="nav container event-nav">
+	  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-file"></i> Propozice</a>
+	  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-file-signature"></i> Registrace</a>
+	  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-users"></i> Startovní listina</a>
+	  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-trophy"></i> Výsledky</a>
+	  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-images"></i> Galerie</a>
+	  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-map"></i> Mapy</a>
+	</nav>
+	{/if}
 	<section class="page-section event-page">
 		<div class="container">
+
 			<h1 n:block="title">{$event->name}</h1>
+
+			<div class="event-sections">
+				<section id="propozice">
+{*					<div n:if="!$event->propositions_active" class="alert alert-info" role="alert">*}
+{*					  Pozor! Zveřejněné propozice nejsou aktuální!*}
+{*					</div>*}
+					<h3>Propozice</h3>
+					{if $event->slug === 'pulmaraton'}
+					<a href="{$basePath}/files/pulmaraton21.pdf" class="btn btn-primary my-2"><i class="far fa-file-pdf"></i> {$event->name}</a>
+					<a href="{$basePath}/files/pulmaraton21.docx" class="btn btn-primary my-2"><i class="far fa-file-word"></i> {$event->name}</a>
+					{else}
+						<h5>V přípravě</h5>
+					{/if}
+				</section>
+
+				<section id="registrace">
+					<h3>Registrace</h3>
+					{if $event->slug === 'pulmaraton'}
+						<a n:href="Event:registration $event->slug" class="btn btn-primary">Registrační formulář</a>
+					{else}
+						<h5>V přípravě</h5>
+					{/if}
+				</section>
+
+				<section id="startovni-listina">
+					<h3>Startovní lístina</h3>
+					{if $event->slug === 'pulmaraton'}
+						<a n:href="Event:startlist $event->slug" class="btn btn-primary">Zobrazit startovní listinu</a>
+					{else}
+						<h5>V přípravě</h5>
+					{/if}
+				</section>
+
+				<section id="vysledky">
+					<h3>Výsledky</h3>
+					<h5>V přípravě</h5>
+{*					<a n:href="Event:results $event->slug" class="btn btn-primary">Zobrazit výsledky</a>*}
+				</section>
+
+				<section id="galerie">
+					<h3>Galerie</h3>
+					<h5>V přípravě</h5>
+{*					<a n:href="Event:gallery $event->slug" class="btn btn-primary">Zobrazit galerii</a>*}
+				</section>
+
+				<section id="galerie">
+					<h3>Mapy</h3>
+					<h5>V přípravě</h5>
+				</section>
+
+				<aside n:ifset="$images" class="event-gallery">
+					<div class="galerie">
+						{foreach $images as $image}
+							<a href="{$basePath}/upload/galleries/{$event->gallery_id}/{$image->name}" data-lightbox="gallery" data-name="{$image->name}">
+								<img src="{$basePath}/upload/galleries/{$event->gallery_id}/thumbs/{$image->name}" class="lazyload" alt="{$image->title}">
+							</a>
+						{/foreach}
+					</div>
+				</aside>
+			</div>
 		</div>
 	</section>
 {/block}

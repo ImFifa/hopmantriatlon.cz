@@ -7,6 +7,8 @@ dateFilterExtension:
 			dateTime: j. n. Y H:i:s
 			weekDay: l
 			dayMonth: j. F
+			dayMonthYear: j. F Y
+			year: Y
 	dayMonth:
 		cs: # name of group is optional (i choose language) it isn't same group above
 			# days:

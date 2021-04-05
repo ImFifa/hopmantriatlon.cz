@@ -5,7 +5,7 @@
 	<section class="new-page">
 		<article n:ifset="$new" class="new-container container">
 			<header>
-				<time datetime="{$new->created|date:'Y-m-d'}">{$new->created|date:'d. m. Y'}</time>
+				<time datetime="{$new->created|date:'Y-m-d'}">{$new->created|dayMonthYear}</time>
 				<h1 n:block="title">{$new->title}</h1>
 				<img n:ifset="$new->cover" src="{$basePath}/upload/news/{$new->id}/{$new->cover}" alt="{$new->title}">
 			</header>

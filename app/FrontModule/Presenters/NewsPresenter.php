@@ -31,11 +31,14 @@ class NewsPresenter extends BasePresenter
 	public function renderShow($slug): void
 	{
 		$new = $this->newsModel->getNew($slug, 'cs');
-		$this->template->new = $new;
-		$this->template->prevNew = $this->repository->getPrevPublicNew($new->created);
-		$this->template->nextNew = $this->repository->getNextPublicNew($new->created);
-		bdump($this->template->prevNew, 'prev');
-		bdump($this->template->nextNew, 'next');
+
+		if (!$new) {
+			$this->error();
+		} else {
+			$this->template->new = $new;
+			$this->template->prevNew = $this->repository->getPrevPublicNew($new->created);
+			$this->template->nextNew = $this->repository->getNextPublicNew($new->created);
+		}
 	}
 
 }

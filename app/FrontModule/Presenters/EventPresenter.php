@@ -129,8 +129,9 @@ class EventPresenter extends BasePresenter
 			->addRule(Form::MAX_LENGTH, 'Maximálné délka je %s znaků', 200)
 			->setRequired('Musíte uvést Vaši emailovou adresu');
 
-		$form->addCheckbox('agree')
-			->setRequired('Bez souhlasu s podmínkami účasti v závodě se nemůžete zaregistrovat.');
+		$form->addCheckbox('agree', 'Souhlasím s využitím osobních údajů za účelem zpracování výsledků závodu.')
+			->setRequired('Je potřeba souhlasit s podmínkami');
+
 
 //		$form->addInvisibleReCaptcha('recaptcha')
 //			->setMessage('Jste opravdu člověk?');
@@ -142,6 +143,7 @@ class EventPresenter extends BasePresenter
 
 			if ($values['id'] === '') {
 				unset($values['id']);
+				unset($values['agree']);
 
 				$year = $values['year_of_birth'];
 				if ($values['sex'] != 'Ž') {

@@ -5,7 +5,8 @@
 	<section class="page-section gallery-page">
 		<div class="container">
 			<a n:href="Event: $event->slug" class="btn btn-outline-secondary mb-3">Zpět na stránku závodu</a>
-			<h1 n:block="title">{$event->name} <small>Registrace</small></h1>
+			<h1 n:block="title">{$event->name}</h1>
+			<h3>Registrace k závodu</h3>
 
 			{foreach $flashes as $flash}
 				<div class="alert alert-{$flash->type}" role="alert">
@@ -65,6 +66,14 @@
 						<div class="form-group">
 							{label email}{/label}
 								{input email class => 'form-control'}
+							<small>Váš email nebude nikde zveřejněn.<br>Využijeme jej pouze pro zaslání diplomu či v případě nutnosti Vás kontaktovat.</small>
+						</div>
+					</div>
+
+					<div class="col-lg-12">
+						<div class="form-group">
+							{input agree class => 'form-control'}
+							Souhlasím s <a href="{$basePath}/files/pulmaraton21.pdf" target="_blank">podmínkami účasti v závodě</a> a využitím osobních údajů za účelem zpracování výsledků závodu.
 						</div>
 					</div>
 

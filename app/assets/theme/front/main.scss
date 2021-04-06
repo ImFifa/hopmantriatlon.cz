@@ -136,6 +136,10 @@ h3 {
 		height: 0;
 		visibility: hidden;
 	}
+
+	input[type='checkbox'] {
+		margin-right: .5rem;
+	}
 }
 
 .navbar {
@@ -310,6 +314,10 @@ h3 {
 		margin-bottom: 1rem;
 		margin-left: 1.5rem;
 	}
+}
+
+.agree-checkbox {
+	margin-right: .5rem;
 }
 
 .article-list {

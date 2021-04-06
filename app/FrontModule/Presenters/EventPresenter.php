@@ -101,7 +101,7 @@ class EventPresenter extends BasePresenter
 			->setRequired('Musíte uvést Vaše příjmení');
 
 		$form->addSelect('sex', 'Pohlaví')
-			->setPrompt('Žádné')
+			->setPrompt('-------')
 			->setRequired('Musíte si zvolit pohlaví')
 			->setItems([
 				'Ž' => 'Žena',
@@ -109,7 +109,7 @@ class EventPresenter extends BasePresenter
 			]);
 
 		$form->addSelect('distance', 'Trať')
-			->setPrompt('Žádná')
+			->setPrompt('-------')
 			->setRequired('Musíte si zvolit trať')
 			->setItems([
 				'Desítka' => 'Desítka',
@@ -128,6 +128,9 @@ class EventPresenter extends BasePresenter
 		$form->addEmail('email', 'Emailová adresa')
 			->addRule(Form::MAX_LENGTH, 'Maximálné délka je %s znaků', 200)
 			->setRequired('Musíte uvést Vaši emailovou adresu');
+
+		$form->addCheckbox('agree')
+			->setRequired('Bez souhlasu s podmínkami účasti v závodě se nemůžete zaregistrovat.');
 
 //		$form->addInvisibleReCaptcha('recaptcha')
 //			->setMessage('Jste opravdu člověk?');

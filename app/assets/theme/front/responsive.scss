@@ -1,4 +1,8 @@
 @include media-breakpoint-up(sm) {
+	h2 {
+		padding: unset;
+	}
+
 	.navbar {
 		.navbar-brand {
 			img {
@@ -11,12 +15,42 @@
 	}
 	.article-list {
 		article {
-			padding-right: unset;
+			padding: unset;
+		}
+	}
+	.upcoming-events {
+		header {
+			top: 260px;
+			height: 80px;
+		}
+	}
+	.latest-news {
+		.archive-link {
+			margin-left: unset;
+		}
+	}
+
+	.event-sections {
+		grid-template-columns: 1fr 1fr;
+
+		.event-gallery {
+			grid-column-start: 1;
+			grid-column-end: 3;
 		}
 	}
 }
 
 @include media-breakpoint-up(md) {
+	h1 {
+		font-size: 2.4rem;
+	}
+	h2 {
+		font-size: 2.1rem;
+	}
+	h3 {
+		font-size: 1.6rem;
+	}
+
 	.navbar {
 		.navbar-brand {
 			img {
@@ -26,9 +60,23 @@
 	}
 	.main-header {
 		margin-top: 100px;
+		height: 300px;
 	}
 	.secondary-header {
 		height: 300px;
+	}
+	.upcoming-events {
+		grid-template-columns: 1fr 1fr;
+
+		header {
+			top: unset;
+			height: unset;
+			left: unset;
+			position: relative;
+			width: unset;
+			padding: 2rem;
+			text-align: center;
+		}
 	}
 
 	.contact-list {
@@ -39,6 +87,14 @@
 	.about-page {
 		.wrote-about-us {
 			grid-template-columns: 1fr 1fr;
+		}
+	}
+
+	.upcoming-events {
+		.halfmarathon, .triathlon, .advent {
+			section {
+				padding: 1rem 2rem;
+			}
 		}
 	}
 
@@ -89,13 +145,33 @@
 }
 
 @include media-breakpoint-up(lg) {
+	.main-header {
+		&:before {
+			content: '';
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			background: linear-gradient(to bottom, rgba($gray-900, .75), rgba($gray-900, .6));
+			z-index: 2;
+		}
+	}
+
+	h1 {
+		font-size: 2.6rem;
+	}
+	h2 {
+		font-size: 2.2rem;
+	}
+	h3 {
+		font-size: 1.7rem;
+	}
 
 	.event-sections {
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: 1fr 1fr 1fr;
 
 		.event-gallery {
 			grid-column-start: 1;
-			grid-column-end: 2;
+			grid-column-end: 4;
 		}
 	}
 
@@ -112,6 +188,7 @@
 	}
 
 	.progress-bar {
+		display: block;
 		margin: 0 15px;
 		height: 5px;
 		top: -5px;
@@ -181,6 +258,14 @@
 		.halfmarathon, .triathlon, .advent {
 			overflow: hidden;
 
+			section {
+				padding: 1.5rem 3rem;
+			}
+
+			h3 {
+				font-size: 1.6rem;
+			}
+
 			a {
 				img {
 					filter: brightness(85%);
@@ -195,6 +280,17 @@
 			img {
 				max-height: unset;
 				height: 260px;
+			}
+
+			.date {
+				padding:  .6rem 3rem;
+
+				i {
+					font-size: 1.5rem;
+				}
+				time {
+					font-size: 1.2rem;
+				}
 			}
 		}
 	}
@@ -286,6 +382,16 @@
 }
 
 @include media-breakpoint-up(xl) {
+
+	h1 {
+		font-size: 2.8rem;
+	}
+	h2 {
+		font-size: 2.3rem;
+	}
+	h3 {
+		font-size: 1.8rem;
+	}
 
 	.secondary-header {
 		height: 400px;

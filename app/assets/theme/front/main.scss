@@ -55,8 +55,13 @@
 html, body {
 	overflow-x: hidden;
 	background: $gray-200;
+	color: $gray-800;
 	font-size: 16px;
 	font-family: 'Nunito', sans-serif;
+}
+
+a {
+	font-weight: 500;
 }
 
 h1, h2, h3, h4, h5, h6, .btn, .nav-link, time {
@@ -65,6 +70,7 @@ h1, h2, h3, h4, h5, h6, .btn, .nav-link, time {
 
 h1 {
 	font-size: 2rem;
+	font-weight: 700;
 }
 h2 {
 	font-size: 1.8rem;
@@ -74,12 +80,25 @@ h3 {
 	font-size: 1.4rem;
 }
 
+h1, h2, h3 {
+	color: $primary;
+}
+
 .main-header {
 	position: relative;
 	height: 250px;
 	margin-top: 80px;
 	z-index: 1;
 	background: #0d0d0d;
+
+	&:before {
+		content: '';
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		background: linear-gradient(to bottom, rgba($gray-900, .45), rgba($gray-900, .3));
+		z-index: 2;
+	}
 
 	.carousel-inner, .carousel-item {
 		height: 100%;
@@ -94,9 +113,9 @@ h3 {
 }
 
 .secondary-header {
-	margin-top: 100px;
+	margin-top: 80px;
 	position: relative;
-	height: 250px;
+	height: 150px;
 	width: 100vw;
 	margin-bottom: 1rem;
 	background-size: cover;
@@ -107,14 +126,15 @@ h3 {
 		width: 100%;
 		height: 100%;
 		position: absolute;
-		background: linear-gradient(to bottom, rgba($gray-900, .85), rgba($gray-900, .35));
+		background: linear-gradient(to bottom, rgba($gray-900, .45), rgba($gray-900, .3));
 		z-index: 2;
 	}
+
 }
 
-.event-nav {
-	background: darken($gray-200, 3%);
-
+.event-nav, .team-nav {
+	border-radius: $border-radius;
+	background: lighten($gray-200, 2%);
 }
 
 .event-sections {
@@ -123,13 +143,23 @@ h3 {
 	grid-gap: 2rem;
 
 	section {
+		border-radius: $border-radius;
 		padding: 1.5rem;
 		background: darken($gray-100, 2.5%);
+
+		h3 {
+			margin-bottom: 1rem;
+		}
 	}
 }
 
 .signUpForm {
-	max-width: 600px;
+	max-width: 650px;
+
+	input, select {
+		max-width: 550px;
+	}
+
 
 	.input-hidden {
 		width: 0;
@@ -137,8 +167,23 @@ h3 {
 		visibility: hidden;
 	}
 
-	input[type='checkbox'] {
-		margin-right: .5rem;
+	.agree-checkbox {
+		label {
+			display: grid;
+			grid-template-columns: 16px auto;
+			grid-column-gap: .6rem;
+
+			.invalid-feedback {
+				grid-column-start: 1;
+				grid-column-end: 3;
+			}
+		}
+
+		#frm-signUpForm-agree {
+			width: 16px;
+			height: 16px;
+			align-self: center;
+		}
 	}
 }
 
@@ -169,6 +214,7 @@ h3 {
 		grid-gap: 1rem;
 
 		.year {
+			border-radius: $border-radius;
 			padding: 1.5rem;
 			background: darken($gray-100, 2.5%);
 
@@ -215,7 +261,7 @@ h3 {
 		height: 80px;
 		left: 0;
 		width: 100vw;
-		display: flex;
+		display: none;
 		justify-content: center;
 		align-items: center;
 		background-color: rgba(255, 255, 255, 0.82);
@@ -229,52 +275,58 @@ h3 {
 	.halfmarathon, .triathlon, .advent {
 		padding: 0;
 		background-color: $gray-100;
+		border-radius: 0 0 $border-radius $border-radius;
+		position: relative;
 
 
 		section {
 			width: 100%;
-			padding: .75rem 1.5rem;
+			padding: 1.5rem;
 			display: flex;
 			flex-direction: column;
-			align-items: flex-start;
+			align-items: center;
 		}
 
 		img {
+			border-radius: $border-radius $border-radius 0 0;
 			width: 100%;
 			object-fit: cover;
 			max-height: 180px;
 		}
 
+		.badgelist {
+			z-index: 1;
+			position: absolute;
+			top: 1rem;
+			left: 1rem;
+			display: flex;
+			justify-content: flex-start;
+			align-items: flex-start;
+		}
+
+		.badge {
+			cursor: unset;
+			display: inline-block;
+			text-transform: uppercase;
+			font-size: .9rem;
+			letter-spacing: .1rem;
+			padding: .35rem .5rem;
+			border-radius: $border-radius * 2;
+			margin: 0 .35rem .35rem 0;
+			background: rgba($gray-700, .5);
+			color: $white;
+		}
 
 		h3 {
 			margin: 0 0 .3rem 0;
 			padding: 0;
 			font-size: 1.4rem;
-			text-transform: uppercase;
-
-			small {
-				font-size: 1rem;
-				color: $gray-600;
-				margin-bottom: .2rem;
-				letter-spacing: .2rem;
-				display: block;
-			}
+			color: $gray-900;
+			font-weight: 700;
 		}
 
-		.date {
-			display: block;
-			background: rgba($gray-300, .2);
-			padding:  .6rem 1.5rem;
-
-			i {
-				margin-right: .3rem;
-				font-size: 1.2rem;
-			}
-			time {
-				font-weight: 500;
-				font-size: 1.1rem;
-				margin: 0;
-			}
+		time {
+			margin: 0;
 		}
 
 
@@ -291,15 +343,20 @@ h3 {
 
 		footer {
 			width: 100%;
-			display: flex;
-			flex-direction: row;
-			align-items: center;
-			justify-content: center;
+			text-align: center;
 
 			a {
+				transition: opacity .2s ease-in-out;
 				width: 100%;
+				max-width: 300px;
 				margin: 0;
-				padding: .8rem 1.5rem;
+				padding: .7rem;
+				background: linear-gradient(45deg, $primary, lighten($primary, 10%));
+				opacity: .9;
+
+				&:hover {
+					opacity: 1;
+				}
 			}
 		}
 	}
@@ -316,10 +373,6 @@ h3 {
 	}
 }
 
-.agree-checkbox {
-	margin-right: .5rem;
-}
-
 .article-list {
 	display: grid;
 	grid-template-columns: 1fr;
@@ -330,12 +383,14 @@ h3 {
 		height: 100%;
 		object-fit: cover;
 		margin-bottom: 1rem;
+		border-radius: $border-radius;
 	}
 
 	article {
 		transition: all .2s ease-in-out;
 		align-self: start;
 		padding: 0 1.5rem;
+		border-radius: $border-radius;
 
 		.article-link {
 			color: unset;
@@ -401,18 +456,22 @@ h3 {
 				width: 100%;
 				height: auto;
 				margin: 1rem 0 2rem 0;
+				border-radius: $border-radius;
 			}
 		}
 
 
 		footer {
-			margin-top: 3.5rem;
-			display: grid;
+			display: none;
+			//display: grid;
+			margin-top: 4.5rem;
 			grid-template-columns: 1fr 1fr;
 			grid-gap: 1rem;
 
 			img {
 				width: 100%;
+				max-height: 160px;
+				object-fit: cover;
 				height: auto;
 				margin: .5rem 0;
 			}
@@ -433,6 +492,7 @@ h3 {
 	grid-template-columns: 1fr 1fr;
 	list-style-type: none;
 	padding-left: unset;
+	border-radius: $border-radius;
 
 	&:hover img {
 		filter: unset;
@@ -467,6 +527,7 @@ h3 {
 
 .hopman-numbers-list {
 	padding: 2rem;
+	border-radius: $border-radius;
 	background: $white;
 	list-style-type: unset;
 	display: grid;
@@ -517,6 +578,7 @@ h3 {
 			font-size: 1.1rem;
 		}
 		img {
+			border-radius: $border-radius;
 			max-width: 280px;
 			width: 100%;
 		}
@@ -539,6 +601,10 @@ h3 {
 	padding: 2rem 0;
 	margin-top: 2rem;
 	margin-bottom: 2rem;
+}
+
+.event-page, .team-page {
+	margin-top: unset;
 }
 
 #scrollTopBtn {
@@ -643,7 +709,7 @@ footer.main-footer {
 		flex-direction: column;
 		padding: 2rem 0;
 		background-color: lighten($gray-100, 3%);
-		color: $gray-500;
+		color: $gray-700;
 		left: -2rem;
 		width: 100vw;
 		position: relative;
@@ -681,6 +747,7 @@ footer.main-footer {
 			max-height: 220px;
 			object-fit: cover;
 			object-position: center;
+			border-radius: $border-radius;
 		}
 
 		&:hover {
@@ -710,6 +777,7 @@ footer.main-footer {
 			max-height: 220px;
 			object-fit: cover;
 			object-position: center;
+			border-radius: $border-radius;
 		}
 
 		&:hover {
@@ -722,7 +790,14 @@ footer.main-footer {
 }
 
 .event-gallery {
-	margin: 2.5rem 0;
+	margin: .5rem 0;
+}
+
+.carousel-caption {
+	display: none !important;
+}
+.carousel-control {
+	z-index: 2;
 }
 
 // carousel fade
@@ -753,7 +828,7 @@ footer.main-footer {
 }
 
 .gdpr {
-	width: 100%;
+	width: calc(100% - 2rem);
 	max-width: 450px;
 	position: fixed;
 	right: 1rem;
@@ -766,6 +841,7 @@ footer.main-footer {
 	color: $darkgray;
 	background-color: $white;
 	z-index: 1000;
+	border-radius: $border-radius;
 
 	i {
 		color: $brown;

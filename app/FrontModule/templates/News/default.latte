@@ -2,7 +2,8 @@
 	<header class="secondary-header" style="background-image: url('{$basePath}/dist/img/header/tri_header.jpg')">
 	</header>
 
-	<section class="news-page container">
+	<section class="page-section news-page">
+		<div class="container">
 			<h1 n:block="title" class="mb-4">Aktuality</h1>
 
 			<div n:ifset="$news" class="article-list">
@@ -38,5 +39,6 @@
 				<h4>Na webu aktuálně nejsou žádné zveřejněné aktuality.</h4>
 				<a class="btn btn-primary mt-3" n:href="Homepage:">Zpět na úvodní stránku</a>
 			</article>
+		</div>
 	</section>
 {/block}

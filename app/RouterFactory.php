@@ -29,7 +29,6 @@ class RouterFactory
 
 		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]<slug>', 'Event:default');
 		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]<slug>/galerie', 'Event:gallery');
-		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]<slug>/vysledky', 'Event:results');
 		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]<slug>/registrace', 'Event:registration');
 		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]<slug>/startovni-listina', 'Event:startlist');
 

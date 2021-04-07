@@ -70,8 +70,8 @@ $colors: map-merge(
 
 $primary:       $green !default;
 $secondary:     $darkgray !default;
-$success:       $blue !default;
-$info:          $cyan !default;
+$success:       $cyan !default;
+$info:          $blue !default;
 $warning:       $yellow !default;
 $danger:        $red !default;
 $light:         $gray-100 !default;
@@ -171,9 +171,9 @@ $body-color:                $gray-900 !default;
 //
 // Style anchor elements.
 
-$link-color:                              theme-color("primary") !default;
+$link-color:                              theme-color("info") !default;
 $link-decoration:                         none !default;
-$link-hover-color:                        darken($link-color, 15%) !default;
+$link-hover-color:                        darken($link-color, 20%) !default;
 $link-hover-decoration:                   underline !default;
 // Darken percentage for links with `.text-*` class (e.g. `.text-success`)
 $emphasized-link-hover-darken-percentage: 15% !default;
@@ -192,10 +192,13 @@ $paragraph-margin-bottom:   1rem !default;
 
 $grid-breakpoints: (
 	xs: 0,
+	xsm: 480px,
 	sm: 576px,
+	xmd: 668px,
 	md: 768px,
 	lg: 992px,
 	xl: 1200px,
+	xlg: 1340px,
 	xxl: 1500px,
 	xxxl: 1800px
 ) !default;
@@ -209,10 +212,14 @@ $grid-breakpoints: (
 // Define the maximum width of `.container` for different screen sizes.
 
 $container-max-widths: (
+	xsm: 450px,
+	xs: 540px,
 	sm: 540px,
+	xmd: 620px,
 	md: 720px,
 	lg: 960px,
 	xl: 1140px,
+	xlg: 1280px,
 	xxl: 1400px,
 	xxxl: 1620px
 ) !default;
@@ -235,10 +242,10 @@ $grid-gutter-width:           30px !default;
 $line-height-lg:              1.5 !default;
 $line-height-sm:              1.5 !default;
 
-$border-width:                1px !default;
+$border-width:                0 !default;
 $border-color:                $gray-300 !default;
 
-$border-radius:               0 !default;
+$border-radius:               .35rem !default;
 $border-radius-lg:            .3rem !default;
 $border-radius-sm:            .2rem !default;
 
@@ -386,8 +393,8 @@ $table-border-level:          -6 !default;
 //
 // Shared variables that are reassigned to `$input-` and `$btn-` specific variables.
 
-$input-btn-padding-y:         .375rem !default;
-$input-btn-padding-x:         .75rem !default;
+$input-btn-padding-y:         .4rem !default;
+$input-btn-padding-x:         .8rem !default;
 $input-btn-font-family:       null !default;
 $input-btn-font-size:         $font-size-base !default;
 $input-btn-line-height:       $line-height-base !default;
@@ -443,7 +450,7 @@ $btn-link-disabled-color:     $gray-600 !default;
 $btn-block-spacing-y:         .5rem !default;
 
 // Allows for customizing button radius independently from global border radius
-$btn-border-radius:           $border-radius !default;
+$btn-border-radius:           $border-radius*5 !default;
 $btn-border-radius-lg:        $border-radius-lg !default;
 $btn-border-radius-sm:        $border-radius-sm !default;
 

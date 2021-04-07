@@ -301,7 +301,6 @@
 		.halfmarathon, .triathlon, .advent {
 			overflow: hidden;
 
-
 			section {
 				padding: 1.5rem;
 			}
@@ -444,6 +443,14 @@
 
 	.event-sections {
 		grid-template-columns: 1fr 1fr 1fr;
+	}
+
+	.upcoming-events {
+		.halfmarathon, .triathlon, .advent {
+			.badgelist {
+				display: flex;
+			}
+		}
 	}
 
 	.hopman-numbers-list {

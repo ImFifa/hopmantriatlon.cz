@@ -299,7 +299,9 @@ h1, h2, h3 {
 			position: absolute;
 			top: 1rem;
 			left: 1rem;
-			display: flex;
+			display: none;
+			width: calc(100% - 2rem);
+			flex-wrap: wrap;
 			justify-content: flex-start;
 			align-items: flex-start;
 		}
@@ -313,7 +315,7 @@ h1, h2, h3 {
 			padding: .35rem .5rem;
 			border-radius: $border-radius * 2;
 			margin: 0 .35rem .35rem 0;
-			background: rgba($gray-700, .5);
+			background: rgba($gray-700, .6);
 			color: $white;
 		}
 

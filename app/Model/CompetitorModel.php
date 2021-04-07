@@ -14,6 +14,21 @@ class CompetitorModel extends BaseModel
 	{
 		return $this->getTable()->where('event_id', $event_id)->order('id DESC')->fetchAll();
 	}
+
+	public function getRegisteredCompetitors($event_id): int
+	{
+		return $this->getTable()->where('event_id', $event_id)->count();
+	}
+
+	public function getRegisteredMan($event_id): int
+	{
+		return $this->getTable()->where('event_id', $event_id)->where('sex', 'M')->count();
+	}
+
+	public function getRegisteredWoman($event_id): int
+	{
+		return $this->getTable()->where('event_id', $event_id)->where('sex', 'Ž')->count();
+	}
 //
 //	public function getEvent(string $slug): ?ActiveRow
 //	{

@@ -5,10 +5,7 @@
 	<section class="page-section results-page">
 		<div class="container">
 			<a n:href="Event: $event->slug" class="btn btn-outline-secondary mb-3">Zpět na stránku závodu</a>
-			<div n:if="!$event->startlist_active" class="alert alert-info" role="alert">
-				Pozor! Startovní listina není aktivní!
-			</div>
-			<h1 n:block="title">{$event->name} <small>Startovní listina</small></h1>
+			<h1 n:block="title">{$event->name} <small>- Startovní listina</small></h1>
 			{if $event->slug != 'pulmaraton'}
 				<h3>Stránka je právě v tvorbě</h3>
 			{else}

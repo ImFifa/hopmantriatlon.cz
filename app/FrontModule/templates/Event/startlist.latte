@@ -4,8 +4,9 @@
 
 	<section class="page-section results-page">
 		<div class="container">
-			<a n:href="Event: $event->slug" class="btn btn-outline-secondary mb-3">Zpět na stránku závodu</a>
-			<h1 n:block="title">{$event->name} <small>- Startovní listina</small></h1>
+			<a n:href="Event: $event->slug" class="btn btn-outline-secondary mb-3"><i class="fas fa-angle-left"></i> Zpět na stránku závodu</a>
+			<h1 n:block="title">{$event->name}</h1>
+			<h3>Startovní listina</h3>
 			{if $event->slug != 'pulmaraton'}
 				<h3>Stránka je právě v tvorbě</h3>
 			{else}

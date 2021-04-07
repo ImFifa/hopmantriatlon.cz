@@ -19,26 +19,27 @@
 
 	<header class="secondary-header" style="background-image: url('{$basePath}/{$event->header_image}')">
 	</header>
-
-	{if $event->slug === 'pulmaraton'}
-	<nav class="nav container event-nav">
-	  <a class="nav-link active" href="{$basePath}/files/pulmaraton21.pdf"><i class="fas fa-file"></i> Propozice</a>
-	  <a class="nav-link" n:href="Event:registration $event->slug"><i class="fas fa-file-signature"></i> Registrace</a>
-	  <a class="nav-link" n:href="Event:startlist $event->slug"><i class="fas fa-users"></i> Startovní listina</a>
-	  <a class="nav-link scroll" n:href="Event:#vysledky $event->slug"><i class="fas fa-trophy"></i> Výsledky</a>
-	  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-images"></i> Galerie</a>
-	  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-map"></i> Mapy</a>
-	</nav>
-	{else}
-	<nav class="nav container event-nav">
-	  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-file"></i> Propozice</a>
-	  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-file-signature"></i> Registrace</a>
-	  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-users"></i> Startovní listina</a>
-	  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-trophy"></i> Výsledky</a>
-	  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-images"></i> Galerie</a>
-	  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-map"></i> Mapy</a>
-	</nav>
-	{/if}
+	<div class="container">
+		{if $event->slug === 'pulmaraton'}
+		<nav class="nav event-nav">
+		  <a class="nav-link active" href="{$basePath}/files/pulmaraton21.pdf"><i class="fas fa-file"></i> Propozice</a>
+		  <a class="nav-link" n:href="Event:registration $event->slug"><i class="fas fa-file-signature"></i> Registrace</a>
+		  <a class="nav-link" n:href="Event:startlist $event->slug"><i class="fas fa-users"></i> Startovní listina</a>
+		  <a class="nav-link scroll" n:href="Event:#vysledky $event->slug"><i class="fas fa-trophy"></i> Výsledky</a>
+		  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-images"></i> Galerie</a>
+		  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-map"></i> Mapy</a>
+		</nav>
+		{else}
+		<nav class="nav event-nav">
+		  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-file"></i> Propozice</a>
+		  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-file-signature"></i> Registrace</a>
+		  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-users"></i> Startovní listina</a>
+		  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-trophy"></i> Výsledky</a>
+		  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-images"></i> Galerie</a>
+		  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-map"></i> Mapy</a>
+		</nav>
+		{/if}
+	</div>
 	<section class="page-section event-page">
 		<div class="container">
 
@@ -50,8 +51,8 @@
 					{if $event->propositions_active}
 						<p>Datum konání: <time datetime="{$event->date|date:"Y-m-d"}">{$event->date|weekDay}, {$event->date|dayMonth}</time><br>
 							Aktuální propozice pro letošní ročník.</p>
-						<a href="{$basePath}/files/pulmaraton21.pdf" class="btn btn-primary my-2"><i class="far fa-file-pdf"></i> {$event->name}</a>
-						<a href="{$basePath}/files/pulmaraton21.docx" class="btn btn-primary my-2"><i class="far fa-file-word"></i> {$event->name}</a>
+						<a href="{$basePath}/files/pulmaraton21.pdf" class="btn btn-outline-info my-2 mr-2"><i class="far fa-file-pdf"></i> {$event->name}</a>
+						<a href="{$basePath}/files/pulmaraton21.docx" class="btn btn-outline-info my-2 mr-2"><i class="far fa-file-word"></i> {$event->name}</a>
 					{else}
 						<h6>Na přípravě propozic pro letošní ročník právě pracujeme.</h6>
 					{/if}
@@ -86,11 +87,11 @@
 					<h3>Výsledky</h3>
 					{if $results}
 						{foreach $results as $result}
-							<a href="{$basePath}/upload/{$event->slug}/vysledky/{$result->path}" class="m-2 btn btn-outline-secondary">
+							<a href="{$basePath}/upload/files/{$event->slug}/vysledky/{$result->path}" target="_blank" class="my-2 mr-2 btn btn-outline-info">
 								<i n:if="$result->type == 'pdf'" class="far fa-file-pdf"></i>
 								<i n:if="$result->type == 'docx'" class="far fa-file-word"></i>
 								<i n:if="$result->type == 'xlsx'" class="far fa-file-excel"></i>
-								{$result->name}</a>
+								{$result->name|slice: ($event->slug|length)}</a>
 						{/foreach}
 					{else}
 						<h6>V přípravě</h6>

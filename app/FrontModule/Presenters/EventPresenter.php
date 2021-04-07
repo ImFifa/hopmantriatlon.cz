@@ -27,16 +27,13 @@ class EventPresenter extends BasePresenter
 
 	public function renderDefault($slug): void
 	{
+		// event
 		$event = $this->eventModel->getEvent($slug);
 		if (!$event) {
 			$this->error();
 		} else {
 			$this->template->event = $event;
 		}
-
-//		if($event->proposition_id != NULL) {
-//			$this->template->files = $this->fileModel->getFiles($event->proposition_id);
-//		}
 
 		// startlist
 		if($event->startlist_active) {
@@ -59,6 +56,7 @@ class EventPresenter extends BasePresenter
 		}
 	}
 
+
 	public function renderGallery($slug): void
 	{
 		$event = $this->eventModel->getEvent($slug);
@@ -69,15 +67,6 @@ class EventPresenter extends BasePresenter
 		}
 	}
 
-	public function renderResults($slug): void
-	{
-		$event = $this->eventModel->getEvent($slug);
-		if (!$event) {
-			$this->error();
-		} else {
-			$this->template->event = $event;
-		}
-	}
 
 	public function renderRegistration($slug): void
 	{
@@ -88,6 +77,7 @@ class EventPresenter extends BasePresenter
 			$this->template->event = $event;
 		}
 	}
+
 
 	public function renderStartlist($slug): void
 	{
@@ -100,42 +90,6 @@ class EventPresenter extends BasePresenter
 		}
 	}
 
-	public function handleYearOfBirthEntered($year)
-	{
-		if (NULL != 'Ž') {
-			if ($year >= 2003) {
-				$category = 'Dorostenci';
-			} elseif ($year >= 1982) {
-				$category = 'Muži do 40ti let';
-			} elseif ($year >= 1972) {
-				$category = 'Muži do 50ti let';
-			} elseif ($year >= 1962) {
-				$category = 'Muži do 60ti let';
-			} else {
-				$category = 'Muži 60+';
-			}
-		} else {
-			if ($year >= 2003) {
-				$category = 'Dorostenky';
-			} elseif ($year >= 1982) {
-				$category = 'Ženy do 40ti let';
-			} elseif ($year >= 1972) {
-				$category = 'Ženy do 50ti let';
-			} else {
-				$category = 'Ženy 50+';
-			}
-		}
-
-		if ($category) {
-			$this['signUpForm']['category']->setValue($category);
-		} else {
-			$this['signUpForm']['category']->setPrompt('Zadejte rok narození a pohlaví')
-				->setItems([]);
-		}
-
-		$this->redrawControl('signUpFormWrapper');
-		$this->redrawControl('categorySnipper');
-	}
 
 	protected function createComponentSignUpForm(): Form
 	{
@@ -155,18 +109,18 @@ class EventPresenter extends BasePresenter
 
 		$form->addSelect('sex', 'Pohlaví')
 			->setPrompt('-------')
-			->setRequired('Musíte si zvolit pohlaví')
+			->setRequired('Musíte uvést Vaše pohlaví')
 			->setItems([
-				'Ž' => 'Žena',
-				'M' => 'Muž'
+				'M' => 'Muž',
+				'Ž' => 'Žena'
 			]);
 
 		$form->addSelect('distance', 'Trať')
 			->setPrompt('-------')
 			->setRequired('Musíte si zvolit trať')
 			->setItems([
-				'Desítka' => 'Desítka',
-				'Půlmaraton' => 'Půlmaraton'
+				'Desítka' => 'Desítka (10km)',
+				'Půlmaraton' => 'Půlmaraton (21km)'
 			]);
 
 		$form->addInteger('year_of_birth', 'Rok narození')
@@ -188,6 +142,7 @@ class EventPresenter extends BasePresenter
 			->setRequired('Musíte uvést Vaši emailovou adresu');
 
 		$form->addCheckbox('agree', 'Souhlasím s využitím osobních údajů za účelem zpracování výsledků závodu.')
+			->setHtmlAttribute('class', 'form-control')
 			->setRequired('Je potřeba souhlasit s podmínkami');
 
 
@@ -203,6 +158,30 @@ class EventPresenter extends BasePresenter
 				unset($values['id']);
 				unset($values['agree']);
 
+				$year = $values['year_of_birth'];
+				if ($values['sex'] != 'Ž') {
+					if ($year >= 2003) {
+						$values['category'] = 'Dorostenci';
+					} elseif ($year >= 1982) {
+						$values['category'] = 'Muži do 40ti let';
+					} elseif ($year >= 1972) {
+						$values['category'] = 'Muži do 50ti let';
+					} elseif ($year >= 1962) {
+						$values['category'] = 'Muži do 60ti let';
+					} else {
+						$values['category'] = 'Muži 60+';
+					}
+				} else {
+					if ($year >= 2003) {
+						$values['category'] = 'Dorostenky';
+					} elseif ($year >= 1982) {
+						$values['category'] = 'Ženy do 40ti let';
+					} elseif ($year >= 1972) {
+						$values['category'] = 'Ženy do 50ti let';
+					} else {
+						$values['category'] = 'Ženy 50+';
+					}
+				}
 
 				$values['id'] = $this->competitorModel->insert($values)->id;
 				$this->flashMessage('Registrace proběhla úspěšně!', 'primary');
@@ -216,32 +195,4 @@ class EventPresenter extends BasePresenter
 
 		return $form;
 	}
-
-	public function createComponentStartList($event_id): DataGrid
-	{
-		$grid = new DataGrid;
-
-		$grid->setDataSource($this->competitorModel->getCompetitors($event_id));
-
-		$grid->setItemsPerPageList([20, 50, 100], true);
-
-		$grid->addColumnText('id', 'ID')
-			->setSortable();
-
-		$grid->addColumnText('name', 'Jméno')
-			->setSortable()
-			->setFilterText();
-
-		$grid->addColumnText('surname', 'Příjmení')
-			->setFilterText();
-
-		$grid->addColumnText('team', 'Oddíl')
-			->setFilterText();
-
-		$grid->addColumnDateTime('year_of_birth', 'Rok narození')
-			->setFormat('j. n. Y');
-
-		return $grid;
-	}
-
 }

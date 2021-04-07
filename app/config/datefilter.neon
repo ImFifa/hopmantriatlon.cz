@@ -4,7 +4,7 @@ dateFilterExtension:
 			# filter name: format
 			day: D
 			date: j. n. Y # overwrite default latte filter
-			dateTime: j. n. Y H:i:s
+			dateTime: j. F H:i:s
 			weekDay: l
 			dayMonth: j. F
 			dayMonthYear: j. F Y

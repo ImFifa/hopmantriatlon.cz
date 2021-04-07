@@ -131,7 +131,7 @@
 	}
 
 	.galerie {
-		grid-template-columns: 220px 220px 220px;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
 
 		a {
 			img {
@@ -366,18 +366,7 @@
 			.footer-socials {
 				margin-top: 70px;
 			}
-
-			.footer-links {
-				li {
-					display: inline-block;
-					margin: .2rem;
-				}
-			}
 		}
-	}
-
-	.galerie {
-		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 	}
 }
 

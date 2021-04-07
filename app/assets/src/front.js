@@ -13,6 +13,11 @@ import lightbox from "lightbox2/dist/js/lightbox";
 
 import Nette from "@/front/netteForms";
 
+import naja from 'naja';
+document.addEventListener('DOMContentLoaded', () => {
+	naja.initialize();
+});
+
 // on scroll events
 const $nav = document.querySelector("#navbar");
 const $scrollTopBtn = document.querySelector("#scrollTopBtn");
@@ -94,8 +99,8 @@ document.addEventListener("DOMContentLoaded", () => {
 			// Using jQuery's animate() method to add smooth page scroll
 			// The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
 			$("html, body").animate({
-				scrollTop: $(hash).offset().top
-			}, 800, function(){
+				scrollTop: $(hash).offset().top - 100
+			}, 600, function(){
 
 				// Add hash (#) to URL when done scrolling (default click behavior)
 				window.location.hash = hash;

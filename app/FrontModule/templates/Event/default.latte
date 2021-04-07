@@ -25,7 +25,7 @@
 	  <a class="nav-link active" href="{$basePath}/files/pulmaraton21.pdf"><i class="fas fa-file"></i> Propozice</a>
 	  <a class="nav-link" n:href="Event:registration $event->slug"><i class="fas fa-file-signature"></i> Registrace</a>
 	  <a class="nav-link" n:href="Event:startlist $event->slug"><i class="fas fa-users"></i> Startovní listina</a>
-	  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-trophy"></i> Výsledky</a>
+	  <a class="nav-link scroll" n:href="Event:#vysledky $event->slug"><i class="fas fa-trophy"></i> Výsledky</a>
 	  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-images"></i> Galerie</a>
 	  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-map"></i> Mapy</a>
 	</nav>
@@ -46,51 +46,77 @@
 
 			<div class="event-sections">
 				<section id="propozice">
-{*					<div n:if="!$event->propositions_active" class="alert alert-info" role="alert">*}
-{*					  Pozor! Zveřejněné propozice nejsou aktuální!*}
-{*					</div>*}
 					<h3>Propozice</h3>
-					{if $event->slug === 'pulmaraton'}
-					<a href="{$basePath}/files/pulmaraton21.pdf" class="btn btn-primary my-2"><i class="far fa-file-pdf"></i> {$event->name}</a>
-					<a href="{$basePath}/files/pulmaraton21.docx" class="btn btn-primary my-2"><i class="far fa-file-word"></i> {$event->name}</a>
+					{if $event->propositions_active}
+						<p>Datum konání: <time datetime="{$event->date|date:"Y-m-d"}">{$event->date|weekDay}, {$event->date|dayMonth}</time><br>
+							Aktuální propozice pro letošní ročník.</p>
+						<a href="{$basePath}/files/pulmaraton21.pdf" class="btn btn-primary my-2"><i class="far fa-file-pdf"></i> {$event->name}</a>
+						<a href="{$basePath}/files/pulmaraton21.docx" class="btn btn-primary my-2"><i class="far fa-file-word"></i> {$event->name}</a>
 					{else}
-						<h5>V přípravě</h5>
+						<h6>Na přípravě propozic pro letošní ročník právě pracujeme.</h6>
 					{/if}
 				</section>
 
 				<section id="registrace">
 					<h3>Registrace</h3>
-					{if $event->slug === 'pulmaraton'}
-						<a n:href="Event:registration $event->slug" class="btn btn-primary">Registrační formulář</a>
+					{if $event->registration_active}
+						<p>Online registrace byla spuštěna a je v plném proudu!<br>
+							{if $event->registration_active_till}
+								Formulář bude aktivní do
+								<time datetime="{$event->registration_active_till|date:"Y-m-d"}">{$event->registration_active_till|dateTime} ({$event->registration_active_till|weekDay})</time> nebo do naplnění kapacity závodu.
+							{/if}</p>
+						<a n:href="Event:registration $event->slug" class="btn btn-primary">Chci se zaregistrovat!</a>
 					{else}
-						<h5>V přípravě</h5>
+						<h6>Právě teď není možné se zaregistrovat. Buď se online registrace pro tento rok ještě nespustila a nebo už je po závodě.</h6>
 					{/if}
 				</section>
 
 				<section id="startovni-listina">
 					<h3>Startovní lístina</h3>
-					{if $event->slug === 'pulmaraton'}
+					{if $event->startlist_active}
+						<p>Celkem je přihlášeno <strong>{$participants} závodníků</strong>.<br>
+							Z toho {$participantsMan} mužů a {$participantsWoman} žen.</p>
 						<a n:href="Event:startlist $event->slug" class="btn btn-primary">Zobrazit startovní listinu</a>
 					{else}
-						<h5>V přípravě</h5>
+						<h6>Startovní listina není dostupná. Online registrace se pro tento rok ještě nespustila a nebo už je po závodě.</h6>
 					{/if}
 				</section>
 
 				<section id="vysledky">
 					<h3>Výsledky</h3>
-					<h5>V přípravě</h5>
+					{if $results}
+						{foreach $results as $result}
+							<a href="{$basePath}/upload/{$event->slug}/vysledky/{$result->path}" class="m-2 btn btn-outline-secondary">
+								<i n:if="$result->type == 'pdf'" class="far fa-file-pdf"></i>
+								<i n:if="$result->type == 'docx'" class="far fa-file-word"></i>
+								<i n:if="$result->type == 'xlsx'" class="far fa-file-excel"></i>
+								{$result->name}</a>
+						{/foreach}
+					{else}
+						<h6>V přípravě</h6>
+					{/if}
 {*					<a n:href="Event:results $event->slug" class="btn btn-primary">Zobrazit výsledky</a>*}
 				</section>
 
 				<section id="galerie">
 					<h3>Galerie</h3>
-					<h5>V přípravě</h5>
+					<h6>V přípravě</h6>
 {*					<a n:href="Event:gallery $event->slug" class="btn btn-primary">Zobrazit galerii</a>*}
 				</section>
 
 				<section id="galerie">
 					<h3>Mapy</h3>
-					<h5>V přípravě</h5>
+					{ifset $maps}
+						<div class="maps-gallery">
+							{foreach $maps as $map}
+								<a href="{$basePath}/upload/galleries/{$event->maps_folder_id}/{$map->name}" data-lightbox="gallery" data-name="{$map->name}">
+									<img src="{$basePath}/upload/galleries/{$event->maps_folder_id}/thumbs/{$map->name}" class="lazyload" alt="{$map->title}">
+								</a>
+							{/foreach}
+						</div>
+					{else}
+						<h6>V přípravě</h6>
+					{/ifset}
 				</section>
 
 				<aside n:ifset="$images" class="event-gallery">

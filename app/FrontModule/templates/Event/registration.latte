@@ -2,7 +2,7 @@
 	<header class="secondary-header" style="background-image: url('{$basePath}/{$event->header_image}')">
 	</header>
 
-	<section class="page-section gallery-page">
+	<section class="page-section gallery-page ajax">
 		<div class="container">
 			<a n:href="Event: $event->slug" class="btn btn-outline-secondary mb-3">Zpět na stránku závodu</a>
 			<h1 n:block="title">{$event->name}</h1>
@@ -17,73 +17,105 @@
 			{if $event->slug != 'pulmaraton'}
 				<h3>Stránka je právě v tvorbě</h3>
 			{else}
-				{form signUpForm, class => 'signUpForm row'}
-					{input event_id class => 'form-control input-hidden', value => $event->id}
-					<div class="col-lg-12">
-						<div class="form-group">
-							{label name}{/label}
-								{input name class => 'form-control'}
+				{snippetArea signUpFormWrapper}
+					{form signUpForm, class => 'signUpForm row'}
+						{input event_id class => 'form-control input-hidden', value => $event->id}
+						<div class="col-lg-12">
+							<div class="form-group">
+								{label name}{/label}
+									{input name class => 'form-control'}
+							</div>
 						</div>
-					</div>
 
-					<div class="col-lg-12">
-						<div class="form-group">
-							{label surname}{/label}
-								{input surname class => 'form-control'}
+						<div class="col-lg-12">
+							<div class="form-group">
+								{label surname}{/label}
+									{input surname class => 'form-control'}
+							</div>
 						</div>
-					</div>
 
-					<div class="col-lg-4">
-						<div class="form-group">
-							{label year_of_birth}{/label}
-								{input year_of_birth class => 'form-control'}
+						<div class="col-lg-4">
+							<div class="form-group">
+								{label year_of_birth}{/label}
+									{input year_of_birth class => 'form-control'}
+							</div>
 						</div>
-					</div>
 
-					<div class="col-lg-12">
-						<div class="form-group">
-							{label sex}{/label}
-							{input sex class => 'form-control form-control-sm'}
+						<div n:snippet="categorySnippet" class="col-lg-6">
+							<div class="form-group">
+								{label category}{/label}
+								{input category class => 'form-control'}
+							</div>
 						</div>
-					</div>
 
-					<div class="col-lg-12">
-						<div class="form-group">
-							{label distance}{/label}
-							{input distance class => 'form-control form-control-sm'}
+						<div class="col-lg-2">
+							<a n:href="YearOfBirthEntered!" class="btn btn-secondary">BTN</a>
 						</div>
-					</div>
 
-					<div class="col-lg-12">
-						<div class="form-group">
-							{label team}{/label}
-								{input team class => 'form-control'}
-							<small>Toto pole je volitelné</small>
+						<div class="col-lg-12">
+							<div class="form-group">
+								{label sex}{/label}
+								{input sex class => 'form-control form-control-sm'}
+							</div>
 						</div>
-					</div>
 
-					<div class="col-lg-12">
-						<div class="form-group">
-							{label email}{/label}
-								{input email class => 'form-control'}
-							<small>Váš email nebude nikde zveřejněn.<br>Využijeme jej pouze pro zaslání diplomu či v případě nutnosti Vás kontaktovat.</small>
+						<div class="col-lg-12">
+							<div class="form-group">
+								{label distance}{/label}
+								{input distance class => 'form-control form-control-sm'}
+							</div>
 						</div>
-					</div>
 
-					<div class="col-lg-12">
-						<div class="form-group">
-							{label agree}{/label}
-							{input agree class => 'form-control, agree-checkbox'}
+						<div class="col-lg-12">
+							<div class="form-group">
+								{label team}{/label}
+									{input team class => 'form-control'}
+								<small>Toto pole je volitelné</small>
+							</div>
 						</div>
-					</div>
 
-					<div class="col-lg-6">
-						<div class="form-group">
-							{input submit class => 'btn btn-primary'}
+						<div class="col-lg-12">
+							<div class="form-group">
+								{label email}{/label}
+									{input email class => 'form-control'}
+								<small>Váš email nebude nikde zveřejněn.<br>Využijeme jej pouze pro zaslání diplomu či v případě nutnosti Vás kontaktovat.</small>
+							</div>
 						</div>
-					</div>
-				{/form}
+
+						<div class="col-lg-12">
+							<div class="form-group">
+								{label agree}{/label}
+								{input agree class => 'form-control, agree-checkbox'}
+							</div>
+						</div>
+
+						<div class="col-lg-6">
+							<div class="form-group">
+								{input submit class => 'btn btn-primary'}
+							</div>
+						</div>
+					{/form}
+				{/snippetArea}
 			{/if}
 		</div>
 	</section>
+
+	{include jsCallback, input => category, link => YearOfBirthEntered}
+
 {/block}
+
+{define jsCallback}
+	<script>
+
+		$('#' + {$control["signUpForm"][$input]->htmlId}).off('change').on('change', function () {
+			$.nette.ajax({
+				type: 'GET',
+				url: {link {$link}!},
+				data: {
+					'year': $(this).val()
+				}
+			});
+		});
+
+	</script>
+{/define}

@@ -38,6 +38,22 @@ class EventPresenter extends BasePresenter
 //			$this->template->files = $this->fileModel->getFiles($event->proposition_id);
 //		}
 
+		// startlist
+		if($event->startlist_active) {
+			$this->template->participants = $this->competitorModel->getRegisteredCompetitors($event->id);
+			$this->template->participantsMan = $this->competitorModel->getRegisteredMan($event->id);
+			$this->template->participantsWoman = $this->competitorModel->getRegisteredWoman($event->id);
+		}
+
+		// results
+		$this->template->results = $this->repository->getFilesDESC($event->results_folder_id);
+
+		// maps
+		if($event->maps_folder_id != NULL) {
+			$this->template->maps = $this->imageModel->getImagesByGallery($event->maps_folder_id);
+		}
+
+		// event gallery
 		if($event->gallery_id != NULL) {
 			$this->template->images = $this->imageModel->getImagesByGallery($event->gallery_id);
 		}
@@ -84,6 +100,43 @@ class EventPresenter extends BasePresenter
 		}
 	}
 
+	public function handleYearOfBirthEntered($year)
+	{
+		if (NULL != 'Ž') {
+			if ($year >= 2003) {
+				$category = 'Dorostenci';
+			} elseif ($year >= 1982) {
+				$category = 'Muži do 40ti let';
+			} elseif ($year >= 1972) {
+				$category = 'Muži do 50ti let';
+			} elseif ($year >= 1962) {
+				$category = 'Muži do 60ti let';
+			} else {
+				$category = 'Muži 60+';
+			}
+		} else {
+			if ($year >= 2003) {
+				$category = 'Dorostenky';
+			} elseif ($year >= 1982) {
+				$category = 'Ženy do 40ti let';
+			} elseif ($year >= 1972) {
+				$category = 'Ženy do 50ti let';
+			} else {
+				$category = 'Ženy 50+';
+			}
+		}
+
+		if ($category) {
+			$this['signUpForm']['category']->setValue($category);
+		} else {
+			$this['signUpForm']['category']->setPrompt('Zadejte rok narození a pohlaví')
+				->setItems([]);
+		}
+
+		$this->redrawControl('signUpFormWrapper');
+		$this->redrawControl('categorySnipper');
+	}
+
 	protected function createComponentSignUpForm(): Form
 	{
 		$form = new Form();
@@ -122,6 +175,11 @@ class EventPresenter extends BasePresenter
 			->addRule(Form::MIN,'Vážně je Vám víc než 100 let? :-)',1921)
 			->setRequired('Musíte uvést Váš rok narození');
 
+		$form->addText('category', 'Kategorie')
+			->setHtmlAttribute('placeholder','Zadejte rok narození a pohlaví')
+			->setDisabled()
+			->setRequired('Pro správné zařazení do kategorie je nutné vyplnit rok narození a pohlaví.');
+
 		$form->addText('team', 'Oddíl/město')
 			->addRule(Form::MAX_LENGTH, 'Maximálné délka je %s znaků', 150);
 
@@ -145,30 +203,6 @@ class EventPresenter extends BasePresenter
 				unset($values['id']);
 				unset($values['agree']);
 
-				$year = $values['year_of_birth'];
-				if ($values['sex'] != 'Ž') {
-					if ($year >= 2003) {
-						$values['category'] = 'Dorostenci';
-					} elseif ($year >= 1982) {
-						$values['category'] = 'Muži do 40ti let';
-					} elseif ($year >= 1972) {
-						$values['category'] = 'Muži do 50ti let';
-					} elseif ($year >= 1962) {
-						$values['category'] = 'Muži do 60ti let';
-					} else {
-						$values['category'] = 'Muži 60+';
-					}
-				} else {
-					if ($year >= 2003) {
-						$values['category'] = 'Dorostenky';
-					} elseif ($year >= 1982) {
-						$values['category'] = 'Ženy do 40ti let';
-					} elseif ($year >= 1972) {
-						$values['category'] = 'Ženy do 50ti let';
-					} else {
-						$values['category'] = 'Ženy 50+';
-					}
-				}
 
 				$values['id'] = $this->competitorModel->insert($values)->id;
 				$this->flashMessage('Registrace proběhla úspěšně!', 'primary');

@@ -434,6 +434,11 @@
 	.galerie {
 		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 	}
+	.news-gallery {
+		.galerie {
+			grid-template-columns: 1fr 1fr 1fr 1fr;
+		}
+	}
 
 	.about-page {
 		.wrote-about-us {
@@ -445,11 +450,9 @@
 		grid-template-columns: 1fr 1fr 1fr;
 	}
 
-	.upcoming-events {
-		.halfmarathon, .triathlon, .advent {
-			.badgelist {
-				display: flex;
-			}
+	article {
+		.badgelist {
+			display: flex;
 		}
 	}
 

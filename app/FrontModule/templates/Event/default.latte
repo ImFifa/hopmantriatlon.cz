@@ -110,7 +110,7 @@
 					{ifset $maps}
 						<div class="maps-gallery">
 							{foreach $maps as $map}
-								<a href="{$basePath}/upload/galleries/{$event->maps_folder_id}/{$map->name}" data-lightbox="gallery" data-name="{$map->name}">
+								<a href="{$basePath}/upload/galleries/{$event->maps_folder_id}/{$map->name}" data-lightbox="maps-gallery" data-name="{$map->name}">
 									<img src="{$basePath}/upload/galleries/{$event->maps_folder_id}/thumbs/{$map->name}" class="lazyload" alt="{$map->title}">
 								</a>
 							{/foreach}

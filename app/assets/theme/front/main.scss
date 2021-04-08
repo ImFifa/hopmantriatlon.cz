@@ -252,6 +252,18 @@ h1, h2, h3 {
 article {
 	position: relative;
 
+	.news-badgelist {
+		z-index: 1;
+		position: absolute;
+		top: 2.5rem;
+		left: 1rem;
+		display: none;
+		width: calc(100% - 2rem);
+		flex-wrap: wrap;
+		justify-content: flex-start;
+		align-items: flex-start;
+	}
+
 	.badgelist {
 		z-index: 1;
 		position: absolute;
@@ -416,10 +428,19 @@ article {
 			padding: 0 2rem 0 0;
 		}
 
+		.news-badgelist {
+			transition: all .2s ease-in-out;
+		}
+
 		&:hover {
 			padding: 1rem;
 			background: $gray-300;
 			box-shadow: 0 3px 2px 2px rgba($gray-200, .2);
+
+			.news-badgelist {
+				top: 3.5rem;
+				left: 2rem;
+			}
 
 			section {
 				padding: 0;

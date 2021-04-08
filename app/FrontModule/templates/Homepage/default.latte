@@ -73,21 +73,22 @@
 			<div class="article-list">
 				{foreach $news as $new}
 				<article>
-					<div n:if="$new->gallery_id != NULL && $new->cover != NULL" class="badgelist">
-						<div class="badge">Galerie</div>
-					</div>
 					<a class="article-link" n:href="News:show $new->slug">
-					<header>
-						<time datetime="{$new->created|date:'Y-m-d'}">{$new->created|dayMonthYear}</time>
-						<img n:ifset="$new->cover" class="img-fluid" src="{$basePath}/upload/news/{$new->id}/{$new->cover}" alt="{$new->title}">
-						<h3>{$new->title}</h3>
-					</header>
-					<section n:ifset="$new->perex">
-						{$new->perex|noescape}
-					</section>
-					<footer n:ifset="$files">
-{*						<a n:href="News:show $new->slug" class="btn btn-secondary">Zobrazit více</a>*}
-					</footer>
+						<div n:if="$new->cover != NULL" class="news-badgelist">
+							<div n:if="$new->gallery_id != NULL" class="badge">Galerie</div>
+							<div n:ifset="$files" class="badge">Soubor/y</div>
+						</div>
+						<header>
+							<time datetime="{$new->created|date:'Y-m-d'}">{$new->created|dayMonthYear}</time>
+							<img n:ifset="$new->cover" class="img-fluid" src="{$basePath}/upload/news/{$new->id}/{$new->cover}" alt="{$new->title}">
+							<h3>{$new->title}</h3>
+						</header>
+						<section n:ifset="$new->perex">
+							{$new->perex|noescape}
+						</section>
+						<footer n:ifset="$files">
+	{*						<a n:href="News:show $new->slug" class="btn btn-secondary">Zobrazit více</a>*}
+						</footer>
 					</a>
 				</article>
 				{/foreach}

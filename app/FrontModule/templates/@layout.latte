@@ -54,10 +54,9 @@
 						<li><a n:href="Event:default adventni-beh">Adventní běh</a></li>
 						<li><a n:href="Homepage:team">Hopman team</a></li>
 						<li><a n:href="News:">Aktuality</a></li>
-						<li><a n:href="Homepage:team">Hopman team</a></li>
-						<li><a n:href="Homepage:members">Členové teamu</a></li>
+						<li><a class="disabled nav-link" href="#" aria-disabled="true">Členové teamu</a></li>
 						<li><a n:href="Homepage:about">Napsali o nás</a></li>
-						<li><a n:href="Homepage:archive">Archiv</a></li>
+						<li><a class="disabled nav-link" href="#" aria-disabled="true">Archiv</a></li>
 						<li><a n:href="Homepage:sitemap">Mapa stránek</a></li>
 					</ul>
 				</div>
@@ -138,6 +137,16 @@
 	<meta name="msapplication-TileColor" content="#ffffff">
 	<meta name="msapplication-config" content="{$basePath}/dist/favicon/browserconfig.xml">
 	<meta name="theme-color" content="#ffffff">
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-106610347-2"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){ dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'UA-106610347-2');
+	</script>
 
 	<link rel="stylesheet" href="{$basePath}/dist/front.bundle.css?{filemtime(WWW . '/dist/front.bundle.css')}" type="text/css">
 	<!-- FONT AWESOME -->

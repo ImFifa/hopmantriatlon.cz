@@ -153,6 +153,13 @@
 		}
 	}
 
+
+	.last-year-event-galleries {
+		.galerie {
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+
 	.galerie {
 		grid-template-columns: 1fr 1fr 1fr 1fr;
 
@@ -168,6 +175,12 @@
 }
 
 @include media-breakpoint-up(lg) {
+	.last-year-event-galleries {
+		.galerie {
+			grid-template-columns: 1fr 1fr 1fr;
+		}
+	}
+
 	.carousel-control {
 		display: none
 	}
@@ -433,6 +446,11 @@
 
 	.galerie {
 		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+	}
+	.event-galleries {
+		.galerie {
+			grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+		}
 	}
 	.news-gallery {
 		.galerie {

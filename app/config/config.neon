@@ -10,9 +10,17 @@ application:
 services:
 	router: App\RouterFactory::createRouter()
 	repository: App\Service\ProjectModelRepository
+	# Grids
+	- App\AdminModule\Grid\MemberGridFactory
+	- App\AdminModule\Grid\EventGalleryGridFactory
 	- App\Model\EventModel
+	- App\Model\MemberModel
 	- App\Model\CompetitionModel
 	- App\Model\CompetitorModel
+	- App\Model\EventCategoryModel
+	- App\Model\EventGalleryModel
+	- App\Model\EventRecordModel
+	- App\Model\EventStatusModel
 	admin.dashboard.eventpanel: App\AdminModule\Dashboard\EventPanel\EventPanelFactory
 
 parameters:
@@ -20,6 +28,8 @@ parameters:
 	admin:
 		menu:
 			Závody: [':Admin:Event:', run]
+			Fotky ze závodů: [':Admin:EventGallery:', image-multiple]
+			Členové: [':Admin:Member:', account-group]
 		dashboard:
 				EventPanel:
 					service: admin.dashboard.eventpanel
@@ -28,6 +38,7 @@ parameters:
 
 extensions:
     dateFilterExtension: h4kuna\DateFilter\DI\DateFilterExtension
+    recaptcha: Contributte\ReCaptcha\DI\ReCaptchaExtension
 
 migrations:
 	driver: mysql

@@ -4,30 +4,31 @@ namespace App\Model;
 
 use K2D\Core\Models\BaseModel;
 use Nette\Database\Table\ActiveRow;
+use Nette\Database\Table\Selection;
 
 class CompetitorModel extends BaseModel
 {
 
 	protected string $table = 'competitor';
 
-	public function getCompetitors($event_id): array
+	public function getCompetitors($competition_id): Selection
 	{
-		return $this->getTable()->where('event_id', $event_id)->order('id DESC')->fetchAll();
+		return $this->getTable()->where('competition_id', $competition_id)->order('id DESC');
 	}
 
-	public function getRegisteredCompetitors($event_id): int
+	public function getRegisteredCompetitors($competition_id): int
 	{
-		return $this->getTable()->where('event_id', $event_id)->count();
+		return $this->getTable()->where('competition_id', $competition_id)->count();
 	}
 
-	public function getRegisteredMan($event_id): int
+	public function getRegisteredMan($competition_id): int
 	{
-		return $this->getTable()->where('event_id', $event_id)->where('sex', 'M')->count();
+		return $this->getTable()->where('competition_id', $competition_id)->where('sex', 'M')->count();
 	}
 
-	public function getRegisteredWoman($event_id): int
+	public function getRegisteredWoman($competition_id): int
 	{
-		return $this->getTable()->where('event_id', $event_id)->where('sex', 'Ž')->count();
+		return $this->getTable()->where('competition_id', $competition_id)->where('sex', 'Ž')->count();
 	}
 //
 //	public function getEvent(string $slug): ?ActiveRow

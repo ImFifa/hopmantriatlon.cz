@@ -1,90 +1,184 @@
 {block #content}
+	{block #og}
+		<meta property="og:title" content="{$event->name} - registrace | HOPMAN">
+		<meta property="og:url" content="{$baseUrl}{plink this}" />
+		<meta property="og:type" content="website">
+		<meta property="og:image" content="{$baseUrl}/{ifset $event->og_image}{$event->og_image}{else}{$vars->og_image}{/ifset}">
+		<meta property="og:description" content="
+		{ifset $event->description}
+			{$event->description|truncate:100}
+		{else}
+			{$vars->description}
+		{/ifset}">
+	{/block}
+
 	<header class="secondary-header" style="background-image: url('{$basePath}/{$event->header_image}')">
 	</header>
 
-	<section class="page-section gallery-page">
+	<section class="page-section registration-page">
 		<div class="container">
 			<a n:href="Event: $event->slug" class="btn btn-outline-secondary mb-3"><i class="fas fa-angle-left"></i> Zpět na stránku závodu</a>
+
+			<!-- Modal -->
+			{foreach $flashes as $flash}
+				{if $flash->type === 'success'}
+					<div class="modal fade" id="registeredModal" tabindex="-1" role="dialog" aria-labelledby="registeredModalTitle" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h4 class="modal-title" id="registeredModalLongTitle">{$event->name}</h4>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									{$flash->message}
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Zavřít</button>
+									<a n:href="Event:startlist $event->slug" class="btn btn-primary">Zobrazit startovní listinu</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				{else}
+					<div class="alert alert-{$flash->type} alert-dismissible fade show" style="max-width: 600px" role="alert">
+						{$flash->message}
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				{/if}
+			{/foreach}
+
 			<h1 n:block="title">{$event->name}</h1>
 			<h3>Registrace k závodu</h3>
-
-			{foreach $flashes as $flash}
-				<div class="alert alert-{$flash->type}" role="alert">
-					{$flash->message}
-				</div>
-			{/foreach}
 
 			{if $event->slug != 'pulmaraton'}
 				<h3>Stránka je právě v tvorbě</h3>
 			{else}
-				{snippetArea signUpFormWrapper}
-					{form signUpForm, class => 'signUpForm row'}
-						{input event_id class => 'form-control input-hidden', value => $event->id}
-						<div class="col-lg-12">
-							<div class="form-group">
-								{label name}{/label}
-									{input name class => 'form-control'}
-							</div>
+				{form signUpForm, class => 'signUpForm row'}
+					{input competition_id class => 'form-control input-hidden', value => $event->competition_id}
+					<div class="col-lg-12">
+						<div class="form-group">
+							{label name}{/label}
+								{input name class => 'form-control'}
 						</div>
+					</div>
 
-						<div class="col-lg-12">
-							<div class="form-group">
-								{label surname}{/label}
-									{input surname class => 'form-control'}
-							</div>
+					<div class="col-lg-12">
+						<div class="form-group">
+							{label surname}{/label}
+								{input surname class => 'form-control'}
 						</div>
+					</div>
 
-						<div class="col-lg-6">
-							<div class="form-group">
-								{label year_of_birth}{/label}
-									{input year_of_birth class => 'form-control'}
-							</div>
+					<div class="col-lg-6">
+						<div class="form-group">
+							{label year_of_birth}{/label}
+								{input year_of_birth class => 'form-control'}
 						</div>
+					</div>
 
-						<div class="col-lg-12">
-							<div class="form-group">
-								{label sex}{/label}
-								{input sex class => 'form-control'}
-							</div>
+					<div class="col-lg-6">
+						<div class="form-group">
+							{label sex}{/label}
+							{input sex class => 'form-control'}
 						</div>
+					</div>
 
-						<div class="col-lg-12">
-							<div class="form-group">
-								{label distance}{/label}
-								{input distance class => 'form-control'}
-							</div>
+					<div class="col-lg-6">
+						<div class="form-group">
+							{label distance}{/label}
+							{input distance class => 'form-control'}
+							<small id="distance-info">Osoby mladší 18ti let nemohou startovat na trati půlmaratonu.</small>
 						</div>
+					</div>
 
-						<div class="col-lg-12">
-							<div class="form-group">
-								{label team}{/label}
-									{input team class => 'form-control'}
-								<small>Toto pole je volitelné</small>
-							</div>
+					<div class="col-lg-6">
+						<div class="form-group">
+							{label category}{/label}
+							{input category class => 'form-control'}
 						</div>
+					</div>
 
-						<div class="col-lg-12">
-							<div class="form-group">
-								{label email}{/label}
-									{input email class => 'form-control'}
-								<small>Váš email nebude nikde zveřejněn.<br>Využijeme jej pouze pro zaslání diplomu či v případě nutnosti Vás kontaktovat.</small>
-							</div>
+					<div class="col-lg-12">
+						<div class="form-group">
+							{label team}{/label}
+								{input team class => 'form-control'}
+							<small>Toto pole je volitelné</small>
 						</div>
+					</div>
 
-						<div class="col-lg-12">
-							<div class="form-group agree-checkbox">
-									{input agree class => 'form-control, required'}
-							</div>
+					<div class="col-lg-12">
+						<div class="form-group">
+							{label email}{/label}
+								{input email class => 'form-control'}
+							<small>Váš email nebude nikde zveřejněn.<br>Využijeme jej pouze pro zaslání diplomu či v případě nutnosti Vás kontaktovat.</small>
 						</div>
+					</div>
 
-						<div class="col-lg-6">
-							<div class="form-group">
-								{input submit class => 'btn btn-primary'}
-							</div>
+					<div class="col-lg-12">
+						<div class="form-group agree-checkbox">
+								{input agree class => 'form-control, required'}
 						</div>
-					{/form}
-				{/snippetArea}
+					</div>
+
+					<div class="col-lg-6">
+						<div class="form-group">
+							{input submit class => 'btn btn-primary'}
+						</div>
+					</div>
+				{/form}
 			{/if}
 		</div>
 	</section>
+{/block}
+
+{block #scripts}
+	<script type="text/javascript">
+		var signUpForm = document.getElementById('frm-signUpForm');
+		var year = document.getElementById('frm-signUpForm-year_of_birth');
+		var sex = document.getElementById('frm-signUpForm-sex');
+		var distance = document.getElementById('frm-signUpForm-distance');
+		var category = document.getElementById('frm-signUpForm-category');
+		var category_id = document.getElementById('frm-signUpForm-category_id');
+		var categoryCode = '';
+		var currentYear = new Date().getFullYear();
+
+		year.addEventListener('input', () => {
+			if (year.value > 2003) {
+				distance.value = 'Desítka';
+				distance.remove(2);
+				document.getElementById('distance-info').style.display = 'block';
+			} else {
+				if (distance.options.length === 2) {
+					var option = document.createElement("option");
+					option.text = "Půlmaraton";
+					option.value = "Půlmaraton";
+					distance.add(option);
+				}
+				document.getElementById('distance-info').style.display = 'none';
+			}
+		});
+
+		signUpForm.addEventListener('input', () => {
+			{ifset $categories}
+				var age = currentYear - year.value;
+			{foreach $categories as $category}
+				if (age >= {$category->age_from} && age <= {$category->age_to}) {
+					if (distance.value === {$category->distance}) {
+						if (sex.value === {$category->code|first}) {
+							category.value = {$category->id};
+							category_id.value = {$category->id};
+						}
+					}
+				}
+			{/foreach}
+			{/ifset}
+		});
+	</script>
+
+	<script src="https://www.google.com/recaptcha/api.js?render=explicit"></script>
+	<script src="{$basePath}/scripts/invisibleRecaptcha.js"></script>
 {/block}

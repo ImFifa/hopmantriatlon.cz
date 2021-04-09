@@ -1,4 +1,17 @@
 {block #content}
+	{block #og}
+		<meta property="og:title" content="{$event->name} - startovní listina | HOPMAN">
+		<meta property="og:url" content="{$baseUrl}{plink this}" />
+		<meta property="og:type" content="website">
+		<meta property="og:image" content="{$baseUrl}/{ifset $event->og_image}{$event->og_image}{else}{$vars->og_image}{/ifset}">
+		<meta property="og:description" content="
+		{ifset $event->description}
+			{$event->description|truncate:100}
+		{else}
+			{$vars->description}
+		{/ifset}">
+	{/block}
+
 	<header class="secondary-header" style="background-image: url('{$basePath}/{$event->header_image}')">
 	</header>
 
@@ -10,7 +23,6 @@
 			{if $event->slug != 'pulmaraton'}
 				<h3>Stránka je právě v tvorbě</h3>
 			{else}
-{*				{control startList $event->id}*}
 				<div n:ifset="$competitors" class="table-responsive-lg">
 					<table class="table">
 						<thead>
@@ -35,7 +47,7 @@
 							<td>{$competitor->year_of_birth}</td>
 							<td>{$competitor->sex}</td>
 							<td>{$competitor->team}</td>
-							<td>{$competitor->category}</td>
+							<td>{($competitor->category_id) ? $competitor->category->name : '---'}</td>
 							<td>{$competitor->distance}</td>
 						</tr>
 

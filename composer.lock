@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2ba89153eb48a272763c4ec26a0cbeb6",
+    "content-hash": "1f8a9de49c84ec123176d566ed0e409e",
     "packages": [
         {
             "name": "brick/date-time",
@@ -255,6 +255,73 @@
                 "source": "https://github.com/contributte/di/tree/v0.4.2"
             },
             "time": "2020-01-05T18:11:45+00:00"
+        },
+        {
+            "name": "contributte/recaptcha",
+            "version": "v3.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/contributte/reCAPTCHA.git",
+                "reference": "0d81d8dbb37c4f33022b93c6e5cf4a7647b570e9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/contributte/reCAPTCHA/zipball/0d81d8dbb37c4f33022b93c6e5cf4a7647b570e9",
+                "reference": "0d81d8dbb37c4f33022b93c6e5cf4a7647b570e9",
+                "shasum": ""
+            },
+            "require": {
+                "nette/di": "~3.0.0",
+                "nette/forms": "~3.0.0",
+                "nette/utils": "~3.0.0|~3.1.0",
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "ninjify/nunjuck": "^0.3.0",
+                "ninjify/qa": "^0.9.0",
+                "phpstan/phpstan-deprecation-rules": "^0.11",
+                "phpstan/phpstan-nette": "^0.11",
+                "phpstan/phpstan-shim": "^0.11",
+                "phpstan/phpstan-strict-rules": "^0.11"
+            },
+            "suggest": {
+                "ext-openssl": "To make requests via https"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Contributte\\ReCaptcha\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Milan Felix Šulc",
+                    "homepage": "https://f3l1x.io"
+                }
+            ],
+            "description": "Google reCAPTCHA for Nette - Forms",
+            "homepage": "https://github.com/contributte/reCAPTCHA",
+            "keywords": [
+                "Forms",
+                "captcha",
+                "google",
+                "nette",
+                "recaptcha"
+            ],
+            "support": {
+                "issues": "https://github.com/contributte/reCAPTCHA/issues",
+                "source": "https://github.com/contributte/reCAPTCHA/tree/master"
+            },
+            "time": "2020-06-15T13:42:54+00:00"
         },
         {
             "name": "firebase/php-jwt",
@@ -3433,7 +3500,7 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:K2D-CZ/core.git",
-                "reference": "e08dbcdb2af0432294fa40479151af4751fdaf61"
+                "reference": "85dc926a4afe42c8dd331451a23e63c95df8b19c"
             },
             "require": {
                 "contributte/console": "^0.8.0",
@@ -3462,7 +3529,7 @@
                 "cms",
                 "nette"
             ],
-            "time": "2021-03-22T01:38:44+00:00"
+            "time": "2021-04-07T02:07:29+00:00"
         },
         {
             "name": "simple-cms/file-module",

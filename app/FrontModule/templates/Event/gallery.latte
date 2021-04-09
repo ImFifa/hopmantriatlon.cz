@@ -1,4 +1,17 @@
 {block #content}
+	{block #og}
+		<meta property="og:title" content="{$event->name} - galerie | HOPMAN">
+		<meta property="og:url" content="{$baseUrl}{plink this}" />
+		<meta property="og:type" content="website">
+		<meta property="og:image" content="{$baseUrl}/{ifset $event->og_image}{$event->og_image}{else}{$vars->og_image}{/ifset}">
+		<meta property="og:description" content="
+		{ifset $event->description}
+			{$event->description|truncate:100}
+		{else}
+			{$vars->description}
+		{/ifset}">
+	{/block}
+
 	<header class="secondary-header" style="background-image: url('{$basePath}/{$event->header_image}')">
 	</header>
 
@@ -6,7 +19,23 @@
 		<div class="container">
 			<a n:href="Event: $event->slug" class="btn btn-outline-secondary mb-3">Zpět na stránku závodu</a>
 			<h1 n:block="title">{$event->name} <small>- Galerie</small></h1>
-			<h3>Stránka je právě v tvorbě</h3>
+			{if $event->gallery_year != NULL}
+				<section class="event-galleries">
+					<div class="galerie">
+						{foreach $galleries as $gallery}
+							<article>
+								<a href="{$gallery->link}" target="_blank">
+									<img src="{$basePath}/upload/eventGalleries/{$gallery->id}/{$gallery->cover}" alt="{$gallery->event->name} - {$gallery->name}">
+								</a>
+								<h5 class="mt-2 mb-0">{$gallery->year} - {$gallery->name}</h5>
+								<span n:if="$gallery->n_photos && $gallery->author"><i class="fas fa-camera"></i> {$gallery->author} | {$gallery->n_photos} <i class="fas fa-image"></i></span>
+							</article>
+						{/foreach}
+					</div>
+				</section>
+			{else}
+				<h3>Stránka je právě v tvorbě</h3>
+			{/if}
 		</div>
 	</section>
 {/block}

@@ -154,12 +154,11 @@ h1, h2, h3 {
 }
 
 .signUpForm {
-	max-width: 650px;
+	max-width: 600px;
 
-	input, select {
-		max-width: 550px;
+	#distance-info {
+		display: none;
 	}
-
 
 	.input-hidden {
 		width: 0;
@@ -764,8 +763,9 @@ footer.main-footer {
 		transition: all .25s ease-in-out;
 		filter: brightness(95%);
 		display: flex;
+		flex-direction: column;
 		justify-content: center;
-		align-items: center;
+		align-items: flex-start;
 
 		img {
 			width: 100%;
@@ -781,6 +781,35 @@ footer.main-footer {
 			box-shadow: 0 0 10px 2px rgba($gray-600, .6);
 			filter: brightness(105%);
 			transform: scale(1.05);
+		}
+	}
+}
+.last-year-event-galleries {
+	.galerie {
+		grid-gap: 1rem;
+
+		a {
+			display: inline-block;
+		}
+
+		img {
+			width: 100%;
+			height: auto;
+			max-width: 160px;
+		}
+	}
+}
+.event-galleries {
+	.galerie {
+		grid-gap: 1rem;
+
+		a {
+			display: inline-block;
+		}
+
+		img {
+			width: auto;
+			height: auto;
 		}
 	}
 }

@@ -19,7 +19,23 @@
 		<div class="container">
 			<a n:href="Event: $event->slug" class="btn btn-outline-secondary mb-3">Zpět na stránku závodu</a>
 			<h1 n:block="title">{$event->name} <small>- Galerie</small></h1>
-			<h3>Stránka je právě v tvorbě</h3>
+			{if $event->gallery_year != NULL}
+				<section class="event-galleries">
+					<div class="galerie">
+						{foreach $galleries as $gallery}
+							<article>
+								<a href="{$gallery->link}" target="_blank">
+									<img src="{$basePath}/upload/eventGalleries/{$gallery->id}/{$gallery->cover}" alt="{$gallery->event->name} - {$gallery->name}">
+								</a>
+								<h5 class="mt-2 mb-0">{$gallery->year} - {$gallery->name}</h5>
+								<span n:if="$gallery->n_photos && $gallery->author"><i class="fas fa-camera"></i> {$gallery->author} | {$gallery->n_photos} <i class="fas fa-image"></i></span>
+							</article>
+						{/foreach}
+					</div>
+				</section>
+			{else}
+				<h3>Stránka je právě v tvorbě</h3>
+			{/if}
 		</div>
 	</section>
 {/block}

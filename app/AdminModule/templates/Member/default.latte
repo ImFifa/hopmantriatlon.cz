@@ -1,0 +1,13 @@
+{block #title}
+	<i class="icon mdi mdi-account-group"></i> Členové
+{/block}
+
+{block #buttons}
+	<a n:href="edit" class="btn btn-success">Přidat člena</a>
+{/block}
+
+{block content}
+	<div class="m-admin-fix bg-white pb-2">
+		{control memberGrid}
+	</div>
+{/block}

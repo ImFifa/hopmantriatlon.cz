@@ -1,0 +1,47 @@
+{extends $control->baseGridTemplate}
+
+{define body-cell-name}
+	<td>
+		{$record->name}
+	</td>
+{/define}
+
+{define body-cell-surname}
+	<td>
+		{$record->surname}
+	</td>
+{/define}
+
+{define body-cell-sport}
+	<td>
+		{$record->sport}
+	</td>
+{/define}
+
+{define body-cell-public}
+	<td>
+		{if $record->public}
+			<span class="text-success"><i class="mdi mdi-earth"></i> Veřejný</span>
+		{else}
+			<span class="text-danger"><i class="mdi mdi-lock"></i> Neveřejný</span>
+		{/if}
+	</td>
+{/define}
+
+{define body-cell-updated}
+	<td>
+		{$record->updated|date:'d.m.Y'}
+	</td>
+{/define}
+
+{define row-action-edit}
+	<a href="{plink :Admin:Member:edit $record->id}" class="btn btn-sm btn-primary">
+		{$action->getLabel()}
+	</a>
+{/define}
+
+{define row-action-delete}
+	<a data-ajax="on" href="{$link}" class="btn btn-sm btn-outline-danger tw-ajax" data-confirm="modal" n:attr="data-confirm-text => $action->getConfirmation()">
+		{$action->getLabel()}
+	</a>
+{/define}

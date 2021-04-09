@@ -4,6 +4,7 @@ namespace App\FrontModule\Presenters;
 
 use App\Model\EventCategoryModel;
 use App\Model\CompetitorModel;
+use App\Model\EventGalleryModel;
 use App\Model\EventModel;
 use K2D\File\Model\FileModel;
 use K2D\Gallery\Models\GalleryModel;
@@ -20,6 +21,9 @@ class EventPresenter extends BasePresenter
 
 	/** @inject */
 	public CompetitorModel $competitorModel;
+
+	/** @inject */
+	public EventGalleryModel $eventGalleryModel;
 
 	/** @inject */
 	public EventCategoryModel $eventCategoryModel;
@@ -59,6 +63,11 @@ class EventPresenter extends BasePresenter
 		if($event->gallery_id != NULL) {
 			$this->template->images = $this->imageModel->getImagesByGallery($event->gallery_id);
 		}
+
+		// event last year gallery
+		if ($event->gallery_year != NULL) {
+			$this->template->galleries = $this->eventGalleryModel->getPublicEventGalleriesFromYear($event->gallery_year);
+		}
 	}
 
 
@@ -69,6 +78,9 @@ class EventPresenter extends BasePresenter
 			$this->error();
 		} else {
 			$this->template->event = $event;
+			if ($event->gallery_year != NULL) {
+				$this->template->galleries = $this->eventGalleryModel->getPublicEventGalleries();
+			}
 		}
 	}
 

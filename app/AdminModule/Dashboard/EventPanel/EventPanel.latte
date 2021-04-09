@@ -14,7 +14,7 @@
 	</div>
 	<div n:ifset="$events" class="card-footer bg-white border-0 pt-0">
 		{foreach $events as $event}
-			<a href="{plink :Admin:Event:edit $event->slug}" class="btn btn-outline-success btn-sm"><i class="icon mdi mdi-{$event->icon}"></i> {$event->name}</a>
+			<a href="{plink :Admin:Event:edit $event->slug}" class="btn btn-outline-success btn-sm mr-1 mb-2"><i class="icon mdi mdi-{$event->icon}"></i> {$event->name}</a>
 		{/foreach}
 
 	</div>

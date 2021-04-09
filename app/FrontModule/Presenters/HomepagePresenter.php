@@ -55,11 +55,6 @@ class HomepagePresenter extends BasePresenter
 
 	}
 
-	public function renderMembers(): void
-	{
-
-	}
-
 	public function renderSitemap(): void
 	{
 		$this->template->events = $this->eventModel->getActiveEvents();

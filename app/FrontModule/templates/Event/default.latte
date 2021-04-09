@@ -91,16 +91,30 @@
 					{else}
 						<h6>V přípravě</h6>
 					{/if}
-{*					<a n:href="Event:results $event->slug" class="btn btn-primary">Zobrazit výsledky</a>*}
 				</section>
 
 				<section id="galerie">
 					<h3>Galerie</h3>
-					<h6>V přípravě</h6>
-{*					<a n:href="Event:gallery $event->slug" class="btn btn-primary">Zobrazit galerii</a>*}
+					{ifset $galleries}
+						<p>Fotografie z roku {$event->gallery_year}</p>
+						<div class="last-year-event-galleries">
+							<div class="galerie">
+								{foreach $galleries as $gallery}
+									<article>
+										<a href="{$gallery->link}" target="_blank">
+											<img src="{$basePath}/upload/eventGalleries/{$gallery->id}/{$gallery->cover}" alt="{$gallery->event->name} - {$gallery->name}">
+										</a>
+									</article>
+								{/foreach}
+							</div>
+						</div>
+						<a n:href="Event:gallery $event->slug" class="mt-4 btn btn-primary">Zobrazit celou galerii</a>
+					{else}
+						<h6>V přípravě</h6>
+					{/ifset}
 				</section>
 
-				<section id="galerie">
+				<section id="mapy">
 					<h3>Mapy</h3>
 					{ifset $maps}
 						<div class="maps-gallery">

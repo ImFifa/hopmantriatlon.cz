@@ -1,0 +1,122 @@
+{templateType K2D\Core\Template\BaseTemplate}
+{varType Nette\Database\Table\ActiveRow|null $eventGallery}
+
+{block #title}
+	{$eventGallery === null ? 'Přidání' : 'Úprava'} galerie
+{/block}
+
+{block #buttons}
+	<a href="#" class="btn btn-primary" onclick="triggerClick('.btn-save')">
+		Uložit
+	</a>
+	<a n:href="default" class="btn btn-light">
+		Zpět
+	</a>
+{/block}
+
+{block content}
+	<div n:if="$eventGallery && $eventGallery->cover" n:snippet="cropper" class="modal fade" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered modal-lg">
+			<div class="modal-content">
+				<div class="modal-body p-0">
+					{control cropper}
+				</div>
+				<div class="modal-footer d-flex justify-content-between">
+					<button type="button" class="btn btn-light" data-dismiss="modal">Zavřít</button>
+					<button type="button" class="btn btn-success" onclick="triggerClick('.btn-cropper-submit')">Oříznout</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid bg-white">
+		<div class="row">
+			<div class="col-lg-8">
+				{snippet cover}
+					{form editForm}
+						<div class="row">
+							<div class="col-lg-4">
+								<div class="form-group">
+									{label name}{/label}
+                                    {input name class => 'form-control form-control-sm'}
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="form-group">
+									{label event_id}{/label}
+                                    {input event_id class => 'form-control form-control-sm'}
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="form-group">
+									{label year}{/label}
+                                    {input year class => 'form-control form-control-sm'}
+								</div>
+							</div>
+							<div class="col-lg-8">
+								<div class="form-group">
+									{label link}{/label}
+                                    {input link class => 'form-control form-control-sm'}
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="form-group">
+									{label author}{/label}
+                                    {input author class => 'form-control form-control-sm'}
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="form-group">
+									{label n_photos}{/label}
+                                    {input n_photos class => 'form-control form-control-sm'}
+								</div>
+							</div>
+							<div class="form-group d-flex align-items-end pb-1">
+								<div class="custom-control custom-checkbox">
+									<input n:name="public" class="custom-control-input">
+									<label n:name="public" class="custom-control-label">Zveřejnit</label>
+								</div>
+							</div>
+						</div>
+						{input save class => 'btn-save d-none'}
+					{/form}
+				{/snippet}
+			</div>
+			<div class="col-lg-4" n:if="$eventGallery" n:snippet="image">
+				<div class="mb-2">
+					Náhledový obrázek
+				</div>
+				{control dropzone}
+                {if $eventGallery->cover}
+					<div class="position-relative" n:if="$eventGallery->cover">
+						<img src="{$basePath}/upload/eventGallerys/{$eventGallery->id}/{$eventGallery->cover}" class="img-fluid" />
+						<div class="position-absolute" style="bottom: 0; width: 100%;">
+							<div class="text-center mb-3">
+								<a n:href="cropImage!" class="ajax btn btn-primary btn-sm">
+									Oříznout
+								</a>
+								<a n:href="deleteImage!"
+										data-confirm="modal"
+										data-confirm-title="Smazání obrázku"
+										data-confirm-text="Opravdu chcete smazat tento obrázek?"
+										data-ajax="off"
+										class="btn btn-sm btn-danger">
+									Smazat
+								</a>
+							</div>
+						</div>
+					</div>
+				{else}
+					<div class="alert alert-info">
+						<div class="icon">
+							<i class="mdi mdi-information"></i>
+						</div>
+						<div class="message">
+							Náhledový obrázek není nahrán
+						</div>
+					</div>
+				{/if}
+			</div>
+		</div>
+	</div>
+{/block}

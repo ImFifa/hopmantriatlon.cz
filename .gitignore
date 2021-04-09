@@ -12,4 +12,5 @@ app/config/google_service_account.json
 www/upload/*
 www/dist/*
 www/info.php
+www/.htaccess
 /resources

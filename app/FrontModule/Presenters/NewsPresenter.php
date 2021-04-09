@@ -2,6 +2,7 @@
 
 namespace App\FrontModule\Presenters;
 
+use K2D\Gallery\Models\ImageModel;
 use K2D\News\Models\NewModel;
 use Nette\Utils\Paginator;
 
@@ -10,6 +11,9 @@ class NewsPresenter extends BasePresenter
 
 	/** @inject */
 	public NewModel $newsModel;
+
+	/** @inject */
+	public ImageModel $imageModel;
 
 	public function renderDefault(int $page = 1): void
 	{
@@ -36,6 +40,12 @@ class NewsPresenter extends BasePresenter
 			$this->error();
 		} else {
 			$this->template->new = $new;
+
+			// event gallery
+			if($new->gallery_id != NULL) {
+				$this->template->images = $this->imageModel->getImagesByGallery($new->gallery_id);
+			}
+
 			$this->template->prevNew = $this->repository->getPrevPublicNew($new->created);
 			$this->template->nextNew = $this->repository->getNextPublicNew($new->created);
 		}

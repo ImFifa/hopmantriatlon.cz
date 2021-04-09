@@ -9,7 +9,20 @@
 				<h1 n:block="title">{$new->title}</h1>
 				<img n:ifset="$new->cover" src="{$basePath}/upload/news/{$new->id}/{$new->cover}" alt="{$new->title}">
 			</header>
-			<section n:ifset="$new->content">{$new->content|noescape}</section>
+			<section n:ifset="$new->content">{$new->content|noescape}
+
+			<aside n:ifset="$images" class="news-gallery">
+				<h5>Galerie:</h5>
+				<div class="galerie">
+					{foreach $images as $image}
+						<a href="{$basePath}/upload/galleries/{$new->gallery_id}/{$image->name}" data-lightbox="gallery" data-name="{$image->name}">
+							<img src="{$basePath}/upload/galleries/{$new->gallery_id}/thumbs/{$image->name}" class="lazyload" alt="{$image->title}">
+						</a>
+					{/foreach}
+				</div>
+			</aside>
+
+			</section>
 			<footer>
 				<article n:ifset="$nextNew">
 					<a n:href="News:show $nextNew->slug">

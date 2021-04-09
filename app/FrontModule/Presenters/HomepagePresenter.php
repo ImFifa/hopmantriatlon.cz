@@ -20,7 +20,7 @@ class HomepagePresenter extends BasePresenter
 
 	public function renderDefault(): void
 	{
-		$this->template->events = $this->eventModel->getEvents();
+		$this->template->events = $this->eventModel->getActiveEvents();
 		$this->template->news = $this->newsModel->getPublicNews('cs')->limit(3);
 
 		$vars = $this->configuration;
@@ -47,7 +47,7 @@ class HomepagePresenter extends BasePresenter
 
 	public function renderArchive(): void
 	{
-
+		$this->template->events = $this->eventModel->getInactiveEvents();
 	}
 
 	public function renderAbout(): void
@@ -62,7 +62,7 @@ class HomepagePresenter extends BasePresenter
 
 	public function renderSitemap(): void
 	{
-		$this->template->events = $this->eventModel->getEvents();
+		$this->template->events = $this->eventModel->getActiveEvents();
 	}
 
 }

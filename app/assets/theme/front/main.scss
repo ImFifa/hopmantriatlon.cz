@@ -154,12 +154,11 @@ h1, h2, h3 {
 }
 
 .signUpForm {
-	max-width: 650px;
+	max-width: 600px;
 
-	input, select {
-		max-width: 550px;
+	#distance-info {
+		display: none;
 	}
-
 
 	.input-hidden {
 		width: 0;

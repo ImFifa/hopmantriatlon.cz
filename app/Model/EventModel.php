@@ -15,6 +15,16 @@ class EventModel extends BaseModel
 		return $this->getTable()->fetchAll();
 	}
 
+	public function getActiveEvents(): array
+	{
+		return $this->getTable()->where('active', 1)->fetchAll();
+	}
+
+	public function getInactiveEvents(): array
+	{
+		return $this->getTable()->where('active', 0)->fetchAll();
+	}
+
 	public function getEvent(string $slug): ?ActiveRow
 	{
 		return $this->getTable()->where('slug', $slug)->fetch();

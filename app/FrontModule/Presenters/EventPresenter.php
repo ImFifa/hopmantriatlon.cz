@@ -2,12 +2,14 @@
 
 namespace App\FrontModule\Presenters;
 
+use App\Model\EventCategoryModel;
 use App\Model\CompetitorModel;
 use App\Model\EventModel;
 use K2D\File\Model\FileModel;
 use K2D\Gallery\Models\GalleryModel;
 use K2D\Gallery\Models\ImageModel;
 use Nette\Application\UI\Form;
+use Nette\Database\DriverException;
 use Nette\Database\Table\ActiveRow;
 use Ublaboo\DataGrid\DataGrid;
 
@@ -18,6 +20,9 @@ class EventPresenter extends BasePresenter
 
 	/** @inject */
 	public CompetitorModel $competitorModel;
+
+	/** @inject */
+	public EventCategoryModel $eventCategoryModel;
 
 	/** @inject */
 	public ImageModel $imageModel;
@@ -37,9 +42,9 @@ class EventPresenter extends BasePresenter
 
 		// startlist
 		if($event->startlist_active) {
-			$this->template->participants = $this->competitorModel->getRegisteredCompetitors($event->id);
-			$this->template->participantsMan = $this->competitorModel->getRegisteredMan($event->id);
-			$this->template->participantsWoman = $this->competitorModel->getRegisteredWoman($event->id);
+			$this->template->participants = $this->competitorModel->getRegisteredCompetitors($event->competition_id);
+			$this->template->participantsMan = $this->competitorModel->getRegisteredMan($event->competition_id);
+			$this->template->participantsWoman = $this->competitorModel->getRegisteredWoman($event->competition_id);
 		}
 
 		// results
@@ -75,6 +80,8 @@ class EventPresenter extends BasePresenter
 			$this->error();
 		} else {
 			$this->template->event = $event;
+			$this->template->categories = $this->eventCategoryModel->getCategoriesForEventById($event->id);
+			bdump($this->template->categories);
 		}
 	}
 
@@ -86,7 +93,7 @@ class EventPresenter extends BasePresenter
 			$this->error();
 		} else {
 			$this->template->event = $event;
-			$this->template->competitors = $this->competitorModel->getCompetitors($event->id);
+			$this->template->competitors = $this->competitorModel->getCompetitors($event->competition_id);
 		}
 	}
 
@@ -95,9 +102,7 @@ class EventPresenter extends BasePresenter
 	{
 		$form = new Form();
 
-		$form->addHidden('id');
-
-		$form->addText('event_id', 'ID události');
+		$form->addText('competition_id', 'ID události');
 
 		$form->addText('name', 'Jméno')
 			->addRule(Form::MAX_LENGTH, 'Maximálné délka je %s znaků', 100)
@@ -106,6 +111,12 @@ class EventPresenter extends BasePresenter
 		$form->addText('surname', 'Příjmení')
 			->addRule(Form::MAX_LENGTH, 'Maximálné délka je %s znaků', 100)
 			->setRequired('Musíte uvést Vaše příjmení');
+
+		$form->addInteger('year_of_birth', 'Rok narození')
+			->addRule(Form::LENGTH, 'Požadovaná délka jsou %s znaky', 4)
+			->addRule(Form::MAX,'Děti mladší 15ti let se nemohou zaregistrovat.',2006)
+			->addRule(Form::MIN,'Vážně je Vám víc než 100 let? :-)',1921)
+			->setRequired('Musíte uvést Váš rok narození');
 
 		$form->addSelect('sex', 'Pohlaví')
 			->setPrompt('-------')
@@ -123,16 +134,12 @@ class EventPresenter extends BasePresenter
 				'Půlmaraton' => 'Půlmaraton (21km)'
 			]);
 
-		$form->addInteger('year_of_birth', 'Rok narození')
-			->addRule(Form::MAX_LENGTH, 'Maximálné délka jsou %s znaky', 4)
-			->addRule(Form::MAX,'Děti mladší 15ti let se nemohou zaregistrovat.',2003)
-			->addRule(Form::MIN,'Vážně je Vám víc než 100 let? :-)',1921)
-			->setRequired('Musíte uvést Váš rok narození');
-
-		$form->addText('category', 'Kategorie')
-			->setHtmlAttribute('placeholder','Zadejte rok narození a pohlaví')
-			->setDisabled()
-			->setRequired('Pro správné zařazení do kategorie je nutné vyplnit rok narození a pohlaví.');
+		$form->addSelect('category', 'Kategorie')
+			->setPrompt('-------')
+			->setItems($this->eventCategoryModel->getForSelect())
+			->setDisabled();
+		$form->addHidden('category_id')
+			->setHtmlAttribute('id', 'frm-signUpForm-category_id');
 
 		$form->addText('team', 'Oddíl/město')
 			->addRule(Form::MAX_LENGTH, 'Maximálné délka je %s znaků', 150);
@@ -145,52 +152,25 @@ class EventPresenter extends BasePresenter
 			->setHtmlAttribute('class', 'form-control')
 			->setRequired('Je potřeba souhlasit s podmínkami');
 
-
-//		$form->addInvisibleReCaptcha('recaptcha')
-//			->setMessage('Jste opravdu člověk?');
+		$form->addInvisibleReCaptcha('recaptcha')
+			->setMessage('Jste opravdu člověk?');
 
 		$form->addSubmit('submit', 'Odeslat přihlášku');
 
 		$form->onSubmit[] = function (Form $form) {
-			$values = $form->getValues(true);
+			try {
+				$values = $form->getValues(true);
 
-			if ($values['id'] === '') {
-				unset($values['id']);
 				unset($values['agree']);
-
-				$year = $values['year_of_birth'];
-				if ($values['sex'] != 'Ž') {
-					if ($year >= 2003) {
-						$values['category'] = 'Dorostenci';
-					} elseif ($year >= 1982) {
-						$values['category'] = 'Muži do 40ti let';
-					} elseif ($year >= 1972) {
-						$values['category'] = 'Muži do 50ti let';
-					} elseif ($year >= 1962) {
-						$values['category'] = 'Muži do 60ti let';
-					} else {
-						$values['category'] = 'Muži 60+';
-					}
-				} else {
-					if ($year >= 2003) {
-						$values['category'] = 'Dorostenky';
-					} elseif ($year >= 1982) {
-						$values['category'] = 'Ženy do 40ti let';
-					} elseif ($year >= 1972) {
-						$values['category'] = 'Ženy do 50ti let';
-					} else {
-						$values['category'] = 'Ženy 50+';
-					}
-				}
-
+				$values['category_id'] = (int) $values['category_id'];
 				$values['id'] = $this->competitorModel->insert($values)->id;
-				$this->flashMessage('Registrace proběhla úspěšně!', 'primary');
 
-			} else {
-				$this->flashMessage('Během registrace nastala chyba', 'danger');
+				$this->flashMessage('Registrace proběhla úspěšně!');
+				$this->redirect('this?odeslano=1');
+
+			} catch (DriverException $e) {
+				$this->flashMessage('Při pokusu o registraci nastala chyba a záznam nebyl uložen. Kontaktujte prosím správce webu na info@hopmantriatlon.cz', 'danger');
 			}
-
-			$this->redirect('this');
 		};
 
 		return $form;

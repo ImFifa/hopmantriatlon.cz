@@ -13,6 +13,7 @@ services:
 	- App\Model\EventModel
 	- App\Model\CompetitionModel
 	- App\Model\CompetitorModel
+	- App\Model\EventCategoryModel
 	admin.dashboard.eventpanel: App\AdminModule\Dashboard\EventPanel\EventPanelFactory
 
 parameters:
@@ -28,6 +29,7 @@ parameters:
 
 extensions:
     dateFilterExtension: h4kuna\DateFilter\DI\DateFilterExtension
+    recaptcha: Contributte\ReCaptcha\DI\ReCaptchaExtension
 
 migrations:
 	driver: mysql

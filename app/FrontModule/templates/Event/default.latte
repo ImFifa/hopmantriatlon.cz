@@ -3,12 +3,7 @@
 		<meta property="og:title" content="{$event->name} | HOPMAN">
 		<meta property="og:url" content="{$baseUrl}{plink this}" />
 		<meta property="og:type" content="website">
-		<meta property="og:image" content="{$baseUrl}/
-		{ifset $event->og_image}
-			{$event->og_image}
-		{else}
-			{$vars->og_image}
-		{/ifset}">
+		<meta property="og:image" content="{$baseUrl}/{ifset $event->og_image}{$event->og_image}{else}{$vars->og_image}{/ifset}">
 		<meta property="og:description" content="
 		{ifset $event->description}
 			{$event->description|truncate:100}
@@ -22,7 +17,7 @@
 	<div class="container">
 		{if $event->slug === 'pulmaraton'}
 		<nav class="nav event-nav">
-		  <a class="nav-link active" href="{$basePath}/files/pulmaraton21.pdf"><i class="fas fa-file"></i> Propozice</a>
+		  <a class="nav-link scroll" n:href="Event:#propozice $event->slug"><i class="fas fa-file"></i> Propozice</a>
 		  <a class="nav-link" n:href="Event:registration $event->slug"><i class="fas fa-file-signature"></i> Registrace</a>
 		  <a class="nav-link" n:href="Event:startlist $event->slug"><i class="fas fa-users"></i> Startovní listina</a>
 		  <a class="nav-link scroll" n:href="Event:#vysledky $event->slug"><i class="fas fa-trophy"></i> Výsledky</a>

@@ -1,6 +1,6 @@
 {
-	"name": "k2d/project-skeleton",
-	"description": "Project template",
+	"name": "urban-webdesign/hopmantriatlon.cz",
+	"description": "Project hopmantriatlon.cz",
 	"minimum-stability": "dev",
 	"prefer-stable": true,
 	"repositories": [
@@ -40,6 +40,7 @@
 		"contributte/recaptcha": "v3.3.1",
 		"nette/nette": "^3.0.0",
 		"orisai/nette-di": "^1.0.0",
+		"nextras/mail-panel": "^2.5",
 		"simple-cms/analytics-module": "v2.x-dev",
 		"simple-cms/box-module": "v2.x-dev",
 		"simple-cms/core-module": "v2.x-dev",

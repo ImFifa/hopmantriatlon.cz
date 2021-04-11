@@ -11,7 +11,12 @@ class EventCategoryModel extends BaseModel
 
 	public function getCategoryNameById(int $category_id): string
 	{
-		return $this->getTable()->where('id', $category_id)->getName();
+		return $this->getTable()->where('id', $category_id)->select('name');
+	}
+
+	public function getCategoryById(int $category_id): ?ActiveRow
+	{
+		return $this->getTable()->where('id', $category_id)->fetch();
 	}
 
 	public function getCategoriesForEventById(int $event_id): array

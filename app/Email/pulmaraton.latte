@@ -1,0 +1,97 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Účastníš se závodu {$competition_name}!</title>
+
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link href="https://fonts.googleapis.com/css2?family=Nunito&family=Varela+Round&display=swap" rel="stylesheet">
+		<style>
+			body {
+				padding: 2rem 2rem 4rem 2rem;
+				color: #333333;
+				background-color: #FFFFFF;
+				font-family: 'Nunito', sans-serif;
+				font-size: 16px;
+				margin: 0 auto;
+			}
+
+			a {
+				color:
+			}
+
+			header {
+				background-color: #000;
+				padding: 2rem;
+				width: 100vw;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+
+			img {
+				width: 100%;
+				max-width: 200px;
+				height: auto;
+			}
+
+			h1, h3, h4, h5 {
+				font-family: 'Varela Round', serif;
+			}
+
+			h1, h3 {
+				text-align: center;
+			}
+
+			article {
+				display: block;
+				max-width: 500px;
+				width: 100%;
+			}
+
+
+		</style>
+	</head>
+	<body>
+	<header>
+		<a href="https://www.hopmantriatlon.cz/" target="_blank">
+			<img src="hopman_logo2021.jpg" alt="Hopman 2021">
+		</a>
+	</header>
+
+	<article>
+		<h1>Účastníš se závodu {$competition_name}!</h1>
+		<h3>Úspěšně jsi se zaregistroval, tak teď už to jen odběhnout! :-)</h3>
+
+		<div class="submitted-data">
+			<h4>Pro kontrolu zde zasíláme vyplněné údaje:</h4>
+			<p>
+				{='Jméno a příjmení:'|padRight: 25, ' '}<strong>{$name} {$surname}</strong><br>
+				{='Rok narození:'|padRight: 25, ' '}<strong>{$birth_year}</strong><br>
+				{='Pohlaví:'|padRight: 25, ' '}<strong>{$sex}</strong><br>
+				{='Kategorie:'|padRight: 25, ' '}<strong>{$category}</strong><br>
+				{='Trať:'|padRight: 25, ' '}<strong>{$distance}</strong><br>
+				{='Oddíl/město:'|padRight: 25, ' '}<strong n:if="$team != NULL">{$team}</strong><br>
+			</p>
+			<p>Pokud by náhodou něco nesouhlasilo, dej nám vědět a hned to opravíme. (stačí odpovědět na tento email)</p>
+		</div>
+
+		<div class="race-info">
+			<h4>Důležité předzávodní informace: <small>(aktuálně platné)</small></h4>
+			<ul>
+				<li>Závod se koná <strong>v neděli 18. dubna v Žatci za řekou</strong> (jako vždy). Prezentace od 8:30.</li>
+				<li><strong>Platba startovného proběhne až na místě</strong> u prezentace (startovné 100Kč)!</li>
+				<li>Startovat se bude <strong>ve vlnách</strong> po maximálně 20ti závodnících (na volbě trati nezáleží). Každých 5 minut odstartuje jedna vlna! První v 9:00 a poslední v 11:00 (celkem 25 vln)</li>
+				<li>Vzhledem k omezením nebude letos žádné oficiální zázemí, nebude ani vyhlašování výsledků. Není možné tradiční občerstvení na trati. Počítejte s tím!</li>
+				<li>Není možné tradiční občerstvení na trati. Počítejte s tím! Pro závodníky bude v cíli zajištěna voda.</li>
+				<li>Vzhledem k omezením nebude letos žádné oficiální zázemí, nebude ani vyhlašování výsledků.</li>
+				<li>Zbylé informace naleznete na webových stránkách v <a href="https://www.hopmantriatlon.cz/files/pulmaraton21.pdf" target="_blank">propozicích závodu</a></li>
+			</ul>
+			<h5>Pro aktuální informace sledujte náš <a href="https://www.facebook.com/hopmantriatlon" target="_blank">Facebook</a> a aktuality na webových stránkách <a href="https://www.hopmantriatlon.cz/" target="_blank">hopmantriatlon.cz</a></h5>
+		</div>
+
+		<p>Na viděnou na startovní čáře!</p>
+
+		<p>Hopman Team</p>
+	</article>
+	</body>
+</html>

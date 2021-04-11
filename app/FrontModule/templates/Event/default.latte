@@ -15,25 +15,33 @@
 	<header class="secondary-header" style="background-image: url('{$basePath}/dist/img/header/{$event->header_image}')">
 	</header>
 	<div class="container">
-		{if $event->slug === 'pulmaraton'}
 		<nav class="nav event-nav">
-		  <a class="nav-link scroll" n:href="Event:#propozice $event->slug"><i class="fas fa-file"></i> Propozice</a>
-		  <a class="nav-link" n:href="Event:registration $event->slug"><i class="fas fa-file-signature"></i> Registrace</a>
-		  <a class="nav-link" n:href="Event:startlist $event->slug"><i class="fas fa-users"></i> Startovní listina</a>
-		  <a class="nav-link scroll" n:href="Event:#vysledky $event->slug"><i class="fas fa-trophy"></i> Výsledky</a>
-		  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-images"></i> Galerie</a>
-		  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-map"></i> Mapy</a>
+			{if $event->propositions_active}
+				<a class="nav-link scroll" n:href="Event:#propozice $event->slug"><i class="fas fa-file"></i> Propozice</a>
+			{else}
+				<a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-file"></i> Propozice</a>
+			{/if}
+
+			{if $event->registration_active}
+				<a class="nav-link" n:href="Event:registration $event->slug"><i class="fas fa-file-signature"></i> Registrace</a>
+			{else}
+				<a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-file-signature"></i> Registrace</a>
+			{/if}
+
+			{if $event->startlist_active}
+				<a class="nav-link" n:href="Event:startlist $event->slug"><i class="fas fa-users"></i> Startovní listina</a>
+			{else}
+				<a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-users"></i> Startovní listina</a>
+			{/if}
+
+			<a class="nav-link scroll" n:href="Event:#vysledky $event->slug"><i class="fas fa-trophy"></i> Výsledky</a>
+			{if $event->slug === 'pulmaraton'}
+				<a class="nav-link" n:href="Event:gallery $event->slug"><i class="fas fa-images"></i> Galerie</a>
+			{else}
+				<a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-images"></i> Galerie</a>
+			{/if}
+		  	<a class="nav-link scroll" n:href="Event:#mapy"><i class="fas fa-map"></i> Mapy</a>
 		</nav>
-		{else}
-		<nav class="nav event-nav">
-		  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-file"></i> Propozice</a>
-		  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-file-signature"></i> Registrace</a>
-		  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-users"></i> Startovní listina</a>
-		  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-trophy"></i> Výsledky</a>
-		  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-images"></i> Galerie</a>
-		  <a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-map"></i> Mapy</a>
-		</nav>
-		{/if}
 	</div>
 	<section class="page-section event-page">
 		<div class="container">

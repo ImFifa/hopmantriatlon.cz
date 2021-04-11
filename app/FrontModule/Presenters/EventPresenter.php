@@ -2,17 +2,18 @@
 
 namespace App\FrontModule\Presenters;
 
+use App\Model\CompetitionModel;
 use App\Model\EventCategoryModel;
 use App\Model\CompetitorModel;
 use App\Model\EventGalleryModel;
 use App\Model\EventModel;
 use K2D\File\Model\FileModel;
-use K2D\Gallery\Models\GalleryModel;
 use K2D\Gallery\Models\ImageModel;
+use Latte\Engine;
 use Nette\Application\UI\Form;
 use Nette\Database\DriverException;
-use Nette\Database\Table\ActiveRow;
-use Ublaboo\DataGrid\DataGrid;
+use Nette\Mail\Mailer;
+use Nette\Mail\Message;
 
 class EventPresenter extends BasePresenter
 {
@@ -21,6 +22,9 @@ class EventPresenter extends BasePresenter
 
 	/** @inject */
 	public CompetitorModel $competitorModel;
+
+	/** @inject */
+	public CompetitionModel $competitionModel;
 
 	/** @inject */
 	public EventGalleryModel $eventGalleryModel;
@@ -33,6 +37,9 @@ class EventPresenter extends BasePresenter
 
 	/** @inject */
 	public FileModel $fileModel;
+
+	/** @var Mailer @inject */
+	public $mailer;
 
 	public function renderDefault($slug): void
 	{
@@ -93,7 +100,6 @@ class EventPresenter extends BasePresenter
 		} else {
 			$this->template->event = $event;
 			$this->template->categories = $this->eventCategoryModel->getCategoriesForEventById($event->id);
-			bdump($this->template->categories);
 		}
 	}
 
@@ -176,6 +182,42 @@ class EventPresenter extends BasePresenter
 				unset($values['agree']);
 				$values['category_id'] = (int) $values['category_id'];
 				$values['id'] = $this->competitorModel->insert($values)->id;
+
+				// get competition name
+				$competition = $this->competitionModel->getCompetitionById($values['competition_id']);
+				$category = $this->eventCategoryModel->getCategoryById($values['category_id']);
+				if ($competition != NULL) {
+					$competition_name = $competition->name;
+					$event_slug = $competition->slug;
+					$category_name = $category->name;
+					$sex = ($values['sex'] === 'M')?'Muži':'Ženy';
+
+					// send email
+					$latte = new Engine;
+					$params = [
+						'competition_name' => $competition_name,
+						'name' => $values['name'],
+						'surname' => $values['surname'],
+						'sex' => $sex,
+						'birth_year' => $values['year_of_birth'],
+						'category' => $category_name,
+						'distance' => $values['distance'],
+						'team' => $values['team']
+					];
+
+					$mail = new Message();
+
+					$mail->setFrom('info@hopmantriatlon.cz', 'Hopman');
+					$mail->addTo($values['email']);
+					$mail->setSubject($values['competition_id']);
+					$mail->setHtmlBody(
+						$latte->renderToString(__DIR__ . '/../../Email/' . $event_slug . '.latte', $params),
+						__DIR__ . '/../../assets/img/email');
+					$mail->setHtmlBody('Účastníš se závodu ' . $competition_name . '!');
+					$this->mailer->send($mail);
+				}
+
+				$this->flashMessage('Zpráva úspěšně odeslána', 'success');
 
 				$this->flashMessage('Registrace proběhla úspěšně!');
 				$this->redirect('this?odeslano=1');

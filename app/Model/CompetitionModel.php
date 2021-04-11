@@ -9,11 +9,11 @@ class CompetitionModel extends BaseModel
 {
 
 	protected string $table = 'competition';
-//
-//	public function getEvents(): array
-//	{
-//		return $this->getTable()->fetchAll();
-//	}
+
+	public function getCompetitionById($id): ActiveRow
+	{
+		return $this->getTable()->where('id', $id)->fetch();
+	}
 //
 //	public function getEvent(string $slug): ?ActiveRow
 //	{

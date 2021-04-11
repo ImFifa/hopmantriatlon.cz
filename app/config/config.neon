@@ -7,6 +7,11 @@ application:
 	mapping:
 		*: App\*Module\Presenters\*Presenter
 
+
+tracy:
+	bar:
+		- Nextras\MailPanel\MailPanel(%tempDir%/mail-panel-latte)
+
 services:
 	router: App\RouterFactory::createRouter()
 	repository: App\Service\ProjectModelRepository
@@ -22,6 +27,9 @@ services:
 	- App\Model\EventRecordModel
 	- App\Model\EventStatusModel
 	admin.dashboard.eventpanel: App\AdminModule\Dashboard\EventPanel\EventPanelFactory
+	nette.mailer:
+			class: Nette\Mail\Mailer
+			factory: Nextras\MailPanel\FileMailer(%tempDir%/mail-panel-mails)
 
 parameters:
 	customTemplatesDir: %appDir%/FrontModule/templates/

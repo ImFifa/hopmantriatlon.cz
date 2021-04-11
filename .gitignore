@@ -14,3 +14,4 @@ www/dist/*
 www/info.php
 www/.htaccess
 /resources
+.DS_Store

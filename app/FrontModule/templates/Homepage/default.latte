@@ -49,7 +49,14 @@
 						<div class="badge">#{$event->type}</div>
 						<div class="badge" style="background: {$event->status->color|noescape}">{$event->status->value}</div>
 					</div>
-					<a n:href="Event: $event->slug"><img src="{$basePath}/{$event->header_image}" alt="{$event->name}"></a>
+					<a n:href="Event: $event->slug">
+						<img src="{$basePath}/dist/img/header/medium_{$event->header_image}"
+							srcset="{$basePath}/dist/img/header/small_{$event->header_image} 400w,
+								    {$basePath}/dist/img/header/medium_{$event->header_image} 550w"
+							 sizes="(max-width: 420px) calc(100vw-30px),
+							 		auto"
+							 alt="{$event->name}">
+					</a>
 					<section>
 						<h3>{$event->name}</h3>
 							<time datetime="{$event->date|date:"Y-m-d"}">{$event->date|weekDay}, {$event->date|dayMonth}</time>

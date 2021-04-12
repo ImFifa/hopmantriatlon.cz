@@ -8,12 +8,16 @@ use App\Model\CompetitorModel;
 use App\Model\EventGalleryModel;
 use App\Model\EventModel;
 use K2D\File\Model\FileModel;
+use K2D\Gallery\Models\GalleryModel;
 use K2D\Gallery\Models\ImageModel;
 use Latte\Engine;
 use Nette\Application\UI\Form;
 use Nette\Database\DriverException;
-use Nette\Mail\Mailer;
+use Nette\Database\Table\ActiveRow;
 use Nette\Mail\Message;
+use Nette\Mail\SmtpMailer;
+use Nette\Neon\Neon;
+use Ublaboo\DataGrid\DataGrid;
 
 class EventPresenter extends BasePresenter
 {
@@ -37,9 +41,6 @@ class EventPresenter extends BasePresenter
 
 	/** @inject */
 	public FileModel $fileModel;
-
-	/** @var Mailer @inject */
-	public $mailer;
 
 	public function renderDefault($slug): void
 	{
@@ -100,6 +101,7 @@ class EventPresenter extends BasePresenter
 		} else {
 			$this->template->event = $event;
 			$this->template->categories = $this->eventCategoryModel->getCategoriesForEventById($event->id);
+			bdump($this->template->categories);
 		}
 	}
 
@@ -190,9 +192,9 @@ class EventPresenter extends BasePresenter
 					$competition_name = $competition->name;
 					$event_slug = $competition->slug;
 					$category_name = $category->name;
-					$sex = ($values['sex'] === 'M')?'Muži':'Ženy';
+					$sex = ($values['sex'] === 'M') ? 'Muži' : 'Ženy';
 
-					// send email
+					// send mail
 					$latte = new Engine;
 					$params = [
 						'competition_name' => $competition_name,
@@ -209,15 +211,20 @@ class EventPresenter extends BasePresenter
 
 					$mail->setFrom('info@hopmantriatlon.cz', 'Hopman');
 					$mail->addTo($values['email']);
-					$mail->setSubject($values['competition_id']);
 					$mail->setHtmlBody(
 						$latte->renderToString(__DIR__ . '/../../Email/' . $event_slug . '.latte', $params),
 						__DIR__ . '/../../assets/img/email');
-					$mail->setHtmlBody('Účastníš se závodu ' . $competition_name . '!');
-					$this->mailer->send($mail);
-				}
+					$parameters = Neon::decode(file_get_contents(__DIR__ . "/../../config/server/local.neon"));
 
-				$this->flashMessage('Zpráva úspěšně odeslána', 'success');
+
+					$mailer = new SmtpMailer([
+						'host' => $parameters['mail']['host'],
+						'username' => $parameters['mail']['username'],
+						'password' => $parameters['mail']['password'],
+						'secure' => $parameters['mail']['secure'],
+					]);
+					$mailer->send($mail);
+				}
 
 				$this->flashMessage('Registrace proběhla úspěšně!');
 				$this->redirect('this?odeslano=1');

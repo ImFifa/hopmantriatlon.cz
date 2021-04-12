@@ -38,10 +38,10 @@
 						</tr>
 						</thead>
 						<tbody>
+						{var $i = 0}
 						{foreach $competitors as $competitor}
-
 						<tr>
-							<td>{$competitor->id}</td>
+							<td>{$iterator->count() - $i}</td>
 							<td>{$competitor->name}</td>
 							<td>{$competitor->surname}</td>
 							<td>{$competitor->year_of_birth}</td>
@@ -50,7 +50,7 @@
 							<td>{($competitor->category_id) ? $competitor->category->name : '---'}</td>
 							<td>{$competitor->distance}</td>
 						</tr>
-
+							{var $i = $i + 1}
 						{/foreach}
 						</tbody>
 					</table>

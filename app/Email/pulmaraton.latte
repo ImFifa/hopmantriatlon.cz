@@ -1,57 +1,97 @@
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Účastníš se závodu {$competition_name}!</title>
+<head>
+	<meta charset="utf-8">
+	<title>Účastníš se závodu {$competition_name}!</title>
 
-		<link rel="preconnect" href="https://fonts.gstatic.com">
-		<link href="https://fonts.googleapis.com/css2?family=Nunito&family=Varela+Round&display=swap" rel="stylesheet">
-		<style>
-			body {
-				padding: 2rem 2rem 4rem 2rem;
-				color: #333333;
-				background-color: #FFFFFF;
-				font-family: 'Nunito', sans-serif;
-				font-size: 16px;
-				margin: 0 auto;
-			}
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Nunito&family=Varela+Round&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			color-scheme: light;
+		}
 
-			a {
-				color:
+		@media only screen and (max-width: 500px) {
+
+			section {
+				border-radius: 0;
 			}
 
 			header {
-				background-color: #000;
-				padding: 2rem;
-				width: 100vw;
-				display: flex;
-				justify-content: center;
-				align-items: center;
+				border-radius: 0;
 			}
 
-			img {
-				width: 100%;
-				max-width: 200px;
-				height: auto;
+			ul {
+				list-style-type: none;
+				padding-left: unset;
 			}
+		}
 
-			h1, h3, h4, h5 {
-				font-family: 'Varela Round', serif;
-			}
+		body {
+			color: #333333;
+			background-color: #ebebeb;
+			font-family: 'Nunito', sans-serif;
+			font-size: 17px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
 
-			h1, h3 {
-				text-align: center;
-			}
+		section {
+			border-radius: .4rem;
+			background-color: #FFFFFF;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			word-wrap: normal;
+			max-width: 600px;
+			padding: 1rem;
+		}
 
-			article {
-				display: block;
-				max-width: 500px;
-				width: 100%;
-			}
+		a {
+			color:
+		}
+
+		header {
+			background: linear-gradient(#000000, #000000);
+			padding: 1rem 0;
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border-radius: .4rem;
+		}
+
+		img {
+			width: 100%;
+			max-width: 250px;
+			height: auto;
+		}
+
+		h1, h3, h4, h5 {
+			font-family: 'Varela Round', serif;
+			color: #1e6707;
+		}
+
+		h4 {
+			margin: 1.5rem 0 0 0;
+			padding: 0;
+		}
+
+		li {
+			margin-bottom: .5rem;
+		}
+
+		article {
+			display: block;
+			width: 100%;
+		}
 
 
-		</style>
-	</head>
-	<body>
+	</style>
+</head>
+<body>
+<section>
 	<header>
 		<a href="https://www.hopmantriatlon.cz/" target="_blank">
 			<img src="hopman_logo2021.jpg" alt="Hopman 2021">
@@ -60,19 +100,20 @@
 
 	<article>
 		<h1>Účastníš se závodu {$competition_name}!</h1>
-		<h3>Úspěšně jsi se zaregistroval, tak teď už to jen odběhnout! :-)</h3>
+		<p>Úspěšně jsi se zaregistroval/a, tak teď už to jen odběhnout! :-)</p>
 
 		<div class="submitted-data">
-			<h4>Pro kontrolu zde zasíláme vyplněné údaje:</h4>
+			<h4>Pro kontrolu zde zasíláme tebou vyplněné údaje:</h4>
 			<p>
 				{='Jméno a příjmení:'|padRight: 25, ' '}<strong>{$name} {$surname}</strong><br>
-				{='Rok narození:'|padRight: 25, ' '}<strong>{$birth_year}</strong><br>
-				{='Pohlaví:'|padRight: 25, ' '}<strong>{$sex}</strong><br>
-				{='Kategorie:'|padRight: 25, ' '}<strong>{$category}</strong><br>
-				{='Trať:'|padRight: 25, ' '}<strong>{$distance}</strong><br>
-				{='Oddíl/město:'|padRight: 25, ' '}<strong n:if="$team != NULL">{$team}</strong><br>
+					{='Rok narození:'|padRight: 25, ' '}<strong>{$birth_year}</strong><br>
+					{='Pohlaví:'|padRight: 25, ' '}<strong>{$sex}</strong><br>
+					{='Kategorie:'|padRight: 25, ' '}<strong>{$category}</strong><br>
+					{='Trať:'|padRight: 25, ' '}<strong>{$distance}</strong><br>
+					{='Oddíl/město:'|padRight: 25, ' '}<strong n:if="$team != NULL">{$team}</strong><br>
 			</p>
-			<p>Pokud by náhodou něco nesouhlasilo, dej nám vědět a hned to opravíme. (stačí odpovědět na tento email)</p>
+			<p>Pokud by náhodou něco nesouhlasilo, dej nám vědět a hned to opravíme.<br>
+				(stačí odpovědět na tento email)</p>
 		</div>
 
 		<div class="race-info">
@@ -80,18 +121,18 @@
 			<ul>
 				<li>Závod se koná <strong>v neděli 18. dubna v Žatci za řekou</strong> (jako vždy). Prezentace od 8:30.</li>
 				<li><strong>Platba startovného proběhne až na místě</strong> u prezentace (startovné 100Kč)!</li>
-				<li>Startovat se bude <strong>ve vlnách</strong> po maximálně 20ti závodnících (na volbě trati nezáleží). Každých 5 minut odstartuje jedna vlna! První v 9:00 a poslední v 11:00 (celkem 25 vln)</li>
-				<li>Vzhledem k omezením nebude letos žádné oficiální zázemí, nebude ani vyhlašování výsledků. Není možné tradiční občerstvení na trati. Počítejte s tím!</li>
-				<li>Není možné tradiční občerstvení na trati. Počítejte s tím! Pro závodníky bude v cíli zajištěna voda.</li>
-				<li>Vzhledem k omezením nebude letos žádné oficiální zázemí, nebude ani vyhlašování výsledků.</li>
+				<!--<li>Startovat se bude <strong>ve vlnách</strong> po maximálně 20ti závodnících (na volbě trati nezáleží). Každých 5 minut odstartuje jedna vlna! První v 9:00 a poslední v 11:00 (celkem 25 vln)</li>-->
+				<li>Vzhledem k omezením nebude letos žádné oficiální zázemí, nebude ani vyhlašování výsledků. Není možné tradiční občerstvení na trati (občerstvovačka za Stroupčí nebude). Počítejte s tím!</li>
+				<li>Na obrátce půlmaratonu bude k dispozici základní občerstvení. Pro závodníky bude v cíli zajištěna voda.</li>
 				<li>Zbylé informace naleznete na webových stránkách v <a href="https://www.hopmantriatlon.cz/files/pulmaraton21.pdf" target="_blank">propozicích závodu</a></li>
 			</ul>
-			<h5>Pro aktuální informace sledujte náš <a href="https://www.facebook.com/hopmantriatlon" target="_blank">Facebook</a> a aktuality na webových stránkách <a href="https://www.hopmantriatlon.cz/" target="_blank">hopmantriatlon.cz</a></h5>
+			<p>Pro aktuální informace sledujte náš <a href="https://www.facebook.com/hopmantriatlon" target="_blank">Facebook</a> a aktuality na webových stránkách <a href="https://www.hopmantriatlon.cz/" target="_blank">hopmantriatlon.cz</a></p>
 		</div>
 
 		<p>Na viděnou na startovní čáře!</p>
 
 		<p>Hopman Team</p>
 	</article>
-	</body>
+</section>
+</body>
 </html>

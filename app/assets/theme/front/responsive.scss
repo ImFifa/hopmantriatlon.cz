@@ -207,8 +207,11 @@
 		.galerie {
 			grid-gap: 1.5rem;
 
-			img {
+			a {
 				margin-right: 1.5rem;
+			}
+
+			img {
 				width: 90px;
 				height: 90px;
 			}

@@ -15,8 +15,8 @@ class EventGalleryModel extends BaseModel
 		return $this->getTable()->where('public', 1)->order('year DESC')->order('id DESC');
 	}
 
-	public function getPublicEventGalleriesFromYear(int $year): Selection
+	public function getPublicEventGalleriesFromYear(int $event_id, int $year): Selection
 	{
-		return $this->getTable()->where('public', 1)->where('year', $year)->order('year DESC')->order('id DESC');
+		return $this->getTable()->where('public', 1)->where('event_id', $event_id)->where('year', $year)->order('year DESC')->order('id DESC');
 	}
 }

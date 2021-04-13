@@ -74,7 +74,7 @@ class EventPresenter extends BasePresenter
 
 		// event last year gallery
 		if ($event->gallery_year != NULL) {
-			$this->template->galleries = $this->eventGalleryModel->getPublicEventGalleriesFromYear($event->gallery_year);
+			$this->template->galleries = $this->eventGalleryModel->getPublicEventGalleriesFromYear($event->id, $event->gallery_year);
 		}
 	}
 

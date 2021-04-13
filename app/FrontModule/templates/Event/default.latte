@@ -35,7 +35,7 @@
 			{/if}
 
 			<a class="nav-link scroll" n:href="Event:#vysledky $event->slug"><i class="fas fa-trophy"></i> Výsledky</a>
-			{if $event->slug === 'pulmaraton'}
+			{if $event->gallery_year != NULL}
 				<a class="nav-link" n:href="Event:gallery $event->slug"><i class="fas fa-images"></i> Galerie</a>
 			{else}
 				<a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-images"></i> Galerie</a>

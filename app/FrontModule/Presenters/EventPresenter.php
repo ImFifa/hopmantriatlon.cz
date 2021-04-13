@@ -87,7 +87,7 @@ class EventPresenter extends BasePresenter
 		} else {
 			$this->template->event = $event;
 			if ($event->gallery_year != NULL) {
-				$this->template->galleries = $this->eventGalleryModel->getPublicEventGalleries();
+				$this->template->galleries = $this->eventGalleryModel->getPublicEventGalleries($event->id);
 			}
 		}
 	}

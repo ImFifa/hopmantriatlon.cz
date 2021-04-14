@@ -800,6 +800,20 @@ footer.main-footer {
 			margin-right: 1rem;
 		}
 
+		h3 {
+			height: 50px;
+			background: $white;
+			margin-top: 1.5rem;
+			border-radius: $border-radius;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+			max-width: 300px;
+			grid-column-start: 1;
+			grid-column-end: none;
+		}
+
 		img {
 			width: 80px;
 			height: 80px;

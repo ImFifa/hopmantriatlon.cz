@@ -189,10 +189,10 @@
 	.last-year-event-galleries {
 		.galerie {
 			grid-template-columns: 1fr 1fr;
-		}
 
-		h3 {
-			grid-column-end: 3;
+			h3 {
+				grid-column-end: 3;
+			}
 		}
 	}
 
@@ -513,10 +513,10 @@
 				width: 100px;
 				height: 100px;
 			}
-		}
 
-		h3 {
-			grid-column-end: 4;
+			h3 {
+				grid-column-end: 4;
+			}
 		}
 	}
 	.news-gallery {

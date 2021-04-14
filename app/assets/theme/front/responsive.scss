@@ -190,6 +190,10 @@
 		.galerie {
 			grid-template-columns: 1fr 1fr;
 		}
+
+		h3 {
+			grid-column-end: 3;
+		}
 	}
 
 	.galerie {
@@ -509,6 +513,10 @@
 				width: 100px;
 				height: 100px;
 			}
+		}
+
+		h3 {
+			grid-column-end: 4;
 		}
 	}
 	.news-gallery {

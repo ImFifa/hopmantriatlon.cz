@@ -24,7 +24,7 @@
 					<div class="galerie">
 						{foreach $galleries as $gallery}
 							{if ($iterator->first || $lastYear != $gallery->year)}
-								<h3>Rok {$year}</h3>
+								<h3>Rok {$gallery->year}</h3>
 								{var $lastYear = $gallery->year}
 							{/if}
 							<article>

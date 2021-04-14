@@ -745,6 +745,7 @@ footer.main-footer {
 	grid-gap: .5rem;
 
 	a {
+		border-radius: $border-radius;
 		transition: all .25s ease-in-out;
 		filter: brightness(95%);
 		display: flex;
@@ -796,7 +797,6 @@ footer.main-footer {
 		}
 
 		a {
-			border-radius: $border-radius;
 			display: inline-block;
 			margin-right: 1rem;
 		}

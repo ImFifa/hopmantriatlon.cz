@@ -23,14 +23,18 @@
 				<section class="event-galleries">
 					<div class="galerie">
 						{foreach $galleries as $gallery}
+							{if ($iterator->first || $lastYear != $gallery->year)}
+								<h3>Rok {$year}</h3>
+								{var $lastYear = $gallery->year}
+							{/if}
 							<article>
 								<a href="{$gallery->link}" target="_blank">
 									<img src="{$basePath}/upload/eventGalleries/{$gallery->id}/{$gallery->cover}" alt="{$gallery->event->name} - {$gallery->name}">
 								</a>
 								<div class="text">
-									<h6 class="mt-2 mb-0">{$gallery->year} - {$gallery->name}</h6>
-									<div n:if="$gallery->n_photos && $gallery->author"><i class="fas fa-camera"></i> {$gallery->author}<br>
-									<i class="fas fa-image"></i> {$gallery->n_photos}</div>
+									<h6 class="mt-2 mb-0">{$gallery->name}</h6>
+									<div n:if="$gallery->author"><i class="fas fa-camera"></i> {$gallery->author}</div>
+									<div n:if="$gallery->n_photos"><i class="fas fa-image"></i> {$gallery->n_photos}</div>
 								</div>
 							</article>
 						{/foreach}

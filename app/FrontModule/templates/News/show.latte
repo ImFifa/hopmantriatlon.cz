@@ -7,9 +7,9 @@
 			<meta property="og:image" content="{$baseUrl}/{ifset $new->cover}upload/news/{$new->id}/{$new->cover}{else}{$vars->og_image}{/ifset}">
 			<meta property="og:description" content="
 			{ifset $new->content}
-				{$new->content|truncate:100}
+				{$new->content|noescape|truncate:100}
 			{else}
-				{$vars->description}
+				{$vars->description|noescape}
 			{/ifset}">
 		{/ifset}
 	{/block}

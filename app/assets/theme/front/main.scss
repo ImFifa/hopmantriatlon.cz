@@ -379,6 +379,12 @@ article {
 	}
 }
 
+.latest-news, .new-container {
+	.btn {
+		margin: .3rem 0;
+	}
+}
+
 .article-list {
 	display: grid;
 	grid-template-columns: 1fr;
@@ -745,6 +751,7 @@ footer.main-footer {
 	grid-gap: .5rem;
 
 	a {
+		border-radius: $border-radius;
 		transition: all .25s ease-in-out;
 		filter: brightness(95%);
 		display: flex;

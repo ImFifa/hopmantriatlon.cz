@@ -1,4 +1,19 @@
 {block #content}
+	{block #og}
+		{ifset $new}
+			<meta property="og:title" content="{$new->title} | HOPMAN">
+			<meta property="og:url" content="{$baseUrl}{plink this}" />
+			<meta property="og:type" content="website">
+			<meta property="og:image" content="{$baseUrl}/{ifset $new->cover}upload/news/{$new->id}/{$new->cover}{else}{$vars->og_image}{/ifset}">
+			<meta property="og:description" content="
+			{ifset $new->content}
+				{$new->content|truncate:100}
+			{else}
+				{$vars->description}
+			{/ifset}">
+		{/ifset}
+	{/block}
+
 	<header class="secondary-header" style="background-image: url('{$basePath}/dist/img/header/tri_header.jpg')">
 	</header>
 

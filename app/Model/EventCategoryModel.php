@@ -29,4 +29,9 @@ class EventCategoryModel extends BaseModel
 		return $this->getTable()->fetchPairs($key, $var);
 	}
 
+	public function getForSelectByEventId(int $event_id, string $key = 'id', string $var = 'name'): array
+	{
+		return $this->getTable()->where('event_id', $event_id)->fetchPairs($key, $var);
+	}
+
 }

@@ -1,0 +1,26 @@
+{block #content}
+	{block #og}
+		<meta property="og:title" content="{$event->name} - startovní listina | HOPMAN">
+		<meta property="og:url" content="{$baseUrl}{plink this}" />
+		<meta property="og:type" content="website">
+		<meta property="og:image" content="{$baseUrl}/{ifset $event->og_image}{$event->og_image}{else}{$vars->og_image}{/ifset}">
+		<meta property="og:description" content="
+		{ifset $event->description}
+			{$event->description|truncate:100}
+		{else}
+			{$vars->description}
+		{/ifset}">
+	{/block}
+
+	<header class="secondary-header" style="background-image: url('{$basePath}/dist/img/header/{$event->header_image}')">
+	</header>
+
+	<section class="page-section results-page">
+		<div class="container">
+			<a n:href="Event: $event->slug" class="btn btn-outline-secondary mb-3"><i class="fas fa-angle-left"></i> Zpět na stránku závodu</a>
+			<h1 n:block="title">QR Code</h1>
+
+			<img n:ifset="$QRPayment" src="http://api.paylibo.com/paylibo/generator/czech/image?accountNumber={$QRPayment->accountNumber}&bankCode={$QRPayment->bankCode}&amount={$QRPayment->amount}.00&currency=CZK&vs={$QRPayment->variableSymbol}&message={$QRPayment->message}" alt="QR Platba">
+		</div>
+	</section>
+{/block}

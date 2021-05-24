@@ -335,7 +335,7 @@ class EventPresenter extends BasePresenter
 						$price = 500;
 					}
 
-					$variableSymbol = str_pad((string)$values['id'], 10, "0", STR_PAD_LEFT);
+					$variableSymbol = str_pad((string)$values['id'], 8, "0", STR_PAD_LEFT);
 					// individual race has 1 in front of variableSymbol
 					$variableSymbol = 1 . $variableSymbol;
 
@@ -435,7 +435,7 @@ class EventPresenter extends BasePresenter
 
 					// payment
 					$price = 600;
-					$variableSymbol = str_pad((string)$values['id'], 9, "0", STR_PAD_LEFT);
+					$variableSymbol = str_pad((string)$values['id'], 8, "0", STR_PAD_LEFT);
 					// relay has 2 in front of variableSymbol
 					$variableSymbol = 2 . $variableSymbol;
 

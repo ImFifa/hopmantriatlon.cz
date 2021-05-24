@@ -1,6 +1,6 @@
 {block #content}
 	{block #og}
-		<meta property="og:title" content="{$competition->name} - registrace | HOPMAN">
+		<meta property="og:title" content="{$event->name} - registrace | HOPMAN">
 		<meta property="og:url" content="{$baseUrl}{plink this}" />
 		<meta property="og:type" content="website">
 		<meta property="og:image" content="{$baseUrl}/{ifset $event->og_image}{$event->og_image}{else}{$vars->og_image}{/ifset}">
@@ -12,21 +12,13 @@
 		{/ifset}">
 	{/block}
 
-	<header class="secondary-header" style="height: 300px; background-image: url('{$basePath}/dist/img/header/{$event->header_image}')">
+	<header class="secondary-header" style="background-image: url('{$basePath}/dist/img/header/{$event->header_image}')">
 	</header>
 
 	<section class="page-section registration-page">
 		<div class="container">
 
 			<a n:href="Event: $event->slug" class="btn btn-outline-secondary mb-3"><i class="fas fa-angle-left"></i> Zpět na stránku závodu</a>
-
-			<div n:if="sizeof($competitions) > 1" class="choose-form-btns mb-3">
-				{foreach $competitions as $comp}
-				<a n:href="Event:registration $comp->slug" class="{if $comp->slug === $competition->slug}active {/if}chooseForm" {ifset $comp->cover}style='background: url("../{$comp->cover|noescape}") no-repeat; background-size: cover; background-position: top;'{/ifset}>
-					<h4>{$comp->name}</h4>
-				</a>
-				{/foreach}
-			</div>
 
 			<!-- Modal -->
 			{foreach $flashes as $flash}
@@ -35,7 +27,7 @@
 						<div class="modal-dialog modal-dialog-centered" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h4 class="modal-title" id="registeredModalLongTitle">{$competition->name}</h4>
+									<h4 class="modal-title" id="registeredModalLongTitle">{$event->name}</h4>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
@@ -45,7 +37,7 @@
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary" data-dismiss="modal">Zavřít</button>
-									<a n:href="Event:startlist $competition->slug" class="btn btn-primary">Zobrazit startovní listinu</a>
+									<a n:href="Event:startlist $event->slug" class="btn btn-primary">Zobrazit startovní listinu</a>
 								</div>
 							</div>
 						</div>
@@ -60,13 +52,62 @@
 				{/if}
 			{/foreach}
 
-			<h1 n:block="title">{$competition->name}</h1>
+			<h1 n:block="title">{$event->name} - štafety</h1>
 			<h3>Registrace k závodu</h3>
 
-			{if !$competition->registration_active}
+			{if !$event->registration_active}
 				<h4>Online registrace na tento závod není aktivní.</h4>
 			{else}
-				{include 'Registrations/registrace-' . $competition->slug . '.latte'}
+			{form triathlonRelaySignUpForm, class => 'signUpForm row'}
+				{input competition_id class => 'form-control input-hidden', value => $event->competition_id}
+				<div class="col-lg-12">
+					<div class="form-group">
+						{label name}{/label}
+						{input name class => 'form-control'}
+					</div>
+				</div>
+
+				<div class="col-lg-12">
+					<div class="form-group">
+						{label competitor1}{/label}
+						{input competitor1 class => 'form-control'}
+					</div>
+				</div>
+
+				<div class="col-lg-12">
+					<div class="form-group">
+						{label competitor2}{/label}
+						{input competitor2 class => 'form-control'}
+					</div>
+				</div>
+
+				<div class="col-lg-12">
+					<div class="form-group">
+						{label competitor3}{/label}
+						{input competitor3 class => 'form-control'}
+					</div>
+				</div>
+
+				<div class="col-lg-12">
+					<div class="form-group">
+						{label email}{/label}
+						{input email class => 'form-control'}
+						<small>Váš email nebude nikde zveřejněn.<br>Využijeme jej pouze pro zaslání diplomu či v případě nutnosti Vás kontaktovat.</small>
+					</div>
+				</div>
+
+				<div class="col-lg-12">
+					<div class="form-group agree-checkbox">
+						{input agree class => 'form-control, required'}
+					</div>
+				</div>
+
+				<div class="col-lg-6">
+					<div class="form-group">
+						{input submit class => 'btn btn-primary'}
+					</div>
+				</div>
+			{/form}
 			{/if}
 		</div>
 	</section>

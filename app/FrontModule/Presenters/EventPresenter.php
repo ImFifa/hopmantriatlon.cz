@@ -2,12 +2,12 @@
 
 namespace App\FrontModule\Presenters;
 
-use App\AdminModule\classes\QRPaymentData;
 use App\Model\CompetitionModel;
 use App\Model\EventCategoryModel;
 use App\Model\CompetitorModel;
 use App\Model\EventGalleryModel;
 use App\Model\EventModel;
+use App\Model\RelayModel;
 use K2D\File\Model\FileModel;
 use K2D\Gallery\Models\ImageModel;
 use Latte\Engine;
@@ -26,6 +26,9 @@ class EventPresenter extends BasePresenter
 	public CompetitorModel $competitorModel;
 
 	/** @inject */
+	public RelayModel $relayModel;
+
+	/** @inject */
 	public CompetitionModel $competitionModel;
 
 	/** @inject */
@@ -40,8 +43,6 @@ class EventPresenter extends BasePresenter
 	/** @inject */
 	public FileModel $fileModel;
 
-	public QRPaymentData $QRPayment;
-
 	public function renderDefault($slug): void
 	{
 		// event
@@ -50,6 +51,12 @@ class EventPresenter extends BasePresenter
 			$this->error();
 		} else {
 			$this->template->event = $event;
+		}
+
+		// competition
+		if ($event->registration_active) {
+			$currYear = date('Y');
+			$this->template->competitions = $this->competitionModel->getThisYearsActiveCompetitionsById($event->id, $currYear);
 		}
 
 		// startlist
@@ -92,78 +99,24 @@ class EventPresenter extends BasePresenter
 		}
 	}
 
+
 	public function renderRegistration($slug): void
 	{
+		$slugArr = explode('-', $slug);
+		$slug = $slugArr[0];
 		$event = $this->eventModel->getEvent($slug);
 		if (!$event) {
 			$this->error();
 		} else {
+			$urlPath = explode('/', $_SERVER['REQUEST_URI']);
+			$currYear = date('Y');
 			$this->template->event = $event;
 			$this->template->categories = $this->eventCategoryModel->getCategoriesForEventById($event->id);
+			$this->template->competition = $this->competitionModel->getSelectedCompetition($urlPath[1]);
+			$this->template->competitions = $this->competitionModel->getThisYearsActiveCompetitionsById($event->id, $currYear);
+
 		}
 	}
-
-	public function renderRegistrationHalfmarathon(): void
-	{
-		$event = $this->eventModel->getEvent('pulmaraton');
-		if (!$event) {
-			$this->error();
-		} else {
-			$this->template->event = $event;
-			$this->template->categories = $this->eventCategoryModel->getCategoriesForEventById($event->id);
-		}
-	}
-
-	public function renderRegistrationTriathlon(): void
-	{
-		$this->getEventInformations('triatlon');
-	}
-
-	public function renderRegistrationAdvent(): void
-	{
-		$event = $this->eventModel->getEvent('adventni-beh');
-		if (!$event) {
-			$this->error();
-		} else {
-			$this->template->event = $event;
-			$this->template->categories = $this->eventCategoryModel->getCategoriesForEventById($event->id);
-		}
-	}
-
-	public function getEventInformations($slug): void
-	{
-		$event = $this->eventModel->getEvent($slug);
-		if (!$event) {
-			$this->error();
-		} else {
-			$this->template->event = $event;
-			$this->template->categories = $this->eventCategoryModel->getCategoriesForEventById($event->id);
-		}
-	}
-
-	public function renderPayment($slug): void
-	{
-		$event = $this->eventModel->getEvent($slug);
-		if (!$event) {
-			$this->error();
-		} else {
-			$this->template->event = $event;
-			$this->template->categories = $this->eventCategoryModel->getCategoriesForEventById($event->id);
-		}
-
-		$QRPayment = new QRPaymentData(
-			2701773793,
-			2010,
-			100,
-			001,
-			'Testovací platba na FIO účet.'
-		);
-
-		$this->template->QRPayment = $QRPayment;
-
-
-	}
-
 
 	public function renderStartlist($slug): void
 	{
@@ -347,7 +300,7 @@ class EventPresenter extends BasePresenter
 			->addRule(Form::MAX_LENGTH, 'Maximálné délka je %s znaků', 200)
 			->setRequired('Musíte uvést Vaši emailovou adresu');
 
-		$form->addCheckbox('agree', 'Souhlasím s využitím osobních údajů za účelem zpracování výsledků závodu.')
+		$form->addCheckbox('agree', 'Souhlasím s podmínkami závodu a využitím osobních údajů za účelem zpracování výsledků závodu.')
 			->setHtmlAttribute('class', 'form-control')
 			->setRequired('Je potřeba souhlasit s podmínkami');
 
@@ -375,7 +328,9 @@ class EventPresenter extends BasePresenter
 
 					// payment
 					$price = 400;
-					$variableSymbol = 212001;
+					$variableSymbol = str_pad($values['id'], 10, "0", STR_PAD_LEFT);
+					// individual race has 1 in front of variableSymbol
+					$variableSymbol = 1 . $variableSymbol;
 
 					// send mail
 					$latte = new Engine;
@@ -399,6 +354,103 @@ class EventPresenter extends BasePresenter
 					$mail->addTo($values['email']);
 					$mail->setHtmlBody(
 						$latte->renderToString(__DIR__ . '/../../Email/' . $event_slug . '.latte', $params),
+						__DIR__ . '/../../assets/img/email');
+					$parameters = Neon::decode(file_get_contents(__DIR__ . "/../../config/server/local.neon"));
+
+					$mailer = new SmtpMailer([
+						'host' => $parameters['mail']['host'],
+						'username' => $parameters['mail']['username'],
+						'password' => $parameters['mail']['password'],
+						'secure' => $parameters['mail']['secure'],
+					]);
+					$mailer->send($mail);
+				}
+
+				$this->flashMessage('Registrace proběhla úspěšně!');
+				$this->redirect('this?odeslano=1');
+
+			} catch (DriverException $e) {
+				$this->flashMessage('Při pokusu o registraci nastala chyba a záznam nebyl uložen. Kontaktujte prosím správce webu na info@hopmantriatlon.cz', 'danger');
+			}
+		};
+
+		return $form;
+	}
+
+
+	protected function createComponentTriathlonRelaySignUpForm(): Form
+	{
+		$form = new Form();
+
+		$form->addText('competition_id', 'ID události');
+
+		$form->addText('name', 'Název štafety')
+			->addRule(Form::MAX_LENGTH, 'Maximálné délka je %s znaků', 160)
+			->setRequired('Štafeta musí mít nějaký název');
+
+		$form->addText('competitor1', 'Závodník 1')
+			->addRule(Form::MAX_LENGTH, 'Maximálné délka je %s znaků', 160)
+			->setRequired('Musíte uvést jméno 1. závodníka');
+
+		$form->addText('competitor2', 'Závodník 2')
+			->addRule(Form::MAX_LENGTH, 'Maximálné délka je %s znaků', 160)
+			->setRequired('Musíte uvést jméno 2. závodníka');
+
+		$form->addText('competitor3', 'Závodník 3')
+			->addRule(Form::MAX_LENGTH, 'Maximálné délka je %s znaků', 160)
+			->setRequired('Musíte uvést jméno 3. závodníka');
+
+		$form->addEmail('email', 'Kontaktní emailová adresa')
+			->addRule(Form::MAX_LENGTH, 'Maximálné délka je %s znaků', 200)
+			->setRequired('Musíte uvést kontaktní emailovou adresu');
+
+		$form->addCheckbox('agree', 'Souhlasím s podmínkami závodu a využitím osobních údajů za účelem zpracování výsledků závodu.')
+			->setHtmlAttribute('class', 'form-control')
+			->setRequired('Je potřeba souhlasit s podmínkami');
+
+		$form->addInvisibleReCaptcha('recaptcha')
+			->setMessage('Jste opravdu člověk?');
+
+		$form->addSubmit('submit', 'Odeslat přihlášku');
+
+		$form->onSubmit[] = function (Form $form) {
+			try {
+				$values = $form->getValues(true);
+
+				unset($values['agree']);
+				$values['id'] = $this->relayModel->insert($values)->id;
+
+				// get competition name
+				$competition = $this->competitionModel->getCompetitionById($values['competition_id']);
+				if ($competition != NULL) {
+					$competition_name = $competition->name;
+					$event_slug = $competition->slug;
+
+					// payment
+					$price = 600;
+					$variableSymbol = str_pad((string)$values['id'], 9, "0", STR_PAD_LEFT);
+					// relay has 2 in front of variableSymbol
+					$variableSymbol = 2 . $variableSymbol;
+
+					// send mail
+					$latte = new Engine;
+					$params = [
+						'competition_name' => $competition_name,
+						'name' => $values['name'],
+						'competitor1' => $values['competitor1'],
+						'competitor2' => $values['competitor2'],
+						'competitor3' => $values['competitor3'],
+						'price' => $price,
+						'variableSymbol' => $variableSymbol,
+						'message' => 'Hopman triatlon - štafeta ' . $values['name']
+					];
+
+					$mail = new Message();
+
+					$mail->setFrom('info@hopmantriatlon.cz', 'Hopman');
+					$mail->addTo($values['email']);
+					$mail->setHtmlBody(
+						$latte->renderToString(__DIR__ . '/../../Email/triatlon-stafeta.latte', $params),
 						__DIR__ . '/../../assets/img/email');
 					$parameters = Neon::decode(file_get_contents(__DIR__ . "/../../config/server/local.neon"));
 
@@ -509,7 +561,8 @@ class EventPresenter extends BasePresenter
 						'birth_year' => $values['year_of_birth'],
 						'category' => $category_name,
 						'distance' => $values['distance'],
-						'team' => $values['team']
+						'team' => $values['team'],
+						'message' => 'Hopman triatlon - startovné (' . $values['name'] . ' ' . $values['surname'] . ')'
 					];
 
 					$mail = new Message();

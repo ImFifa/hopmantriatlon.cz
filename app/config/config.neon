@@ -17,6 +17,7 @@ services:
 	- App\Model\MemberModel
 	- App\Model\CompetitionModel
 	- App\Model\CompetitorModel
+	- App\Model\RelayModel
 	- App\Model\EventCategoryModel
 	- App\Model\EventGalleryModel
 	- App\Model\EventRecordModel

@@ -82,6 +82,26 @@
 			grid-column-end: 3;
 		}
 	}
+
+	.choose-form-btns {
+		flex-direction: row;
+
+		.chooseForm {
+			padding-left: 2rem;
+			min-height: 150px;
+			max-width: 600px;
+
+			h4 {
+				font-size: 1.8rem;
+			}
+		}
+
+		a {
+			&:first-child {
+				margin-right: 1rem;
+			}
+		}
+	}
 }
 
 @include media-breakpoint-up(md) {
@@ -221,8 +241,6 @@
 			}
 		}
 	}
-
-
 }
 
 @include media-breakpoint-up(lg) {

@@ -266,7 +266,6 @@ class EventPresenter extends BasePresenter
 
 		$form->addInteger('year_of_birth', 'Rok narození')
 			->addRule(Form::LENGTH, 'Požadovaná délka jsou %s znaky', 4)
-			->addRule(Form::MAX,'Děti mladší 15ti let se nemohou zaregistrovat.',2006)
 			->addRule(Form::MIN,'Vážně je Vám víc než 100 let? :-)',1921)
 			->setRequired('Musíte uvést Váš rok narození');
 
@@ -282,6 +281,7 @@ class EventPresenter extends BasePresenter
 			->setPrompt('-------')
 			->setRequired('Musíte si zvolit trať')
 			->setItems([
+				'Dětský triatlon' => 'Dětský triatlon',
 				'Sprint triatlon' => 'Sprint triatlon',
 				'Olympijský triatlon' => 'Olympijský triatlon'
 			]);
@@ -327,8 +327,15 @@ class EventPresenter extends BasePresenter
 					$sex = ($values['sex'] === 'M') ? 'Muži' : 'Ženy';
 
 					// payment
-					$price = 400;
-					$variableSymbol = str_pad($values['id'], 10, "0", STR_PAD_LEFT);
+					if ($values['distance'] == 'Dětský triatlon')
+						$price = 50;
+					elseif ($values['distance'] == 'Sprint triatlon')
+						$price = 400;
+					else {
+						$price = 500;
+					}
+
+					$variableSymbol = str_pad((string)$values['id'], 10, "0", STR_PAD_LEFT);
 					// individual race has 1 in front of variableSymbol
 					$variableSymbol = 1 . $variableSymbol;
 

@@ -45,7 +45,7 @@
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary" data-dismiss="modal">Zavřít</button>
-									<a n:href="Event:startlist $competition->slug" class="btn btn-primary">Zobrazit startovní listinu</a>
+									<a n:if="$event->startlist_active" n:href="Event:startlist $competition->slug" class="btn btn-primary">Zobrazit startovní listinu</a>
 								</div>
 							</div>
 						</div>

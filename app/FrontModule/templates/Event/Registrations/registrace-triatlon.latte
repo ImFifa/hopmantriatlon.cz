@@ -32,7 +32,7 @@
 		<div class="form-group">
 			{label distance}{/label}
 			{input distance class => 'form-control'}
-			<small id="distance-info">Osoby mladší 18ti let nemohou startovat na trati půlmaratonu.</small>
+			<small id="distance-info">Osoby mladší 19ti let nemohou startovat na trati olympijského triatlonu.</small>
 		</div>
 	</div>
 
@@ -84,22 +84,6 @@
 		var categoryCode = '';
 		var currentYear = new Date().getFullYear();
 
-		year.addEventListener('input', () => {
-			if (year.value > 2003) {
-				distance.value = 'Sprint triatlon';
-				distance.remove(2);
-				document.getElementById('distance-info').style.display = 'block';
-			} else {
-				if (distance.options.length === 2) {
-					var option = document.createElement("option");
-					option.text = "Olympijský triatlon";
-					option.value = "Olympijský triatlon";
-					distance.add(option);
-				}
-				document.getElementById('distance-info').style.display = 'none';
-			}
-		});
-
 		signUpForm.addEventListener('input', () => {
 			{ifset $categories}
 			var age = currentYear - year.value;
@@ -111,6 +95,10 @@
 						category_id.value = {$category->id};
 					}
 				}
+			}
+			if (distance.value == 'Dětský triatlon') {
+				category.value = 14;
+				category_id.value = 14;
 			}
 			{/foreach}
 			{/ifset}

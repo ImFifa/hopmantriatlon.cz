@@ -116,7 +116,12 @@
 
 		<div class="payment">
 			<h4>Informace k platbě:</h4>
-			<img src="http://api.paylibo.com/paylibo/generator/czech/image?accountNumber=2701773793&bankCode=2010&amount={$price}.00&currency=CZK&vs={$variableSymbol}&message={$message}" alt="QR Platba">
+			<p>
+				Číslo účtu: <strong>2000732761/2010</strong><br>
+				Variabilní symbol: <strong>{$variableSymbol}</strong><br>
+			</p>
+			<img src="http://api.paylibo.com/paylibo/generator/czech/image?accountNumber=2000732761&bankCode=2010&amount={$price}.00&currency=CZK&vs={$variableSymbol}&message={$message}" alt="QR Platba">
+			<h5>U platby je nutné uvést variabilní symbol!</h5>
 		</div>
 
 		<div class="race-info">

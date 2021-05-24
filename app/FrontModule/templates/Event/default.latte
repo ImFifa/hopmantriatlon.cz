@@ -54,8 +54,11 @@
 					{if $event->propositions_active}
 						<p>Datum konání: <time datetime="{$event->date|date:"Y-m-d"}">{$event->date|weekDay}, {$event->date|dayMonth}</time><br>
 							Aktuální propozice pro letošní ročník.</p>
-						<a href="{$basePath}/files/pulmaraton21.pdf" class="btn btn-outline-info my-2 mr-2"><i class="far fa-file-pdf"></i> {$event->name}</a>
-						<a href="{$basePath}/files/pulmaraton21.docx" class="btn btn-outline-info my-2 mr-2"><i class="far fa-file-word"></i> {$event->name}</a>
+						{if $event->slug == 'triatlon'}
+							<a href="{$basePath}/files/tri21.pdf" class="btn btn-outline-info my-2 mr-2"><i class="far fa-file-pdf"></i> {$event->name}</a>
+						{else}
+							<a href="{$basePath}/files/pulmaraton21.pdf" class="btn btn-outline-info my-2 mr-2"><i class="far fa-file-pdf"></i> {$event->name}</a>
+						{/if}
 					{else}
 						<h6>Na přípravě propozic pro letošní ročník právě pracujeme.</h6>
 					{/if}
@@ -71,7 +74,7 @@
 							{/if}</p>
 						{ifset $competitions}
 							{foreach $competitions as $competition}
-								<a n:href="Event:registration $competition->slug" class="btn btn-primary">{$competition->name}</a>
+								<a n:href="Event:registration $competition->slug" class="btn btn-primary mb-2">{$competition->name}</a>
 							{/foreach}
 						{/ifset}
 					{else}

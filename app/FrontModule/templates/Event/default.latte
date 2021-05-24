@@ -69,14 +69,18 @@
 								Formulář bude aktivní do
 								<time datetime="{$event->registration_active_till|date:"Y-m-d"}">{$event->registration_active_till|dateTime} ({$event->registration_active_till|weekDay})</time> nebo do naplnění kapacity závodu.
 							{/if}</p>
-						<a n:href="Event:registration $event->slug" class="btn btn-primary">Chci se zaregistrovat!</a>
+						{ifset $competitions}
+							{foreach $competitions as $competition}
+								<a n:href="Event:registration $competition->slug" class="btn btn-primary">{$competition->name}</a>
+							{/foreach}
+						{/ifset}
 					{else}
 						<h6>Právě teď není možné se zaregistrovat. Buď se online registrace pro tento rok ještě nespustila a nebo už je po závodě.</h6>
 					{/if}
 				</section>
 
 				<section id="startovni-listina">
-					<h3>Startovní lístina</h3>
+					<h3>Startovní listina</h3>
 					{if $event->startlist_active}
 						<p>Celkem je přihlášeno <strong>{$participants} závodníků</strong>.<br>
 							Z toho {$participantsMan} mužů a {$participantsWoman} žen.</p>

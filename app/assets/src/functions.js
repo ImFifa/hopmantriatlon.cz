@@ -4,9 +4,9 @@ const $scrollTopBtn = document.querySelector("#scrollTopBtn");
 
 function runOnScroll() {
 	var currentScrollPos = window.pageYOffset;
-	if (currentScrollPos > 240 && window.innerWidth > 992) {
+	if (currentScrollPos > 100 && window.innerWidth > 992) {
 		$nav.classList.add("navbar-bg");
-	} else if (currentScrollPos < 240) {
+	} else if (currentScrollPos < 100) {
 		$nav.classList.remove("navbar-bg");
 	}
 

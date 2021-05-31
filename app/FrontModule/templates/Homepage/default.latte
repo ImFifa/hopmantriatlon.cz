@@ -86,8 +86,8 @@
 							<div n:ifset="$files" class="badge">Soubor/y</div>
 						</div>
 						<header>
-							<time datetime="{$new->created|date:'Y-m-d'}">{$new->created|dayMonthYear}</time>
 							<img n:ifset="$new->cover" class="img-fluid" src="{$basePath}/upload/news/{$new->id}/{$new->cover}" alt="{$new->title}">
+							<time datetime="{$new->created|date:'Y-m-d'}">{$new->created|dayMonthYear}</time>
 							<h3>{$new->title}</h3>
 						</header>
 						<section n:ifset="$new->perex">

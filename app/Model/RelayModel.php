@@ -10,9 +10,9 @@ class RelayModel extends BaseModel
 {
 	protected string $table = 'relay';
 
-	public function getRelays($competition_id): Selection
+	public function getRelays($competition_id): ?Selection
 	{
-		return $this->getTable()->where('competition_id', $competition_id)->order('id DESC');
+		return $this->getTable()->where('competition_id', $competition_id)->order('name ASC');
 	}
 
 	public function getRegisteredRelays($competition_id): int

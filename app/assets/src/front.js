@@ -20,16 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	naja.initialize();
 });
 
-
-// startlist filters
-const distanceSelect = document.querySelector("#distance-select");
-const categorySelect = document.querySelector("#category-select");
-const sexSelect = document.querySelector("#sex-select");
-
-distanceSelect.addEventListener("change", () => {
-	console.log(distanceSelect.value);
-});
-
 // on scroll events
 const $nav = document.querySelector("#navbar");
 const $scrollTopBtn = document.querySelector("#scrollTopBtn");

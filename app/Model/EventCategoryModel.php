@@ -21,7 +21,12 @@ class EventCategoryModel extends BaseModel
 
 	public function getCategoriesForEventById(int $event_id): array
 	{
-		return $this->getTable()->where('event_id', $event_id)->fetchAll();
+		return $this->getTable()->select('id, code, name')->where('event_id', $event_id)->fetchAll();
+	}
+
+	public function getDistancesForEventById(int $event_id): array
+	{
+		return $this->getTable()->select('id, distance')->where('event_id', $event_id)->group('distance')->fetchAll();
 	}
 
 	public function getForSelectByCode(string $key = 'code', string $var = 'name'): array

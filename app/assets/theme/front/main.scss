@@ -54,7 +54,7 @@
 
 html, body {
 	overflow-x: hidden;
-	background: $gray-200;
+	background: $gray-100;
 	color: $gray-800;
 	font-size: 16px;
 	font-family: 'Nunito', sans-serif;
@@ -87,6 +87,7 @@ h3 {
 h1, h2, h3 {
 	color: $primary;
 }
+
 
 .main-header {
 	position: relative;
@@ -306,7 +307,7 @@ article {
 
 	.halfmarathon, .triathlon, .advent {
 		padding: 0;
-		background-color: $gray-100;
+		background-color: lighten($gray-100, 4%);
 		border-radius: 0 0 $border-radius $border-radius;
 
 
@@ -509,7 +510,7 @@ article {
 
 .sponsor-list {
 	padding: 2rem;
-	background: $gray-300;
+	background: $gray-200;
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	list-style-type: none;
@@ -639,7 +640,7 @@ footer.main-footer {
 	padding-left: 2rem;
 	padding-right: 2rem;
 	margin-top: 2rem;
-	background: $gray-100;
+	background: $gray-50;
 
 	.container {
 		padding: 2rem 0;
@@ -969,5 +970,19 @@ footer.main-footer {
 		h4 {
 			color: $white;
 		}
+	}
+}
+
+.startlist-filters {
+	border-radius: $border-radius;
+	background: $gray-50;
+	padding: 1rem;
+	margin-bottom: 1rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+
+	div {
+		margin: .5rem;
 	}
 }

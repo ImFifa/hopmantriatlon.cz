@@ -13,7 +13,7 @@ class CompetitorModel extends BaseModel
 
 	public function getCompetitors($competition_id): Selection
 	{
-		return $this->getTable()->where('competition_id', $competition_id)->order('id DESC');
+		return $this->getTable()->where('competition_id', $competition_id)->order('distance DESC')->order('surname ASC');
 	}
 
 	public function getRegisteredCompetitors($competition_id): int

@@ -20,15 +20,25 @@ document.addEventListener('DOMContentLoaded', () => {
 	naja.initialize();
 });
 
+
+// startlist filters
+const distanceSelect = document.querySelector("#distance-select");
+const categorySelect = document.querySelector("#category-select");
+const sexSelect = document.querySelector("#sex-select");
+
+distanceSelect.addEventListener("change", () => {
+	console.log(distanceSelect.value);
+});
+
 // on scroll events
 const $nav = document.querySelector("#navbar");
 const $scrollTopBtn = document.querySelector("#scrollTopBtn");
 
 function runOnScroll() {
 	var currentScrollPos = window.pageYOffset;
-	if (currentScrollPos > 240 && window.innerWidth > 992) {
+	if (currentScrollPos > 190 && window.innerWidth > 992) {
 		$nav.classList.add("navbar-bg");
-	} else if (currentScrollPos < 240) {
+	} else if (currentScrollPos < 190) {
 		$nav.classList.remove("navbar-bg");
 	}
 

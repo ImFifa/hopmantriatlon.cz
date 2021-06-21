@@ -1,0 +1,19 @@
+{templateType K2D\Core\Template\BaseTemplate}
+{varType Nette\Database\Table\ActiveRow|null $new}
+
+{block #title}
+	Seznam přihlášených závodníků - {$event->name}
+{/block}
+
+{block #buttons}
+	<a n:if="$event" n:href=":Front:Event:startlist $event->slug" class="btn btn-info" target="_blank">
+		Zobrazit na webu
+	</a>
+	<a n:href="default" class="btn btn-light">
+		Zpět
+	</a>
+{/block}
+
+{block content}
+	<h4>Startovka</h4>
+{/block}

@@ -15,7 +15,7 @@ class RelayModel extends BaseModel
 		return $this->getTable()->where('competition_id', $competition_id)->order('name ASC');
 	}
 
-	public function getRegisteredRelays($competition_id): int
+	public function getRegisteredRelays($competition_id): ?int
 	{
 		return $this->getTable()->where('competition_id', $competition_id)->count();
 	}

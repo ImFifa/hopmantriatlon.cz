@@ -15,5 +15,24 @@
 {/block}
 
 {block content}
-
+	<div class="m-4 card-group">
+	{foreach $events as $event}
+		<div class="card m-2" style="width: 18rem;">
+			<img src="{$basePath}/dist/img/header/{$event->header_image}" class="card-img-top" alt="{$event->name}">
+			<div class="card-body">
+				<h5 class="card-title"><i class="icon mdi mdi-{$event->icon}"></i> {$event->name}</h5>
+				<p class="card-text">{$event->description}</p>
+			</div>
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">Cras justo odio</li>
+				<li class="list-group-item">Dapibus ac facilisis in</li>
+				<li class="list-group-item">Vestibulum at eros</li>
+			</ul>
+			<div class="card-body">
+				<a n:href="Event:edit $event->slug" class="card-link"><i class="far fa-edit"></i> Upravit událost</a>
+				<a n:href="Event:registered $event->slug" class="card-link"><i class="fas fa-list"></i> Seznam přihlášených</a>
+			</div>
+		</div>
+	{/foreach}
+	</div>
 {/block}

@@ -85,8 +85,35 @@
 				<section id="startovni-listina">
 					<h3>Startovní listina</h3>
 					{if $event->startlist_active}
-						<p>Celkem je přihlášeno <strong>{$participants} závodníků</strong>.<br>
-							Z toho {$participantsMan} mužů a {$participantsWoman} žen.</p>
+						{switch $event->id}
+							{case 1}
+							<p>
+								Půlmaraton: <strong>{$halfmarathon}</strong><br>
+								Desítka: <strong>{$t10k}</strong><br>
+								Dětský závod: <strong>{$kids}</strong><br>
+								Celkem je přihlášeno <strong>{$participants}</strong>.<br>
+								Z toho {$participantsMan} mužů a {$participantsWoman} žen.
+							</p>
+							{case 3}
+							<p>
+								Olympijský triatlon: <strong>{$olympic}</strong><br>
+								Sprint triatlon: <strong>{$sprint}</strong><br>
+								Dětský triatlon: <strong>{$kids}</strong><br>
+								<span n:ifset="$relays">Štafety: <strong>{$relays}</strong><br></span><br>
+								Celkem je přihlášeno <strong>{$participants}</strong>.<br>
+								Z toho {$participantsMan} mužů a {$participantsWoman} žen.
+							</p>
+							{case 5}
+							<p>
+								Muži: <strong>{$men}</strong><br>
+								Ženy: <strong>{$women}</strong><br>
+								Dorostenci/ky: <strong>{$juniors}</strong><br>
+								Děti: <strong>{$kids}</strong><br>
+								Celkem je přihlášeno <strong>{$participants}</strong>.<br>
+								Z toho {$participantsMan} mužů a {$participantsWoman} žen.
+							</p>
+						{/switch}
+
 						<a n:href="Event:startlist $event->slug" class="btn btn-primary">Zobrazit startovní listinu</a>
 					{else}
 						<h6>Startovní listina není dostupná. Online registrace se pro tento rok ještě nespustila a nebo už je po závodě.</h6>

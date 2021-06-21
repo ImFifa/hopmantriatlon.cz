@@ -64,6 +64,28 @@ class EventPresenter extends BasePresenter
 			$this->template->participants = $this->competitorModel->getRegisteredCompetitors($event->competition_id);
 			$this->template->participantsMan = $this->competitorModel->getRegisteredMan($event->competition_id);
 			$this->template->participantsWoman = $this->competitorModel->getRegisteredWoman($event->competition_id);
+
+			bdump($event->competition_id);
+
+			switch ($event->id) {
+				case 1:
+					$this->template->kids = $this->competitorModel->getRegisteredKidsRun($event->competition_id);
+					$this->template->t10k = $this->competitorModel->getRegistered10Run($event->competition_id);
+					$this->template->halfmarathon = $this->competitorModel->getRegistered21Run($event->competition_id);
+					break;
+				case 3:
+					$this->template->kids = $this->competitorModel->getRegisteredKidsTriatlon($event->competition_id);
+					$this->template->sprint = $this->competitorModel->getRegisteredSprintTriathlon($event->competition_id);
+					$this->template->olympic = $this->competitorModel->getRegisteredOlympicTriathlon($event->competition_id);
+					$this->template->relays = $this->relayModel->getRegisteredRelays($event->competition_id + 1);
+					break;
+				case 5:
+					$this->template->kids = $this->competitorModel->getRegisteredKidsAdvent($event->competition_id);
+					$this->template->juniors = $this->competitorModel->getRegisteredJuniorsAdvent($event->competition_id);
+					$this->template->men = $this->competitorModel->getRegisteredMenAdvent($event->competition_id);
+					$this->template->women = $this->competitorModel->getRegisteredWomenAdvent($event->competition_id);
+					break;
+			}
 		}
 
 		// results

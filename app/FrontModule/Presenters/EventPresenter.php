@@ -150,12 +150,10 @@ class EventPresenter extends BasePresenter
 			$this->template->categories = $this->eventCategoryModel->getCategoriesForEventById($event->id);
 			$this->template->distances = $this->eventCategoryModel->getDistancesForEventById($event->id);
 
-			bdump($this->template->distances);
-
 			$this->template->competitors = $this->competitorModel->getCompetitors($event->competition_id);
 
 			// render relay startlist
-			$this->template->relays = $this->relayModel->getRelays($event->competition_id);
+			$this->template->relays = $this->relayModel->getRelays($event->competition_id + 1);
 		}
 	}
 

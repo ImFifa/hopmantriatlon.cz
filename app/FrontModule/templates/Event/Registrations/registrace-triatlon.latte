@@ -67,7 +67,7 @@
 
 	<div class="col-lg-6">
 		<div class="form-group">
-			{input submit class => 'btn btn-primary'}
+			{input submit class => 'btn btn-primary', id => 'submitBtn'}
 		</div>
 	</div>
 {/form}
@@ -83,6 +83,14 @@
 		var category_id = document.getElementById('frm-triathlonSignUpForm-category_id');
 		var categoryCode = '';
 		var currentYear = new Date().getFullYear();
+		var submit = document.getElementById('submitBtn');
+
+		signUpForm.addEventListener('submit', () => {
+			submit.disabled = true;
+			setTimeout( function() {
+				submit.disabled = false;
+			},3000);
+		});
 
 		signUpForm.addEventListener('input', () => {
 			{ifset $categories}

@@ -446,6 +446,11 @@ class EventPresenter extends BasePresenter
 		$form->addInvisibleReCaptcha('recaptcha')
 			->setMessage('Jste opravdu člověk?');
 
+		$form->addInteger('spam', 'Kolik je 1 + 1?')
+			->addRule(Form::EQUAL, 'Správná odpověď je 2.', 2)
+			->setRequired('Musíte zadat výsledek příkladu');
+
+
 		$form->addSubmit('submit', 'Odeslat přihlášku');
 
 		$form->onSubmit[] = function (Form $form) {
@@ -453,6 +458,7 @@ class EventPresenter extends BasePresenter
 				$values = $form->getValues(true);
 
 				unset($values['agree']);
+				unset($values['spam']);
 				$values['id'] = $this->relayModel->insert($values)->id;
 
 				// get competition name

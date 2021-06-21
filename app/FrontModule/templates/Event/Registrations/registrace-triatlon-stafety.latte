@@ -38,13 +38,37 @@
 
 	<div class="col-lg-12">
 		<div class="form-group agree-checkbox">
-			{input agree class => 'form-control, required'}
+			{input agree class => 'form-control'}
+		</div>
+	</div>
+
+	<div class="col-lg-12">
+		<div class="form-group">
+			{label spam}{/label}
+			{input spam class => 'form-control'}
+			<small>Z důvodu opakovaných útoků na tento formulář jsme byli nuceni přidat do přihlášky toto pole jako další prvek ochrany před boty.</small>
 		</div>
 	</div>
 
 	<div class="col-lg-6">
 		<div class="form-group">
-			{input submit class => 'btn btn-primary'}
+			{input submit class => 'btn btn-primary', id => 'submitBtn'}
 		</div>
 	</div>
 {/form}
+
+
+{block #scripts}
+	<!-- prevent double submission -->
+	<script type="text/javascript">
+		var submit = document.getElementById('submitBtn');
+		var signUpForm = document.getElementById('frm-triathlonRelaySignUpForm');
+
+		signUpForm.addEventListener('submit', () => {
+			submit.disabled = true;
+			setTimeout( function() {
+				submit.disabled = false;
+			},3000);
+		});
+	</script>
+{/block}

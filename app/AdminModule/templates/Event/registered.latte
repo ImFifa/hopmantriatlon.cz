@@ -2,11 +2,11 @@
 {varType Nette\Database\Table\ActiveRow|null $new}
 
 {block #title}
-	Seznam přihlášených závodníků - {$event->name}
+	Seznam přihlášených závodníků - {$competition->name}
 {/block}
 
 {block #buttons}
-	<a n:if="$event" n:href=":Front:Event:startlist $event->slug" class="btn btn-info" target="_blank">
+	<a n:if="$competition" n:href=":Front:Event:startlist $competition->slug" class="btn btn-info" target="_blank">
 		Zobrazit na webu
 	</a>
 	<a n:href="default" class="btn btn-light">
@@ -15,5 +15,9 @@
 {/block}
 
 {block content}
-	<h4>Startovka</h4>
+	{if $competition->competition_type === 1}
+		{control grid, id => $competition->id}
+	{else}
+		<h4>Startovka štafet</h4>
+	{/if}
 {/block}

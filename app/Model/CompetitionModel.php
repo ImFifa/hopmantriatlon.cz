@@ -24,6 +24,11 @@ class CompetitionModel extends BaseModel
 	{
 		return $this->getTable()->where('registration_active', 1)->where('event_id', $id)->where('year', $year)->order('id ASC')->fetchAll();
 	}
+
+	public function getThisYearsCompetitions($year): array
+	{
+		return $this->getTable()->where('year', $year)->order('id ASC')->fetchAll();
+	}
 //
 //	public function getEvent(string $slug): ?ActiveRow
 //	{

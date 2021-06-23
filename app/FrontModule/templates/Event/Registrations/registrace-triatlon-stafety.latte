@@ -1,5 +1,8 @@
 {form triathlonRelaySignUpForm, class => 'signUpForm row'}
 	{input competition_id class => 'form-control input-hidden', value => $competition->id}
+
+	{input address class => 'form-control input-hidden'}
+
 	<div class="col-lg-12">
 		<div class="form-group">
 			{label name}{/label}
@@ -39,14 +42,6 @@
 	<div class="col-lg-12">
 		<div class="form-group agree-checkbox">
 			{input agree class => 'form-control'}
-		</div>
-	</div>
-
-	<div class="col-lg-12">
-		<div class="form-group">
-			{label spam}{/label}
-			{input spam class => 'form-control'}
-			<small>Z důvodu opakovaných útoků na tento formulář jsme byli nuceni přidat do přihlášky toto pole jako další prvek ochrany před boty.</small>
 		</div>
 	</div>
 

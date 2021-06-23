@@ -16,6 +16,8 @@ use Nette\Database\DriverException;
 use Nette\Mail\Message;
 use Nette\Mail\SmtpMailer;
 use Nette\Neon\Neon;
+use wodCZ\NetteHoneypot\Honeypot;
+use wodCZ\NetteHoneypot\HoneypotExtension;
 
 class EventPresenter extends BasePresenter
 {
@@ -419,6 +421,8 @@ class EventPresenter extends BasePresenter
 
 		$form->addText('competition_id', 'ID události');
 
+		$form->addText('address', 'Ochrana proti botům');
+
 		$form->addText('name', 'Název štafety')
 			->addRule(Form::MAX_LENGTH, 'Maximálné délka je %s znaků', 160)
 			->setRequired('Štafeta musí mít nějaký název');
@@ -446,19 +450,20 @@ class EventPresenter extends BasePresenter
 		$form->addInvisibleReCaptcha('recaptcha')
 			->setMessage('Jste opravdu člověk?');
 
-		$form->addInteger('spam', 'Kolik je 1 + 1?')
-			->addRule(Form::EQUAL, 'Správná odpověď je 2.', 2)
-			->setRequired('Musíte zadat výsledek příkladu');
-
-
 		$form->addSubmit('submit', 'Odeslat přihlášku');
 
 		$form->onSubmit[] = function (Form $form) {
 			try {
 				$values = $form->getValues(true);
 
+				// anti-spam
+				if (!empty($values['address'])) {
+					$this->flashMessage('Boti se do našeho závodu registrovat nemohou. Zkuste to znovu jako člověk.', 'warning');
+					$this->redirect('this?bot=1');
+				}
+
 				unset($values['agree']);
-				unset($values['spam']);
+				unset($values['address']);
 				$values['id'] = $this->relayModel->insert($values)->id;
 
 				// get competition name

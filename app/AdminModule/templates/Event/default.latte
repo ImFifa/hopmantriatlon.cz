@@ -17,22 +17,43 @@
 {block content}
 	<div class="m-4 card-group">
 	{foreach $events as $event}
-		<div class="card m-2" style="width: 18rem;">
-			<img src="{$basePath}/dist/img/header/{$event->header_image}" class="card-img-top" alt="{$event->name}">
+		<div class="card m-2" style="max-width: 400px;">
+			<img src="{$basePath}/dist/img/header/{$event->header_image}" class="card-img-top" style="height: 300px; object-fit: cover" alt="{$event->name}">
 			<div class="card-body">
-				<h5 class="card-title"><i class="icon mdi mdi-{$event->icon}"></i> {$event->name}</h5>
+				<h4 class="card-title"><i class="icon mdi mdi-{$event->icon}"></i> {$event->name}</h4>
 				<p class="card-text">{$event->description}</p>
 			</div>
 			<ul class="list-group list-group-flush">
-				<li class="list-group-item">Cras justo odio</li>
-				<li class="list-group-item">Dapibus ac facilisis in</li>
-				<li class="list-group-item">Vestibulum at eros</li>
+				<li n:class="$event->propositions_active ? text-success : text-danger, list-group-item"><i class="fas fa-file"></i> Propozice: <i class="fas fa-{($event->propositions_active)?"check":"times"}"></i></li>
+				<li n:class="$event->registration_active ? text-success : text-danger, list-group-item"><i class="fas fa-file-signature"></i> Registrace: <i class="fas fa-{($event->registration_active)?"check":"times"}"></i>
+					<ul>
+						{foreach $competitions as $competition}
+							<li n:class="!$competition->registration_active ? text-danger" n:if="$competition->event_id === $event->id">{$competition->name}</li>
+						{/foreach}
+					</ul>
+				</li>
+				<li n:class="$event->startlist_active ? text-success : text-danger, list-group-item"><i class="fas fa-users"></i> Startovní listina: <i class="fas fa-{($event->startlist_active)?"check":"times"}"></i>
+					<ul>
+						{foreach $competitions as $competition}
+							<li n:if="$competition->event_id === $event->id">
+								<a n:href="Event:registered $competition->id" class="card-link">{$competition->name}</a>
+							</li>
+						{/foreach}
+					</ul>
+				</li>
 			</ul>
 			<div class="card-body">
-				<a n:href="Event:edit $event->slug" class="card-link"><i class="far fa-edit"></i> Upravit událost</a>
-				<a n:href="Event:registered $event->slug" class="card-link"><i class="fas fa-list"></i> Seznam přihlášených</a>
+				<a n:href="Event:edit $event->slug" class="card-link"><i class="far fa-edit"></i> Upravit závod</a>
+			</div>
+			<div class="card-footer">
+				<small>Poslední úprava: {$event->updated|dateTime}</small>
 			</div>
 		</div>
 	{/foreach}
 	</div>
+{/block}
+
+{block #head}
+	<!-- FONT AWESOME -->
+	<script src="https://kit.fontawesome.com/150cafc137.js" crossorigin="anonymous"></script>
 {/block}

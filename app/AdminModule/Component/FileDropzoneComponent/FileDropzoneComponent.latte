@@ -1,0 +1,19 @@
+{varType string $uploadLink}
+{varType string $redrawLink}
+{varType string|null $prompt}
+
+<div class="dropzone" data-dropzone-upload-link="{$uploadLink}" data-dropzone-redraw-link="{$redrawLink}">
+	<div class="dz-message">
+		{if $prompt !== null}
+			{$prompt}
+		{else}
+			PlsNahrajte soubory přetažením do tohoto okna nebo kliknutím zde.
+		{/if}
+	</div>
+</div>
+<div class="dropzone-progress py-3">
+	<div class="progress">
+		<div class="progress-bar progress-bar-striped progress-bar-animated-reverse" data-progress="0"></div>
+	</div>
+</div>
+<div class="dz-preview-container d-none"></div>

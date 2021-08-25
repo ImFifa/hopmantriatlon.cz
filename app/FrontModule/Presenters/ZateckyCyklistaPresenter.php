@@ -22,7 +22,7 @@ class ZateckyCyklistaPresenter extends BasePresenter
 
 	public function renderDefault(): void
 	{
-		$this->template->images = $this->imageModel->getImagesByGallery(2);
+		$this->template->images = $this->imageModel->getImagesByGallery(8);
 	}
 
 

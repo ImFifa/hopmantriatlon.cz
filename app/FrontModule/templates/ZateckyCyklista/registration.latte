@@ -1,0 +1,131 @@
+{block #content}
+	{block #og}
+		<meta property="og:title" content="Žatecký cyklista 2021 | Registrace">
+		<meta property="og:url" content="{$baseUrl}{plink this}" />
+		<meta property="og:type" content="website">
+		<meta property="og:image" content="{$basePath}/dist/img/zatecky_cyklista/zatecky_cyklista.jpeg">
+		<meta property="og:description" content="Jde o jedinečný cyklistický závod v Žateckých městských parcích. Jde o formu open, děti, hobby, classic. Horská, gravel, cyklokros kola. Rádi představíme historii cyklistiky v Žatci a můžete se těšit na dobré občerstvení.">
+	{/block}
+
+	<header class="secondary-header" style="background-image: url('{$basePath}/dist/img/zatecky_cyklista/cover.jpeg'); background-position: bottom">
+	</header>
+	<div class="container">
+		<nav class="nav event-nav">
+			<a class="nav-link" n:href="ZateckyCyklista:"><i class="fas fa-home"></i> Hlavní stránka závodu</a>
+			<a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-file"></i> Propozice</a>
+			<a class="nav-link" n:href="ZateckyCyklista:registration"><i class="fas fa-file-signature"></i> Registrace</a>
+			<a class="nav-link" n:href="ZateckyCyklista:startlist"><i class="fas fa-users"></i> Startovní listina</a>
+			<a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-trophy"></i> Výsledky</a>
+		</nav>
+	</div>
+
+	<section class="page-section registration-page">
+		<div class="container">
+
+			<!-- Modal -->
+			{foreach $flashes as $flash}
+				{if $flash->type === 'success'}
+					<div class="modal fade" id="registeredModal" tabindex="-1" role="dialog" aria-labelledby="registeredModalTitle" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h4 class="modal-title" id="registeredModalLongTitle">Žatecký cyklista</h4>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									{$flash->message}
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Zavřít</button>
+									<a n:href="ZateckyCyklista:startlist" class="btn btn-primary">Zobrazit startovní listinu</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				{else}
+					<div class="alert alert-{$flash->type} alert-dismissible fade show" style="max-width: 600px" role="alert">
+						{$flash->message}
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				{/if}
+			{/foreach}
+
+			<h1 n:block="title">Žatecký cyklista</h1>
+			<h3>Registrace k závodu</h3>
+
+			{form signUpForm, class => 'signUpForm row'}
+				<div class="col-lg-12">
+					<div class="form-group">
+						{label name}{/label}
+						{input name class => 'form-control'}
+					</div>
+				</div>
+
+				<div class="col-lg-12">
+					<div class="form-group">
+						{label surname}{/label}
+						{input surname class => 'form-control'}
+					</div>
+				</div>
+
+				<div class="col-lg-6">
+					<div class="form-group">
+						{label year_of_birth}{/label}
+						{input year_of_birth class => 'form-control'}
+					</div>
+				</div>
+
+				<div class="col-lg-6">
+					<div class="form-group">
+						{label sex}{/label}
+						{input sex class => 'form-control'}
+					</div>
+				</div>
+
+				<div class="col-lg-12">
+					<div class="form-group">
+						{label category}{/label}
+						{input category class => 'form-control'}
+					</div>
+				</div>
+
+				<div class="col-lg-12">
+					<div class="form-group">
+						{label team}{/label}
+						{input team class => 'form-control'}
+						<small>Toto pole je volitelné</small>
+					</div>
+				</div>
+
+				<div class="col-lg-12">
+					<div class="form-group">
+						{label email}{/label}
+						{input email class => 'form-control'}
+						<small>Váš email nebude nikde zveřejněn.<br>Využijeme jej pouze v případě nutnosti Vás kontaktovat.</small>
+					</div>
+				</div>
+
+				<div class="col-lg-12">
+					<div class="form-group agree-checkbox">
+						{input agree class => 'form-control, required'}
+					</div>
+				</div>
+
+				<div class="col-lg-6">
+					<div class="form-group">
+						{input submit class => 'btn btn-primary'}
+					</div>
+				</div>
+			{/form}
+		</div>
+	</section>
+{/block}
+
+{block #scripts}
+	<script src="https://www.google.com/recaptcha/api.js?render=explicit"></script>
+	<script src="{$basePath}/scripts/invisibleRecaptcha.js"></script>
+{/block}

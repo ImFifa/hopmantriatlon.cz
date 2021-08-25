@@ -1,0 +1,55 @@
+{block #content}
+	{block #og}
+		<meta property="og:title" content="Žatecký cyklista 2021">
+		<meta property="og:url" content="{$baseUrl}{plink this}" />
+		<meta property="og:type" content="website">
+		<meta property="og:image" content="{$basePath}/dist/img/zatecky_cyklista/zatecky_cyklista.jpeg">
+		<meta property="og:description" content="Jde o jedinečný cyklistický závod v Žateckých městských parcích. Jde o formu open, děti, hobby, classic. Horská, gravel, cyklokros kola. Rádi představíme historii cyklistiky v Žatci a můžete se těšit na dobré občerstvení.">
+	{/block}
+
+	<header class="secondary-header" style="background-image: url('{$basePath}/dist/img/zatecky_cyklista/cover.jpeg'); background-position: bottom">
+	</header>
+	<div class="container">
+		<nav class="nav event-nav">
+			<a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-home"></i> Hlavní stránka závodu</a>
+			<a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-file"></i> Propozice</a>
+			<a class="nav-link" n:href="ZateckyCyklista:registration"><i class="fas fa-file-signature"></i> Registrace</a>
+			<a class="nav-link" n:href="ZateckyCyklista:startlist"><i class="fas fa-users"></i> Startovní listina</a>
+			<a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-trophy"></i> Výsledky</a>
+		</nav>
+	</div>
+	<section class="page-section event-page">
+		<div class="container">
+
+			<h1 n:block="title">Žatecký cyklista</h1>
+
+			<div class="event-sections">
+				<section id="propozice">
+					<h3>Propozice</h3>
+					<a href="#" class="btn btn-outline-info my-2 mr-2 disabled" aria-disabled="true"><i class="far fa-file-pdf"></i> Žatecký cyklista</a>
+				</section>
+
+				<section id="registrace">
+					<h3>Registrace</h3>
+					<p>Online registrace byla spuštěna a je v plném proudu!<br>
+					<a n:href="ZateckyCyklista:registration" class="btn btn-primary my-2 mr-2">Chci se zaregistrovat!</a>
+				</section>
+
+				<section id="startovni-listina">
+					<h3>Startovní listina</h3>
+					<a n:href="ZateckyCyklista:startlist" class="btn btn-primary my-2 mr-2">Zobrazit startovní listinu</a>
+				</section>
+
+				<aside n:ifset="$images" class="event-gallery">
+					<div class="galerie">
+						{foreach $images as $image}
+							<a href="{$basePath}/upload/galleries/2/{$image->name}" data-lightbox="gallery" data-name="{$image->name}">
+								<img src="{$basePath}/upload/galleries/2/thumbs/{$image->name}" class="lazyload" alt="{$image->title}">
+							</a>
+						{/foreach}
+					</div>
+				</aside>
+			</div>
+		</div>
+	</section>
+{/block}

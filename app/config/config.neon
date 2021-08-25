@@ -22,6 +22,7 @@ services:
 	- App\Model\EventGalleryModel
 	- App\Model\EventRecordModel
 	- App\Model\EventStatusModel
+	- App\Model\ZateckyCyklistaModel
 	admin.dashboard.eventpanel: App\AdminModule\Dashboard\EventPanel\EventPanelFactory
 
 parameters:

@@ -29,6 +29,11 @@ class RouterFactory
 		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]aktuality', 'News:default');
 		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]aktualita/<slug>', 'News:show');
 
+		// zatecky cyklista
+		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]zatecky-cyklista', 'ZateckyCyklista:default');
+		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]zatecky-cyklista/registrace', 'ZateckyCyklista:registration');
+		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]zatecky-cyklista/startovni-listina', 'ZateckyCyklista:startlist');
+
 		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]<slug>', 'Event:default');
 		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]<slug>/galerie', 'Event:gallery');
 		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]<slug>/registrace', 'Event:registration');

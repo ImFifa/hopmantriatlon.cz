@@ -13,7 +13,7 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 
-// Other
+// ZateckyCyklista
 const devMode = process.env.NODE_ENV !== "production";
 
 // Webpack abilities

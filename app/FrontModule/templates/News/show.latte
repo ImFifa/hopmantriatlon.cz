@@ -5,12 +5,12 @@
 			<meta property="og:url" content="{$baseUrl}{plink this}" />
 			<meta property="og:type" content="website">
 			<meta property="og:image" content="{$baseUrl}/{ifset $new->cover}upload/news/{$new->id}/{$new->cover}{else}{$vars->og_image}{/ifset}">
-			<meta property="og:description" content="
+			<meta property="og:description" content='
 			{ifset $new->content}
 				{$new->content|noescape|truncate:100}
 			{else}
 				{$vars->description|noescape}
-			{/ifset}">
+			{/ifset}'>
 		{/ifset}
 	{/block}
 

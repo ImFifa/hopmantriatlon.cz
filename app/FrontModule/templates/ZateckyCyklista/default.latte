@@ -12,7 +12,7 @@
 	<div class="container">
 		<nav class="nav event-nav">
 			<a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-home"></i> Hlavní stránka závodu</a>
-			<a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-file"></i> Propozice</a>
+			<a class="nav-link" target="_blank" href="{$basePath}/files/zatecky-cyklista/zatecky_cyklista_propozice.pdf"><i class="fas fa-file"></i> Propozice</a>
 			<a class="nav-link" n:href="ZateckyCyklista:registration"><i class="fas fa-file-signature"></i> Registrace</a>
 			<a class="nav-link" n:href="ZateckyCyklista:startlist"><i class="fas fa-users"></i> Startovní listina</a>
 			<a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-trophy"></i> Výsledky</a>
@@ -26,7 +26,7 @@
 			<div class="event-sections">
 				<section id="propozice">
 					<h3>Propozice</h3>
-					<a href="#" class="btn btn-outline-info my-2 mr-2 disabled" aria-disabled="true"><i class="far fa-file-pdf"></i> Žatecký cyklista</a>
+					<a target="_blank" href="{$basePath}/files/zatecky-cyklista/zatecky_cyklista_propozice.pdf" class="btn btn-outline-info my-2 mr-2"><i class="far fa-file-pdf"></i> Žatecký cyklista</a>
 				</section>
 
 				<section id="registrace">
@@ -38,6 +38,13 @@
 				<section id="startovni-listina">
 					<h3>Startovní listina</h3>
 					<a n:href="ZateckyCyklista:startlist" class="btn btn-primary my-2 mr-2">Zobrazit startovní listinu</a>
+				</section>
+
+				<section>
+					<h3>Trasa závodu</h3>
+					<a href="{$basePath}/files/zatecky-cyklista/trasa_zavodu.jpg" data-lightbox="gallery" data-name="Trasa závodu">
+						<img src="{$basePath}/files/zatecky-cyklista/trasa_zavodu.jpg" class="img-fluid" style="max-width: 500px" alt="Trasa závodu">
+					</a>
 				</section>
 
 				<aside n:ifset="$images" class="event-gallery">

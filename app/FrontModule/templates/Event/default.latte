@@ -54,7 +54,7 @@
 					{if $event->propositions_active}
 						<p>Datum konání: <time datetime="{$event->date|date:"Y-m-d"}">{$event->date|weekDay}, {$event->date|dayMonth}</time><br>
 							Aktuální propozice pro letošní ročník.</p>
-						<a href="{$basePath}/upload/files/propozice/{$event->slug}{$event->date|date:"Y"}.pdf" class="btn btn-outline-info my-2 mr-2"><i class="far fa-file-pdf"></i> {$event->name}</a>
+						<a href="{$basePath}/upload/files/propozice/{$event->slug}{$event->date|year}.pdf" target="_blank" class="btn btn-outline-info my-2 mr-2"><i class="far fa-file-pdf"></i> {$event->name}</a>
 					{else}
 						<h6>Na přípravě propozic pro letošní ročník právě pracujeme.</h6>
 					{/if}

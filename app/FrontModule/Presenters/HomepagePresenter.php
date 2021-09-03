@@ -33,6 +33,9 @@ class HomepagePresenter extends BasePresenter
 			$this->template->hopmanParticipants = $vars->hopmanNumbersParticipants;
 			$this->template->hopmanBeers = $vars->hopmanNumbersBeers;
 		}
+
+		// event gallery
+		$this->template->images = $this->imageModel->getImagesByGallery(10);
 	}
 
 	public function renderTeam(): void

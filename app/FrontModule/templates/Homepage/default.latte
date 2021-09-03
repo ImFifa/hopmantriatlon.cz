@@ -1,27 +1,35 @@
 {block #content}
 	<header id="headerCarousel" class="main-header carousel slide carousel-fade" data-ride="carousel">
 		<div class="carousel-inner">
-			<div class="carousel-item active">
-				<img class="d-block" src="{$basePath}/dist/img/pul_header.jpg" alt="Žatecký půlmaraton">
-				<div class="carousel-caption d-none d-md-block">
-					<h5>Žatecký půlmaraton</h5>
-					<p>18. dubna</p>
+			{ifset $images}
+				{foreach $images as $image}
+					<div class="carousel-item active">
+						<img class="d-block" src="{$basePath}/upload/galleries/{$event->gallery_id}/{$image->name}" alt="{$image->title}">
+					</div>
+				{/foreach}
+			{else}
+				<div class="carousel-item active">
+					<img class="d-block" src="{$basePath}/dist/img/pul_header.jpg" alt="Žatecký půlmaraton">
+					<div class="carousel-caption d-none d-md-block">
+						<h5>Žatecký půlmaraton</h5>
+						<p>18. dubna</p>
+					</div>
 				</div>
-			</div>
-			<div class="carousel-item">
-				<img class="d-block" src="{$basePath}/dist/img/tri_header.jpg" alt="Hopman triatlon">
-				<div class="carousel-caption d-none d-md-block">
-					<h5>Hopman triatlon</h5>
-					<p>3. července</p>
+				<div class="carousel-item">
+					<img class="d-block" src="{$basePath}/dist/img/tri_header.jpg" alt="Hopman triatlon">
+					<div class="carousel-caption d-none d-md-block">
+						<h5>Hopman triatlon</h5>
+						<p>3. července</p>
+					</div>
 				</div>
-			</div>
-			<div class="carousel-item">
-				<img class="d-block" src="{$basePath}/dist/img/adv_header.jpg" alt="Adventní běh">
-				<div class="carousel-caption d-none d-md-block">
-					<h5>Adventní běh</h5>
-					<p>4. prosince</p>
+				<div class="carousel-item">
+					<img class="d-block" src="{$basePath}/dist/img/adv_header.jpg" alt="Adventní běh">
+					<div class="carousel-caption d-none d-md-block">
+						<h5>Adventní běh</h5>
+						<p>4. prosince</p>
+					</div>
 				</div>
-			</div>
+			{/if}
 		</div>
 		<a class="carousel-control carousel-control-prev" href="#headerCarousel" role="button" data-slide="prev">
 			<span class="carousel-control-prev-icon" aria-hidden="true"></span>

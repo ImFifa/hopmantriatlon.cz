@@ -3,8 +3,8 @@
 		<div class="carousel-inner">
 			{ifset $images}
 				{foreach $images as $image}
-					<div class="carousel-item active">
-						<img class="d-block" src="{$basePath}/upload/galleries/{$event->gallery_id}/{$image->name}" alt="{$image->title}">
+					<div class="carousel-item {if $iterator->first}active{/if}">
+						<img class="d-block" src="{$basePath}/upload/galleries/10/{$image->name}" alt="{$image->title}">
 					</div>
 				{/foreach}
 			{else}
@@ -29,7 +29,7 @@
 						<p>4. prosince</p>
 					</div>
 				</div>
-			{/if}
+			{/ifset}
 		</div>
 		<a class="carousel-control carousel-control-prev" href="#headerCarousel" role="button" data-slide="prev">
 			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -59,7 +59,7 @@
 					</div>
 					<a n:href="Event: $event->slug">
 						<img src="{$basePath}/dist/img/header/medium_{$event->header_image}"
-							srcset="{$basePath}/dist/img/header/small_{$event->header_image} 400w,
+							 srcset="{$basePath}/dist/img/header/small_{$event->header_image} 400w,
 								    {$basePath}/dist/img/header/medium_{$event->header_image} 550w"
 							 sizes="(max-width: 420px) calc(100vw-30px),
 							 		auto"
@@ -67,7 +67,7 @@
 					</a>
 					<section>
 						<h3>{$event->name}</h3>
-							<time datetime="{$event->date|date:"Y-m-d"}">{$event->date|weekDay}, {$event->date|dayMonth}</time>
+						<time datetime="{$event->date|date:"Y-m-d"}">{$event->date|weekDay}, {$event->date|dayMonth}</time>
 						<p n:ifset="$event->description">{$event->description}</p>
 						<footer>
 							<a n:href="Event: $event->slug" class="btn btn-primary">Stránka závodu</a>
@@ -87,90 +87,90 @@
 
 			<div class="article-list">
 				{foreach $news as $new}
-				<article>
-					<a class="article-link" n:href="News:show $new->slug">
-						<div n:if="$new->cover != NULL" class="news-badgelist">
-							<div n:if="$new->gallery_id != NULL" class="badge">Galerie</div>
-							<div n:ifset="$files" class="badge">Soubor/y</div>
-						</div>
-						<header>
-							<img n:ifset="$new->cover" class="img-fluid" src="{$basePath}/upload/news/{$new->id}/{$new->cover}" alt="{$new->title}">
-							<time datetime="{$new->created|date:'Y-m-d'}">{$new->created|dayMonthYear}</time>
-							<h3>{$new->title}</h3>
-						</header>
-						<section n:ifset="$new->perex">
-							{$new->perex|noescape}
-						</section>
-						<footer n:ifset="$files">
-	{*						<a n:href="News:show $new->slug" class="btn btn-secondary">Zobrazit více</a>*}
-						</footer>
-					</a>
-				</article>
+					<article>
+						<a class="article-link" n:href="News:show $new->slug">
+							<div n:if="$new->cover != NULL" class="news-badgelist">
+								<div n:if="$new->gallery_id != NULL" class="badge">Galerie</div>
+								<div n:ifset="$files" class="badge">Soubor/y</div>
+							</div>
+							<header>
+								<img n:ifset="$new->cover" class="img-fluid" src="{$basePath}/upload/news/{$new->id}/{$new->cover}" alt="{$new->title}">
+								<time datetime="{$new->created|date:'Y-m-d'}">{$new->created|dayMonthYear}</time>
+								<h3>{$new->title}</h3>
+							</header>
+							<section n:ifset="$new->perex">
+								{$new->perex|noescape}
+							</section>
+							<footer n:ifset="$files">
+								{*						<a n:href="News:show $new->slug" class="btn btn-secondary">Zobrazit více</a>*}
+							</footer>
+						</a>
+					</article>
 				{/foreach}
 			</div>
 		</div>
 	</section>
 
 	<section class="page-section sponsors container">
-			<h2>Podporují nás</h2>
+		<h2>Podporují nás</h2>
 
-			<ul class="sponsor-list">
-				<li>
-					<a href="http://www.bohemiahop.cz/cz/">
-						<img src="{$basePath}/dist/img/sponsor/bohemia_hop.png" alt="Bohemia Hop">
-					</a>
-				</li>
-				<li>
-					<a href="https://www.chchp.cz/chram-chmele-a-piva/">
-						<img src="{$basePath}/dist/img/sponsor/chchp.png" alt="CHCHP">
-					</a>
-				</li>
-				<li>
-					<a href="https://www.grapesc.cz/">
-						<img src="{$basePath}/dist/img/sponsor/grape.png" alt="Grape SC, a.s.">
-					</a>
-				</li>
-				<li>
-					<a href="https://dast.ustecko.com/">
-						<img src="{$basePath}/dist/img/sponsor/k-dast.png" alt="K-Dast">
-					</a>
-				</li>
-				<li>
-					<a href="https://www.kempnechranice.cz/">
-						<img src="{$basePath}/dist/img/sponsor/cscn.png" alt="Czech Sailing Centre Nechranice">
-					</a>
-				</li>
-				<li>
-					<a href="http://www.zateckypivovar.cz/">
-						<img src="{$basePath}/dist/img/sponsor/pivovarzatec.png" alt="Žatecký pivovar">
-					</a>
-				</li>
-				<li>
-					<a href="https://www.unetickypivovar.cz/">
-						<img src="{$basePath}/dist/img/sponsor/unetickypivovar.png" alt="Únětický pivovar">
-					</a>
-				</li>
-				<li>
-					<a href="http://damm.cz/">
-						<img src="{$basePath}/dist/img/sponsor/damm.png" alt="DAMM">
-					</a>
-				</li>
-				<li>
-					<a href="https://www.yankeesvicky.cz/">
-						<img src="{$basePath}/dist/img/sponsor/yankee.png" alt="Yankee Candle">
-					</a>
-				</li>
-				<li>
-					<a href="http://www.holidaycentrum.cz/cs/penzion-ubytovani">
-						<img src="{$basePath}/dist/img/sponsor/holidaycentrum.png" alt="Holiday Centrum Vikletice">
-					</a>
-				</li>
-				<li>
-					<a href="https://www.cyklofriede.cz/">
-						<img src="{$basePath}/dist/img/sponsor/friede.png" alt="Cyklo Friede">
-					</a>
-				</li>
-			</ul>
+		<ul class="sponsor-list">
+			<li>
+				<a href="http://www.bohemiahop.cz/cz/">
+					<img src="{$basePath}/dist/img/sponsor/bohemia_hop.png" alt="Bohemia Hop">
+				</a>
+			</li>
+			<li>
+				<a href="https://www.chchp.cz/chram-chmele-a-piva/">
+					<img src="{$basePath}/dist/img/sponsor/chchp.png" alt="CHCHP">
+				</a>
+			</li>
+			<li>
+				<a href="https://www.grapesc.cz/">
+					<img src="{$basePath}/dist/img/sponsor/grape.png" alt="Grape SC, a.s.">
+				</a>
+			</li>
+			<li>
+				<a href="https://dast.ustecko.com/">
+					<img src="{$basePath}/dist/img/sponsor/k-dast.png" alt="K-Dast">
+				</a>
+			</li>
+			<li>
+				<a href="https://www.kempnechranice.cz/">
+					<img src="{$basePath}/dist/img/sponsor/cscn.png" alt="Czech Sailing Centre Nechranice">
+				</a>
+			</li>
+			<li>
+				<a href="http://www.zateckypivovar.cz/">
+					<img src="{$basePath}/dist/img/sponsor/pivovarzatec.png" alt="Žatecký pivovar">
+				</a>
+			</li>
+			<li>
+				<a href="https://www.unetickypivovar.cz/">
+					<img src="{$basePath}/dist/img/sponsor/unetickypivovar.png" alt="Únětický pivovar">
+				</a>
+			</li>
+			<li>
+				<a href="http://damm.cz/">
+					<img src="{$basePath}/dist/img/sponsor/damm.png" alt="DAMM">
+				</a>
+			</li>
+			<li>
+				<a href="https://www.yankeesvicky.cz/">
+					<img src="{$basePath}/dist/img/sponsor/yankee.png" alt="Yankee Candle">
+				</a>
+			</li>
+			<li>
+				<a href="http://www.holidaycentrum.cz/cs/penzion-ubytovani">
+					<img src="{$basePath}/dist/img/sponsor/holidaycentrum.png" alt="Holiday Centrum Vikletice">
+				</a>
+			</li>
+			<li>
+				<a href="https://www.cyklofriede.cz/">
+					<img src="{$basePath}/dist/img/sponsor/friede.png" alt="Cyklo Friede">
+				</a>
+			</li>
+		</ul>
 	</section>
 
 	<section n:ifset="$hopmanNumbersActive" class="page-section hopman-numbers container">

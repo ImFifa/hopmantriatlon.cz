@@ -54,11 +54,7 @@
 					{if $event->propositions_active}
 						<p>Datum konání: <time datetime="{$event->date|date:"Y-m-d"}">{$event->date|weekDay}, {$event->date|dayMonth}</time><br>
 							Aktuální propozice pro letošní ročník.</p>
-						{if $event->slug == 'triatlon'}
-							<a href="{$basePath}/files/tri21.pdf" class="btn btn-outline-info my-2 mr-2"><i class="far fa-file-pdf"></i> {$event->name}</a>
-						{else}
-							<a href="{$basePath}/files/pulmaraton21.pdf" class="btn btn-outline-info my-2 mr-2"><i class="far fa-file-pdf"></i> {$event->name}</a>
-						{/if}
+						<a href="{$basePath}/upload/files/propozice/{$event->slug}{$event->date|date:"Y"}.pdf" class="btn btn-outline-info my-2 mr-2"><i class="far fa-file-pdf"></i> {$event->name}</a>
 					{else}
 						<h6>Na přípravě propozic pro letošní ročník právě pracujeme.</h6>
 					{/if}
@@ -78,7 +74,7 @@
 							{/foreach}
 						{/ifset}
 					{else}
-						<h6>Právě teď není možné se zaregistrovat. Buď se online registrace pro tento rok ještě nespustila a nebo už je po závodě.</h6>
+						<h6>Právě teď není možné se zaregistrovat.</h6>
 					{/if}
 				</section>
 
@@ -116,7 +112,7 @@
 
 						<a n:href="Event:startlist $event->slug" class="btn btn-primary">Zobrazit startovní listinu</a>
 					{else}
-						<h6>Startovní listina není dostupná. Online registrace se pro tento rok ještě nespustila a nebo už je po závodě.</h6>
+						<h6>Startovní listina aktuálně není dostupná.</h6>
 					{/if}
 				</section>
 

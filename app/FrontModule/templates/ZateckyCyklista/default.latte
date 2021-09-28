@@ -13,9 +13,9 @@
 		<nav class="nav event-nav">
 			<a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-home"></i> Hlavní stránka závodu</a>
 			<a class="nav-link" target="_blank" href="{$basePath}/files/zatecky-cyklista/zatecky_cyklista_propozice.pdf"><i class="fas fa-file"></i> Propozice</a>
-			<a class="nav-link" n:href="ZateckyCyklista:registration"><i class="fas fa-file-signature"></i> Registrace</a>
+			<a class="nav-link disabled" n:href="ZateckyCyklista:registration" aria-disabled="true"><i class="fas fa-file-signature"></i> Registrace</a>
 			<a class="nav-link" n:href="ZateckyCyklista:startlist"><i class="fas fa-users"></i> Startovní listina</a>
-			<a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-trophy"></i> Výsledky</a>
+			<a class="nav-link" href="{$basePath}/files/zatecky-cyklista/zatecky_cyklista_vysledky.pdf"><i class="fas fa-trophy"></i> Výsledky 2021</a>
 		</nav>
 	</div>
 	<section class="page-section event-page">
@@ -30,9 +30,8 @@
 				</section>
 
 				<section id="registrace">
-					<h3>Registrace</h3>
-					<p>Online registrace byla spuštěna a je v plném proudu!<br>
-					<a n:href="ZateckyCyklista:registration" class="btn btn-primary my-2 mr-2">Chci se zaregistrovat!</a>
+					<h3>Výsledky 2021</h3>
+					<a href="{$basePath}/files/zatecky-cyklista/zatecky_cyklista_vysledky.pdf" class="btn btn-primary my-2 mr-2">Výsledková listina 2021</a>
 				</section>
 
 				<section id="startovni-listina">

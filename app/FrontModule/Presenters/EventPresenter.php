@@ -126,8 +126,6 @@ class EventPresenter extends BasePresenter
 
 	public function renderRegistration($slug): void
 	{
-		$slugArr = explode('-', $slug);
-		$slug = $slugArr[0];
 		$event = $this->eventModel->getEvent($slug);
 		if (!$event) {
 			$this->error();
@@ -155,7 +153,8 @@ class EventPresenter extends BasePresenter
 			$this->template->competitors = $this->competitorModel->getCompetitors($event->competition_id);
 
 			// render relay startlist
-			$this->template->relays = $this->relayModel->getRelays($event->competition_id + 1);
+			if ($event->id == '3')
+				$this->template->relays = $this->relayModel->getRelays($event->competition_id + 1);
 		}
 	}
 
@@ -552,6 +551,8 @@ class EventPresenter extends BasePresenter
 		$form->addSelect('distance', 'Trať')
 			->setPrompt('-------')
 			->setItems([
+				'0,4km' => '0,4km',
+				'1km' => '1km',
 				'4,4km' => '4,4km (2 okruhy)',
 				'6,6km' => '6,6km (3 okruhy)'
 			])
@@ -561,6 +562,7 @@ class EventPresenter extends BasePresenter
 			->setPrompt('-------')
 			->setItems($this->eventCategoryModel->getForSelectByEventId(5))
 			->setDisabled();
+
 		$form->addHidden('category_id')
 			->setHtmlAttribute('id', 'frm-signUpForm-category_id');
 

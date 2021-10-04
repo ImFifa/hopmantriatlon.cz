@@ -1,0 +1,121 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Adventní běh - registrace proběhla úspěšně!</title>
+
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Nunito&family=Varela+Round&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			color-scheme: light;
+		}
+
+		@media only screen and (max-width: 500px) {
+
+			section {
+				border-radius: 0;
+			}
+
+			header {
+				border-radius: 0;
+			}
+
+			ul {
+				list-style-type: none;
+				padding-left: unset;
+			}
+		}
+
+		body {
+			color: #333333;
+			background-color: #ebebeb;
+			font-family: 'Nunito', sans-serif;
+			font-size: 17px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		section {
+			border-radius: .4rem;
+			background-color: #FFFFFF;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			word-wrap: normal;
+			max-width: 600px;
+			padding: 1rem;
+		}
+
+		h1, h3, h4, h5 {
+			font-family: 'Varela Round', serif;
+			color: #1e6707;
+		}
+
+		h4 {
+			margin: 1.5rem 0 0 0;
+			padding: 0;
+		}
+
+		li {
+			margin-bottom: .5rem;
+		}
+
+		article {
+			display: block;
+			width: 100%;
+		}
+
+
+	</style>
+</head>
+<body>
+<section>
+	<article>
+		<h1>Adventní běh 2021</h1>
+		<h3>4. prosince, Žatec </h3>
+
+		<div class="submitted-data">
+			<h4>Pro kontrolu zde zasíláme tebou vyplněné údaje:</h4>
+			<p>
+				{='Jméno a příjmení:'|padRight: 25, ' '}<strong>{$name} {$surname}</strong><br>
+					{='Rok narození:'|padRight: 25, ' '}<strong>{$birth_year}</strong><br>
+					{='Pohlaví:'|padRight: 25, ' '}<strong>{$sex}</strong><br>
+					{='Kategorie:'|padRight: 25, ' '}<strong>{$category}</strong><br>
+					{='Oddíl/město:'|padRight: 25, ' '}<strong n:if="$team != NULL">{$team}</strong><br>
+			</p>
+			<p>Pokud by náhodou něco nesouhlasilo, dej nám vědět a hned to opravíme.<br>
+				(stačí odpovědět na tento email)</p>
+		</div>
+
+		{*		<div class="payment">*}
+{*			<h4>Informace k platbě:</h4>*}
+{*			<p>*}
+{*				Částka: <strong>{$price}</strong><br>*}
+{*				Číslo účtu: <strong>2000732761/2010</strong><br>*}
+{*				Variabilní symbol: <strong>{$variableSymbol}</strong><br>*}
+{*				QR Platba:<br>*}
+{*			</p>*}
+{*			<img src="https://api.paylibo.com/paylibo/generator/czech/image?compress=false&size=440&accountNumber=2000732761&bankCode=2010&amount={$price}&currency=CZK&vs={$variableSymbol}&message={$message}" alt="QR Platba">*}
+{*			<i>QR platbu je možné načíst pouze přes mobilní aplikaci internetového bankovnictví.</i>*}
+{*			<h5>U platby je nutné uvést variabilní symbol!</h5>*}
+{*		</div>*}
+
+		<div class="race-info">
+
+			{*			<h4>Důležité předzávodní informace: <small>(aktuálně platné)</small></h4>*}
+{*			<ul>*}
+{*				<li>Doplníme...</li>*}
+{*			</ul>*}
+			<p>Pro aktuální informace sledujte náš <a href="https://www.facebook.com/hopmantriatlon" target="_blank">Facebook</a> a aktuality na webových stránkách <a href="https://www.hopmantriatlon.cz/" target="_blank">hopmantriatlon.cz</a></p>
+		</div>
+
+		<p>Na viděnou na startovní čáře!</p>
+
+		<p>Za Hopman Team<br>
+		Filip</p>
+	</article>
+</section>
+</body>
+</html>

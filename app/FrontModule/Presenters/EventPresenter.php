@@ -248,23 +248,7 @@ class EventPresenter extends BasePresenter
 						'team' => $values['team']
 					];
 
-					$mail = new Message();
-
-					$mail->setFrom('info@hopmantriatlon.cz', 'Hopman');
-					$mail->addTo($values['email']);
-					$mail->setHtmlBody(
-						$latte->renderToString(__DIR__ . '/../../Email/' . $event_slug . '.latte', $params),
-						__DIR__ . '/../../assets/img/email');
-					$parameters = Neon::decode(file_get_contents(__DIR__ . "/../../config/server/local.neon"));
-
-
-					$mailer = new SmtpMailer([
-						'host' => $parameters['mail']['host'],
-						'username' => $parameters['mail']['username'],
-						'password' => $parameters['mail']['password'],
-						'secure' => $parameters['mail']['secure'],
-					]);
-					$mailer->send($mail);
+					$this->SendMessage($values['email'], $latte, $event_slug, $params);
 				}
 
 				$this->flashMessage('Registrace proběhla úspěšně!');
@@ -384,22 +368,7 @@ class EventPresenter extends BasePresenter
 						'message' => $values['name'] . ' ' . $values['surname'] . ' (' . $values['year_of_birth'] . ') - startovné na: ' . $competition_name
 					];
 
-					$mail = new Message();
-
-					$mail->setFrom('info@hopmantriatlon.cz', 'Hopman');
-					$mail->addTo($values['email']);
-					$mail->setHtmlBody(
-						$latte->renderToString(__DIR__ . '/../../Email/' . $event_slug . '.latte', $params),
-						__DIR__ . '/../../assets/img/email');
-					$parameters = Neon::decode(file_get_contents(__DIR__ . "/../../config/server/local.neon"));
-
-					$mailer = new SmtpMailer([
-						'host' => $parameters['mail']['host'],
-						'username' => $parameters['mail']['username'],
-						'password' => $parameters['mail']['password'],
-						'secure' => $parameters['mail']['secure'],
-					]);
-					$mailer->send($mail);
+					$this->SendMessage($values['email'], $latte, $event_slug, $params);
 				}
 
 				$this->flashMessage('Registrace proběhla úspěšně!');
@@ -590,46 +559,22 @@ class EventPresenter extends BasePresenter
 				$values['category_id'] = (int) $values['category_id'];
 				$values['id'] = $this->competitorModel->insert($values)->id;
 
-				// get competition name
-				$competition = $this->competitionModel->getCompetitionById($values['competition_id']);
-				$category = $this->eventCategoryModel->getCategoryById($values['category_id']);
-				if ($competition != NULL) {
-					$competition_name = $competition->name;
-					$event_slug = $competition->slug;
-					$category_name = $category->name;
+				if (!empty($values)) {
 					$sex = ($values['sex'] === 'M') ? 'Muži' : 'Ženy';
 
 					// send mail
 					$latte = new Engine;
 					$params = [
-						'competition_name' => $competition_name,
 						'name' => $values['name'],
 						'surname' => $values['surname'],
 						'sex' => $sex,
 						'birth_year' => $values['year_of_birth'],
-						'category' => $category_name,
+						'category' => $values['category'],
 						'distance' => $values['distance'],
-						'team' => $values['team'],
-						'message' => 'Hopman triatlon - startovné (' . $values['name'] . ' ' . $values['surname'] . ')'
+						'team' => $values['team']
 					];
 
-					$mail = new Message();
-
-					$mail->setFrom('info@hopmantriatlon.cz', 'Hopman');
-					$mail->addTo($values['email']);
-					$mail->setHtmlBody(
-						$latte->renderToString(__DIR__ . '/../../Email/' . $event_slug . '.latte', $params),
-						__DIR__ . '/../../assets/img/email');
-					$parameters = Neon::decode(file_get_contents(__DIR__ . "/../../config/server/local.neon"));
-
-
-					$mailer = new SmtpMailer([
-						'host' => $parameters['mail']['host'],
-						'username' => $parameters['mail']['username'],
-						'password' => $parameters['mail']['password'],
-						'secure' => $parameters['mail']['secure'],
-					]);
-					$mailer->send($mail);
+					$this->SendMessage($values['email'], $latte, $params);
 				}
 
 				$this->flashMessage('Registrace proběhla úspěšně!');
@@ -641,5 +586,32 @@ class EventPresenter extends BasePresenter
 		};
 
 		return $form;
+	}
+
+	/**
+	 * @param $email
+	 * @param Engine $latte
+	 * @param $event_slug
+	 * @param array $params
+	 */
+	protected function SendMessage($email, Engine $latte, array $params): void
+	{
+		$mail = new Message();
+
+		$mail->setFrom('info@hopmantriatlon.cz', 'Hopman');
+		$mail->addTo($email);
+		$mail->setHtmlBody(
+			$latte->renderToString(__DIR__ . '/../../Email/adventni-beh.latte', $params),
+			__DIR__ . '/../../assets/img/email');
+		$parameters = Neon::decode(file_get_contents(__DIR__ . "/../../config/server/local.neon"));
+
+
+		$mailer = new SmtpMailer([
+			'host' => $parameters['mail']['host'],
+			'username' => $parameters['mail']['username'],
+			'password' => $parameters['mail']['password'],
+			'secure' => $parameters['mail']['secure'],
+		]);
+		$mailer->send($mail);
 	}
 }

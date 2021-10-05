@@ -72,11 +72,11 @@ class CompetitorModel extends BaseModel
 	}
 	public function getRegisteredWomenAdvent($competition_id): int
 	{
-		return $this->getTable()->where('competition_id', $competition_id)->where('distance', '4400m')->count();
+		return $this->getTable()->where('competition_id', $competition_id)->where('sex', 'Ž')->count();
 	}
 	public function getRegisteredMenAdvent($competition_id): int
 	{
-		return $this->getTable()->where('competition_id', $competition_id)->where('distance', '6600m')->count();
+		return $this->getTable()->where('competition_id', $competition_id)->where('sex', 'M')->count();
 	}
 
 //

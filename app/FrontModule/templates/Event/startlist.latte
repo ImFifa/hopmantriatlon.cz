@@ -66,7 +66,7 @@
 							<th scope="col">Pohlaví</th>
 							<th scope="col">Oddíl/město</th>
 							<th scope="col">Kategorie</th>
-							<th scope="col">Zaplaceno</th>
+{*							<th scope="col">Vzdálenost</th>*}
 						</tr>
 						</thead>
 						<tbody>
@@ -83,11 +83,12 @@
 								<td>{$competitor->sex}</td>
 								<td>{$competitor->team}</td>
 								<td>{($competitor->category_id) ? $competitor->category->name : '---'}</td>
-								<td><span style="color: {if $competitor->paid}green{else}red{/if}; font-weight: 700">{if $competitor->paid}ANO{else}NE{/if}</span></td>
+{*								<td><span style="color: {if $competitor->paid}green{else}red{/if}; font-weight: 700">{if $competitor->paid}ANO{else}NE{/if}</span></td>*}
 							</tr>
 						{/foreach}
 						</tbody>
 					</table>
+					<p>Celkový počet registrovaných závodníků: <strong>{$competitors|length}</strong></p>
 				</div>
 
 				<div n:ifset="$relays" class="table-responsive-lg">

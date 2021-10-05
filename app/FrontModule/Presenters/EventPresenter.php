@@ -67,8 +67,6 @@ class EventPresenter extends BasePresenter
 			$this->template->participantsMan = $this->competitorModel->getRegisteredMan($event->competition_id);
 			$this->template->participantsWoman = $this->competitorModel->getRegisteredWoman($event->competition_id);
 
-			bdump($event->competition_id);
-
 			switch ($event->id) {
 				case 1:
 					$this->template->kids = $this->competitorModel->getRegisteredKidsRun($event->competition_id);
@@ -82,8 +80,6 @@ class EventPresenter extends BasePresenter
 					$this->template->relays = $this->relayModel->getRegisteredRelays($event->competition_id + 1);
 					break;
 				case 5:
-					$this->template->kids = $this->competitorModel->getRegisteredKidsAdvent($event->competition_id);
-					$this->template->juniors = $this->competitorModel->getRegisteredJuniorsAdvent($event->competition_id);
 					$this->template->men = $this->competitorModel->getRegisteredMenAdvent($event->competition_id);
 					$this->template->women = $this->competitorModel->getRegisteredWomenAdvent($event->competition_id);
 					break;
@@ -505,7 +501,6 @@ class EventPresenter extends BasePresenter
 
 		$form->addInteger('year_of_birth', 'Rok narození')
 			->addRule(Form::LENGTH, 'Požadovaná délka jsou %s znaky', 4)
-			->addRule(Form::MAX,'Děti mladší 15ti let se nemohou zaregistrovat.',2006)
 			->addRule(Form::MIN,'Vážně je Vám víc než 100 let? :-)',1921)
 			->setRequired('Musíte uvést Váš rok narození');
 
@@ -517,15 +512,10 @@ class EventPresenter extends BasePresenter
 				'Ž' => 'Žena'
 			]);
 
-		$form->addSelect('distance', 'Trať')
-			->setPrompt('-------')
-			->setItems([
-				'0,4km' => '0,4km',
-				'1km' => '1km',
-				'4,4km' => '4,4km (2 okruhy)',
-				'6,6km' => '6,6km (3 okruhy)'
-			])
-			->setDisabled();
+		$form->addText('distance', 'Trať')
+			->setHtmlAttribute('placeholder', '-------')
+			->setHtmlAttribute('readonly', true)
+			->setRequired('Vzdálenost musí být vyplněna');
 
 		$form->addSelect('category', 'Kategorie')
 			->setPrompt('-------')
@@ -533,7 +523,7 @@ class EventPresenter extends BasePresenter
 			->setDisabled();
 
 		$form->addHidden('category_id')
-			->setHtmlAttribute('id', 'frm-signUpForm-category_id');
+			->setHtmlAttribute('id', 'frm-adventSignUpForm-category_id');
 
 		$form->addText('team', 'Oddíl/město')
 			->addRule(Form::MAX_LENGTH, 'Maximálné délka je %s znaků', 150);
@@ -557,61 +547,47 @@ class EventPresenter extends BasePresenter
 
 				unset($values['agree']);
 				$values['category_id'] = (int) $values['category_id'];
+				$category = $this->eventCategoryModel->getCategoryById($values['category_id']);
 				$values['id'] = $this->competitorModel->insert($values)->id;
+				$sex = ($values['sex'] === 'M') ? 'Muži' : 'Ženy';
 
-				if (!empty($values)) {
-					$sex = ($values['sex'] === 'M') ? 'Muži' : 'Ženy';
+				// send mail
+				$latte = new Engine;
+				$params = [
+					'name' => $values['name'],
+					'surname' => $values['surname'],
+					'birth_year' => $values['year_of_birth'],
+					'sex' => $sex,
+					'category' => $category->name,
+					'distance' => $values['distance'],
+					'team' => $values['team'],
+				];
 
-					// send mail
-					$latte = new Engine;
-					$params = [
-						'name' => $values['name'],
-						'surname' => $values['surname'],
-						'sex' => $sex,
-						'birth_year' => $values['year_of_birth'],
-						'category' => $values['category'],
-						'distance' => $values['distance'],
-						'team' => $values['team']
-					];
+				$mail = new Message();
 
-					$this->SendMessage($values['email'], $latte, $params);
-				}
+				$mail->setFrom('info@hopmantriatlon.cz', 'Hopman');
+				$mail->addTo($values['email']);
+				$mail->setHtmlBody(
+					$latte->renderToString(__DIR__ . '/../../Email/adventni-beh.latte', $params),
+					__DIR__ . '/../../assets/img/email');
+				$parameters = Neon::decode(file_get_contents(__DIR__ . "/../../config/server/local.neon"));
+
+				$mailer = new SmtpMailer([
+					'host' => $parameters['mail']['host'],
+					'username' => $parameters['mail']['username'],
+					'password' => $parameters['mail']['password'],
+					'secure' => $parameters['mail']['secure'],
+				]);
+				$mailer->send($mail);
 
 				$this->flashMessage('Registrace proběhla úspěšně!');
 				$this->redirect('this?odeslano=1');
 
-			} catch (DriverException $e) {
+			} catch (\ErrorException $e) {
 				$this->flashMessage('Při pokusu o registraci nastala chyba a záznam nebyl uložen. Kontaktujte prosím správce webu na info@hopmantriatlon.cz', 'danger');
 			}
 		};
 
 		return $form;
-	}
-
-	/**
-	 * @param $email
-	 * @param Engine $latte
-	 * @param $event_slug
-	 * @param array $params
-	 */
-	protected function SendMessage($email, Engine $latte, array $params): void
-	{
-		$mail = new Message();
-
-		$mail->setFrom('info@hopmantriatlon.cz', 'Hopman');
-		$mail->addTo($email);
-		$mail->setHtmlBody(
-			$latte->renderToString(__DIR__ . '/../../Email/adventni-beh.latte', $params),
-			__DIR__ . '/../../assets/img/email');
-		$parameters = Neon::decode(file_get_contents(__DIR__ . "/../../config/server/local.neon"));
-
-
-		$mailer = new SmtpMailer([
-			'host' => $parameters['mail']['host'],
-			'username' => $parameters['mail']['username'],
-			'password' => $parameters['mail']['password'],
-			'secure' => $parameters['mail']['secure'],
-		]);
-		$mailer->send($mail);
 	}
 }

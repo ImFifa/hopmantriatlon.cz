@@ -20,6 +20,11 @@ jobs:
         if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer install --no-interaction --no-progress
 
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+
       - name: 🔗 NPM install
         if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm install

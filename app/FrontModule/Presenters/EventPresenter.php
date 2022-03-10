@@ -16,8 +16,6 @@ use Nette\Database\DriverException;
 use Nette\Mail\Message;
 use Nette\Mail\SmtpMailer;
 use Nette\Neon\Neon;
-use wodCZ\NetteHoneypot\Honeypot;
-use wodCZ\NetteHoneypot\HoneypotExtension;
 
 class EventPresenter extends BasePresenter
 {
@@ -157,6 +155,8 @@ class EventPresenter extends BasePresenter
 
 	protected function createComponentHalfmarathonSignUpForm(): Form
 	{
+
+        $currentYear = date("Y");
 		$form = new Form();
 
 		$form->addText('competition_id', 'ID události');
@@ -169,11 +169,28 @@ class EventPresenter extends BasePresenter
 			->addRule(Form::MAX_LENGTH, 'Maximálné délka je %s znaků', 100)
 			->setRequired('Musíte uvést Vaše příjmení');
 
+        $form->addSelect('distance', 'Trať')
+            ->setPrompt('-------')
+            ->setRequired('Musíte si zvolit trať')
+            ->setItems([
+                'Desítka' => 'Desítka (10km)',
+                'Půlmaraton' => 'Půlmaraton (21km)',
+                'Dětský běh' => 'Dětský běh (400m/800m)'
+            ]);
+
 		$form->addInteger('year_of_birth', 'Rok narození')
 			->addRule(Form::LENGTH, 'Požadovaná délka jsou %s znaky', 4)
-			->addRule(Form::MAX,'Děti mladší 15ti let se nemohou zaregistrovat.',2006)
-			->addRule(Form::MIN,'Vážně je Vám víc než 100 let? :-)',1921)
-			->setRequired('Musíte uvést Váš rok narození');
+			->addRule(Form::MIN,'Vážně je Vám víc než 100 let? :-)',$currentYear - 100)
+			->setRequired('Musíte uvést Váš rok narození')
+            // pokud je trat detsky beh
+            ->addConditionOn($form['distance'], $form::EQUAL, 'Dětský běh')
+                ->addRule(Form::MIN,'Na dětský běh se mohou přihlásit pouze mladší 15 let', $currentYear - 15)
+            // pokud je trat desitka
+            ->addConditionOn($form['distance'], $form::EQUAL, 'Desítka')
+                ->addRule(Form::MAX,'Na desítku se mohou přihlásit pouze závodníci, který je alespoň 15 let', $currentYear - 15)
+            // pokud je trat pulmaraton
+            ->addConditionOn($form['distance'], $form::EQUAL, 'Půlmaraton')
+                ->addRule(Form::MAX,'Na půlmaraton se mohou přihlásit pouze závodníci, který je alespoň 18 let', $currentYear - 18);
 
 		$form->addSelect('sex', 'Pohlaví')
 			->setPrompt('-------')
@@ -183,20 +200,12 @@ class EventPresenter extends BasePresenter
 				'Ž' => 'Žena'
 			]);
 
-		$form->addSelect('distance', 'Trať')
-			->setPrompt('-------')
-			->setRequired('Musíte si zvolit trať')
-			->setItems([
-				'Desítka' => 'Desítka (10km)',
-				'Půlmaraton' => 'Půlmaraton (21km)'
-			]);
-
 		$form->addSelect('category', 'Kategorie')
 			->setPrompt('-------')
 			->setItems($this->eventCategoryModel->getForSelectByEventId(1))
 			->setDisabled();
 		$form->addHidden('category_id')
-			->setHtmlAttribute('id', 'frm-signUpForm-category_id');
+			->setHtmlAttribute('id', 'frm-halfmarathonSignUpForm-category_id');
 
 		$form->addText('team', 'Oddíl/město')
 			->addRule(Form::MAX_LENGTH, 'Maximálné délka je %s znaků', 150);
@@ -231,7 +240,26 @@ class EventPresenter extends BasePresenter
 					$category_name = $category->name;
 					$sex = ($values['sex'] === 'M') ? 'Muži' : 'Ženy';
 
-					// send mail
+                    // payment
+                    if ($values['distance'] == 'Dětský běh')
+                        $price = 50;
+                    elseif ($values['distance'] == 'Desítka')
+                        if ((date('Y') - $values['year_of_birth']) >= 20) {
+                            $price = 150;
+                        } else {
+                            $price = 100;
+                        }
+                    else {
+                        $price = 200;
+                    }
+
+                    $variableSymbol = str_pad((string)$values['id'], 5, "0", STR_PAD_LEFT);
+                    // individual race has 1 in front of variableSymbol
+                    $variableSymbol = 1 . $variableSymbol;
+
+                    $message = $values['name'] . ' ' . $values['surname'] . ' (' . $values['year_of_birth'] . ')';
+					bdump($message);
+                    // send mail
 					$latte = new Engine;
 					$params = [
 						'competition_name' => $competition_name,
@@ -241,10 +269,28 @@ class EventPresenter extends BasePresenter
 						'birth_year' => $values['year_of_birth'],
 						'category' => $category_name,
 						'distance' => $values['distance'],
-						'team' => $values['team']
+						'team' => $values['team'],
+                        'price' => $price,
+                        'variableSymbol' => $variableSymbol,
+                        'message' => $message
 					];
 
-					$this->SendMessage($values['email'], $latte, $event_slug, $params);
+                    $mail = new Message();
+
+                    $mail->setFrom('info@hopmantriatlon.cz', 'Hopman');
+                    $mail->addTo($values['email']);
+                    $mail->setHtmlBody(
+                        $latte->renderToString(__DIR__ . '/../../Email/pulmaraton.latte', $params),
+                        __DIR__ . '/../../assets/img/email');
+                    $parameters = Neon::decode(file_get_contents(__DIR__ . "/../../config/server/local.neon"));
+
+                    $mailer = new SmtpMailer([
+                        'host' => $parameters['mail']['host'],
+                        'username' => $parameters['mail']['username'],
+                        'password' => $parameters['mail']['password'],
+                        'secure' => $parameters['mail']['secure'],
+                    ]);
+                    $mailer->send($mail);
 				}
 
 				$this->flashMessage('Registrace proběhla úspěšně!');

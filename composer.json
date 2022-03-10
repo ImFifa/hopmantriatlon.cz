@@ -70,6 +70,10 @@
 		"sort-packages": true,
 		"platform": {
 			"php": "7.4"
+		},
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true,
+			"phpstan/extension-installer": true
 		}
 	}
 }

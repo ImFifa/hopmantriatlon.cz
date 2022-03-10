@@ -30,9 +30,10 @@
 			color: #333333;
 			background-color: #ebebeb;
 			font-family: 'Nunito', sans-serif;
-			font-size: 17px;
+			font-size: 16px;
 			display: flex;
-			justify-content: center;
+			flex-direction: row;
+			justify-content: flex-start;
 			align-items: center;
 		}
 
@@ -44,8 +45,8 @@
 			justify-content: center;
 			align-items: center;
 			word-wrap: normal;
-			max-width: 600px;
-			padding: 1rem;
+			max-width: 700px;
+			padding: 1.5rem;
 		}
 
 		a {
@@ -85,6 +86,7 @@
 		article {
 			display: block;
 			width: 100%;
+			padding: 1rem;
 		}
 
 
@@ -94,15 +96,14 @@
 <section>
 	<header>
 		<a href="https://www.hopmantriatlon.cz/" target="_blank">
-			<img src="hopman_logo2021.jpg" alt="Hopman 2021">
+			<img src="hopman_logo2022.png" alt="Hopman 2022">
 		</a>
 	</header>
 
 	<article>
-		<h1>Účastníš se závodu {$competition_name}!</h1>
-		<p>Úspěšně jsi se zaregistroval/a, tak teď už to jen odběhnout! :-)</p>
+		<h1>Registrace na závod {$competition_name} proběhla úspěšně!</h1>
 
-		<div class="submitted-data">
+		<div class="submitted-data mt-3">
 			<h4>Pro kontrolu zde zasíláme tebou vyplněné údaje:</h4>
 			<p>
 				{='Jméno a příjmení:'|padRight: 25, ' '}<strong>{$name} {$surname}</strong><br>
@@ -116,20 +117,33 @@
 				(stačí odpovědět na tento email)</p>
 		</div>
 
-		<div class="race-info">
-			<h4>Důležité předzávodní informace: <small>(aktuálně platné)</small></h4>
-			<ul>
-				<li>Závod se koná <strong>v neděli 18. dubna v Žatci za řekou</strong> (jako vždy). Prezentace od 8:30.</li>
-				<li><strong>Platba startovného proběhne až na místě</strong> u prezentace (startovné 100Kč)!</li>
-				<!--<li>Startovat se bude <strong>ve vlnách</strong> po maximálně 20ti závodnících (na volbě trati nezáleží). Každých 5 minut odstartuje jedna vlna! První v 9:00 a poslední v 11:00 (celkem 25 vln)</li>-->
-				<li>Vzhledem k omezením nebude letos žádné oficiální zázemí, nebude ani vyhlašování výsledků. Není možné tradiční občerstvení na trati (občerstvovačka za Stroupčí nebude). Počítejte s tím!</li>
-				<li>Na obrátce půlmaratonu bude k dispozici základní občerstvení. Pro závodníky bude v cíli zajištěna voda.</li>
-				<li>Zbylé informace naleznete na webových stránkách v <a href="https://www.hopmantriatlon.cz/files/pulmaraton21.pdf" target="_blank">propozicích závodu</a></li>
-			</ul>
-			<p>Pro aktuální informace sledujte náš <a href="https://www.facebook.com/hopmantriatlon" target="_blank">Facebook</a> a aktuality na webových stránkách <a href="https://www.hopmantriatlon.cz/" target="_blank">hopmantriatlon.cz</a></p>
+		<div class="payment">
+			<h4>Informace k platbě:</h4>
+			<p>
+				Částka: <strong>{$price}</strong><br>
+				Číslo účtu: <strong>2000732761/2010</strong><br>
+				Variabilní symbol: <strong>{$variableSymbol}</strong><br>
+				QR Platba:<br>
+			</p>
+			<img src="https://api.paylibo.com/paylibo/generator/czech/image?accountNumber=2000732761&bankCode=2010&amount={$price}&currency=CZK&vs={$variableSymbol}&message={$message}&size=440&">
+{*			<i>QR platbu je možné načíst pouze přes mobilní aplikaci internetového bankovnictví.</i>*}
+			<h5>U platby je nutné uvést variabilní symbol!</h5>
 		</div>
 
-		<p>Na viděnou na startovní čáře!</p>
+{*		<div class="race-info">*}
+{*			<h4>Důležité předzávodní informace: <small>(aktuálně platné)</small></h4>*}
+{*			<ul>*}
+{*				<li>Závod se koná <strong>v neděli 18. dubna v Žatci za řekou</strong> (jako vždy). Prezentace od 8:30.</li>*}
+{*				<li><strong>Platba startovného proběhne až na místě</strong> u prezentace (startovné 100Kč)!</li>*}
+{*				<!--<li>Startovat se bude <strong>ve vlnách</strong> po maximálně 20ti závodnících (na volbě trati nezáleží). Každých 5 minut odstartuje jedna vlna! První v 9:00 a poslední v 11:00 (celkem 25 vln)</li>-->*}
+{*				<li>Vzhledem k omezením nebude letos žádné oficiální zázemí, nebude ani vyhlašování výsledků. Není možné tradiční občerstvení na trati (občerstvovačka za Stroupčí nebude). Počítejte s tím!</li>*}
+{*				<li>Na obrátce půlmaratonu bude k dispozici základní občerstvení. Pro závodníky bude v cíli zajištěna voda.</li>*}
+{*				<li>Zbylé informace naleznete na webových stránkách v <a href="https://www.hopmantriatlon.cz/files/pulmaraton21.pdf" target="_blank">propozicích závodu</a></li>*}
+{*			</ul>*}
+{*			<p>Pro aktuální informace sledujte náš <a href="https://www.facebook.com/hopmantriatlon" target="_blank">Facebook</a> a aktuality na webových stránkách <a href="https://www.hopmantriatlon.cz/" target="_blank">hopmantriatlon.cz</a></p>*}
+{*		</div>*}
+
+		<p class="mt-4">Na viděnou na startovní čáře!</p>
 
 		<p>Hopman Team</p>
 	</article>

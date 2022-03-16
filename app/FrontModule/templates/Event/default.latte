@@ -17,30 +17,30 @@
 	<div class="container">
 		<nav class="nav event-nav">
 			{if $event->propositions_active}
-				<a class="nav-link scroll" n:href="Event:#propozice $event->slug"><i class="fas fa-file"></i> Propozice</a>
+				<a class="nav-link scroll" n:href="Event:#propozice $event->slug"><i class="fa-solid fa-file"></i> Propozice</a>
 			{else}
-				<a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-file"></i> Propozice</a>
+				<a class="nav-link disabled" href="#" aria-disabled="true"><i class="fa-solid fa-file"></i> Propozice</a>
 			{/if}
 
 			{if $event->registration_active}
-				<a class="nav-link" n:href="Event:registration $event->slug"><i class="fas fa-file-signature"></i> Registrace</a>
+				<a class="nav-link" n:href="Event:registration $event->slug"><i class="fa-solid fa-file-signature"></i> Registrace</a>
 			{else}
-				<a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-file-signature"></i> Registrace</a>
+				<a class="nav-link disabled" href="#" aria-disabled="true"><i class="fa-solid fa-file-signature"></i> Registrace</a>
 			{/if}
 
 			{if $event->startlist_active}
-				<a class="nav-link" n:href="Event:startlist $event->slug"><i class="fas fa-users"></i> Startovní listina</a>
+				<a class="nav-link" n:href="Event:startlist $event->slug"><i class="fa-solid fa-users"></i> Startovní listina</a>
 			{else}
-				<a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-users"></i> Startovní listina</a>
+				<a class="nav-link disabled" href="#" aria-disabled="true"><i class="fa-solid fa-users"></i> Startovní listina</a>
 			{/if}
 
-			<a class="nav-link scroll" n:href="Event:#vysledky $event->slug"><i class="fas fa-trophy"></i> Výsledky</a>
+			<a class="nav-link scroll" n:href="Event:#vysledky $event->slug"><i class="fa-solid fa-trophy"></i> Výsledky</a>
 			{if $event->gallery_year != NULL}
-				<a class="nav-link" n:href="Event:gallery $event->slug"><i class="fas fa-images"></i> Galerie</a>
+				<a class="nav-link" n:href="Event:gallery $event->slug"><i class="fa-solid fa-images"></i> Galerie</a>
 			{else}
-				<a class="nav-link disabled" href="#" aria-disabled="true"><i class="fas fa-images"></i> Galerie</a>
+				<a class="nav-link disabled" href="#" aria-disabled="true"><i class="fa-solid fa-images"></i> Galerie</a>
 			{/if}
-		  	<a class="nav-link scroll" n:href="Event:#mapy"><i class="fas fa-map"></i> Mapy</a>
+		  	<a class="nav-link scroll" n:href="Event:#mapy"><i class="fa-solid fa-map"></i> Mapy</a>
 		</nav>
 	</div>
 	<section class="page-section event-page">
@@ -52,29 +52,30 @@
 				<section id="propozice">
 					<h3>Propozice</h3>
 					{if $event->propositions_active}
-						<p>Datum konání: <time datetime="{$event->date|date:"Y-m-d"}">{$event->date|weekDay}, {$event->date|dayMonth}</time><br>
-							Aktuální propozice pro letošní ročník.</p>
-						<a href="{$basePath}/upload/files/propozice/{$event->slug}{$event->date|year}.pdf" target="_blank" class="btn btn-outline-info my-2 mr-2"><i class="far fa-file-pdf"></i> {$event->name}</a>
+						<p>
+                            Datum konání: <time datetime="{$event->date|date:"Y-m-d"}">{$event->date|weekDay|lower}, {$event->date|dayMonthYear|lower}</time>
+                            <a href="{$basePath}/upload/files/propozice/{$event->slug}{$event->date|year}.pdf" target="_blank" class="btn btn-nobg-info mr-2"><i class="fa-solid fa-file-pdf"></i> {$event->name} - propozice</a>
+						</p>
 					{else}
-						<h6>Na přípravě propozic pro letošní ročník právě pracujeme.</h6>
+						<p>Na přípravě propozic pro letošní ročník právě pracujeme.</p>
 					{/if}
 				</section>
 
 				<section id="registrace">
 					<h3>Registrace</h3>
 					{if $event->registration_active}
-						<p>Online registrace byla spuštěna a je v plném proudu!<br>
+						<p>Online registrace je v aktivní!<br>
 							{if $event->registration_active_till}
-								Formulář bude aktivní do
-								<time datetime="{$event->registration_active_till|date:"Y-m-d"}">{$event->registration_active_till|dateTime} ({$event->registration_active_till|weekDay})</time> nebo do naplnění kapacity závodu.
+								Formulář bude uzavřen v {$event->registration_active_till|weekDay|lower}
+								<time datetime="{$event->registration_active_till|date:"Y-m-d"}">{$event->registration_active_till|dateTime|lower}</time> nebo po naplnění kapacity závodu.
 							{/if}</p>
 						{ifset $competitions}
 							{foreach $competitions as $competition}
-								<a n:href="Event:registration $competition->slug" class="btn btn-primary mb-2">{$competition->name}</a>
+								<a n:href="Event:registration $competition->slug" class="btn btn-primary mb-2">On-line registrace</a>
 							{/foreach}
 						{/ifset}
 					{else}
-						<h6>Právě teď není možné se zaregistrovat.</h6>
+						<p>Právě teď není možné se zaregistrovat.</p>
 					{/if}
 				</section>
 
@@ -87,8 +88,7 @@
 								Půlmaraton: <strong>{$halfmarathon}</strong><br>
 								Desítka: <strong>{$t10k}</strong><br>
 								Dětský závod: <strong>{$kids}</strong><br>
-								Celkem je přihlášeno <strong>{$participants}</strong>.<br>
-								Z toho {$participantsMan} mužů a {$participantsWoman} žen.
+								Celkem je přihlášeno <strong>{$participants}</strong> závodníků. {*Z toho {$participantsMan} <i class="fa-solid fa-mars"></i> a {$participantsWoman} <i class="fa-solid fa-venus"></i>. *}
 							</p>
 							{case 3}
 							<p>
@@ -96,21 +96,19 @@
 								Sprint triatlon: <strong>{$sprint}</strong><br>
 								Dětský triatlon: <strong>{$kids}</strong><br>
 								<span n:ifset="$relays">Štafety: <strong>{$relays}</strong><br></span><br>
-								Celkem je přihlášeno <strong>{$participants}</strong>.<br>
-								Z toho {$participantsMan} mužů a {$participantsWoman} žen.
+								Celkem je přihlášeno <strong>{$participants}</strong> závodníků. Z toho {$participantsMan} <i class="fa-solid fa-mars"></i> a {$participantsWoman} <i class="fa-solid fa-venus"></i>.
 							</p>
 							{case 5}
 							<p>
 								Muži: <strong>{$men}</strong><br>
 								Ženy: <strong>{$women}</strong><br>
-								Celkem je přihlášeno <strong>{$participants}</strong>.<br>
-								Z toho {$participantsMan} mužů a {$participantsWoman} žen.
+								Celkem je přihlášeno <strong>{$participants}</strong> závodníků. Z toho {$participantsMan} <i class="fa-solid fa-mars"></i> a {$participantsWoman} <i class="fa-solid fa-venus"></i>.
 							</p>
 						{/switch}
 
-						<a n:href="Event:startlist $event->slug" class="btn btn-primary">Zobrazit startovní listinu</a>
+						<a n:href="Event:startlist $event->slug" class="btn btn-primary">Startovní listina</a>
 					{else}
-						<h6>Startovní listina aktuálně není dostupná.</h6>
+						<p>Startovní listina aktuálně není dostupná.</p>
 					{/if}
 				</section>
 
@@ -118,14 +116,14 @@
 					<h3>Výsledky</h3>
 					{if $results}
 						{foreach $results as $result}
-							<a href="{$basePath}/upload/files/{$event->slug}/vysledky/{$result->path}" target="_blank" class="my-2 mr-2 btn btn-outline-info">
-								<i n:if="$result->type == 'pdf'" class="far fa-file-pdf"></i>
-								<i n:if="$result->type == 'docx'" class="far fa-file-word"></i>
-								<i n:if="$result->type == 'xlsx'" class="far fa-file-excel"></i>
+							<a href="{$basePath}/upload/files/{$event->slug}/vysledky/{$result->path}" target="_blank" class="my-1 mr-1 btn btn-nobg-info">
+								<i n:if="$result->type == 'pdf'" class="fa-solid fa-file-pdf"></i>
+								<i n:if="$result->type == 'docx'" class="fa-solid fa-file-word"></i>
+								<i n:if="$result->type == 'xlsx'" class="fa-solid fa-file-excel"></i>
 								{$result->name|slice: ($event->slug|length)}</a>
 						{/foreach}
 					{else}
-						<h6>V přípravě</h6>
+						<p>V přípravě</p>
 					{/if}
 				</section>
 
@@ -146,7 +144,7 @@
 						</div>
 						<a n:href="Event:gallery $event->slug" class="mt-4 btn btn-primary">Zobrazit celou galerii</a>
 					{else}
-						<h6>V přípravě</h6>
+						<p>V přípravě</p>
 					{/ifset}
 				</section>
 
@@ -161,7 +159,7 @@
 							{/foreach}
 						</div>
 					{else}
-						<h6>V přípravě</h6>
+						<p>V přípravě</p>
 					{/ifset}
 				</section>
 

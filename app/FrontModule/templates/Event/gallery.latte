@@ -17,7 +17,7 @@
 
 	<section class="page-section gallery-page">
 		<div class="container">
-			<a n:href="Event: $event->slug" class="btn btn-outline-secondary mb-3">Zpět na stránku závodu</a>
+			<a n:href="Event: $event->slug" class="btn btn-nobg-secondary mb-3"><i class="fas fa-angle-left"></i> Zpět na stránku závodu</a>
 			<h1 n:block="title">{$event->name} <small>- Galerie</small></h1>
 			{if $event->gallery_year != NULL}
 				<section class="event-galleries">

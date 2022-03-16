@@ -36,8 +36,12 @@
 		"ext-libxml": "*",
 		"ext-simplexml": "*",
 		"ext-xmlwriter": "*",
+		"contributte/recaptcha": "^v3.3.1",
+		"endroid/qr-code": "^4.1",
+		"h4kuna/date-filter": "^1.0",
 		"nette/nette": "^3.0.0",
 		"orisai/nette-di": "^1.0.0",
+		"rikudou/czqrpayment": "^5.0",
 		"simple-cms/analytics-module": "dev-master",
 		"simple-cms/box-module": "dev-master",
 		"simple-cms/core-module": "dev-master",
@@ -46,10 +50,7 @@
 		"simple-cms/news-module": "dev-master",
 		"symfony/dotenv": "^5.1",
 		"tracy/tracy": "^2.7.6",
-		"contributte/recaptcha": "^v3.3.1",
-		"endroid/qr-code": "^4.1",
-		"h4kuna/date-filter": "^1.0",
-		"rikudou/czqrpayment": "^5.0"
+		"ublaboo/datagrid": "^6.9"
 	},
 	"require-dev": {
 		"nextras/mail-panel": "^2.5",

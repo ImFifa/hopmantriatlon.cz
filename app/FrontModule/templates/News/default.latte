@@ -9,7 +9,7 @@
 			<div n:ifset="$news" class="article-list">
 				{foreach $news as $new}
 					<article>
-						<div n:if="$new->gallery_id != NULL && $new->cover != NULL" class="badgelist">
+						<div n:if="$new->gallery_id != NULL && $new->cover != NULL" class="news-badgelist">
 							<div class="badge">Galerie</div>
 						</div>
 						<a class="article-link" n:href="News:show $new->slug">

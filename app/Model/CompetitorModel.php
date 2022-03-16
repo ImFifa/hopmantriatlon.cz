@@ -35,7 +35,7 @@ class CompetitorModel extends BaseModel
 	// pulmaraton
 	public function getRegisteredKidsRun($competition_id): int
 	{
-		return $this->getTable()->where('competition_id', $competition_id)->where('distance', 'Dětský závod')->count();
+		return $this->getTable()->where('competition_id', $competition_id)->where('distance', 'Dětský běh')->count();
 	}
 	public function getRegistered10Run($competition_id): int
 	{

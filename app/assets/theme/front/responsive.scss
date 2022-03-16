@@ -302,7 +302,7 @@
 		color: rgba($white, 1);
 	}
 	.navbar-dark .navbar-nav .nav-link {
-		color: rgba($white, .9);
+		color: rgba($white, .8);
 		letter-spacing: .03rem;
 	}
 
@@ -328,6 +328,10 @@
 
 	.navbar {
 		background: unset;
+
+		.navigation-toggler {
+			display: none;
+		}
 	}
 
 	.navbar-bg {
@@ -413,10 +417,6 @@
 			img {
 				max-height: unset;
 				height: 260px;
-			}
-
-			time {
-				font-size: 1.2rem;
 			}
 		}
 	}

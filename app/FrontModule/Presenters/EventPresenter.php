@@ -383,20 +383,27 @@ class EventPresenter extends BasePresenter
                 ->setSortable();
 
             $grid->addColumnText('sex', 'Pohlaví')
+                ->setSortable()
                 ->setAlign('center')
-                ->setFitContent();
+                ->setFilterSelect([
+                    '' => '',
+                    'M' => 'M',
+                    'Ž' => 'Ž'
+                    ]);
 
             $grid->addColumnText('distance_id', 'Trať')
+                ->setSortable()
                 ->setReplacement($this->distanceModel->getForSelect())
                 ->setFilterSelect(['' => ''] + $this->distanceModel->getDistancesByCompetition($competition_id));
 
             $grid->addColumnText('category_id', 'Kategorie')
+                ->setSortable()
                 ->setReplacement($this->categoryModel->getForSelect())
                 ->setFilterSelect(['' => ''] + $categories);
 
             $grid->addColumnText('paid', 'Status')
+                ->setSortable()
                 ->setAlign('center')
-                ->setFitContent()
                 ->setReplacement([
                     0 => 'Nezaplaceno',
                     1 => 'Zaplaceno'

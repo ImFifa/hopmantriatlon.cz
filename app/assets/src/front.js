@@ -7,18 +7,20 @@ import "bootstrap/js/dist/util";
 import "bootstrap/js/dist/alert";
 import "bootstrap/js/dist/modal";
 
+import "nette.ajax.js/nette.ajax";
+
 import "lightbox2/dist/css/lightbox.css";
+
+// datagrid
+import "ublaboo-datagrid/assets/datagrid";
+import "ublaboo-datagrid/assets/datagrid-spinners";
+import "ublaboo-datagrid/assets/datagrid-instant-url-refresh";
 // eslint-disable-next-line no-unused-vars
 import lightbox from "lightbox2/dist/js/lightbox";
 
 // import "@/front/cookie";
 
 import Nette from "@/front/netteForms";
-
-import naja from 'naja';
-document.addEventListener('DOMContentLoaded', () => {
-	naja.initialize();
-});
 
 // on scroll events
 const $nav = document.querySelector("#navbar");
@@ -47,9 +49,9 @@ document.addEventListener("DOMContentLoaded", () => {
 	// modal after registration
 	const queryString = window.location.search;
 	const urlParams = new URLSearchParams(queryString);
-	var odeslano = urlParams.get('odeslano');
+	var odeslano = urlParams.get("odeslano");
 	if(odeslano){
-		$('#registeredModal').modal('show')
+		$("#registeredModal").modal("show");
 	}
 
 	//gdpr

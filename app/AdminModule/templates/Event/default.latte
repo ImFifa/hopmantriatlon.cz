@@ -36,7 +36,7 @@
 					<ul>
 						{foreach $competitions as $competition}
 							<li n:if="$competition->event_id === $event->id">
-								<a n:href="Event:registered $competition->id" class="card-link">{$competition->name}</a>
+								<a n:href="Event:startlist $competition->id" class="card-link">{$competition->name}</a>
 							</li>
 						{/foreach}
 					</ul>

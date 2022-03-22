@@ -1,0 +1,107 @@
+{form "signUpForm-$competition->id", class => 'signUpForm row'}
+    {input competition_id class => 'form-control input-hidden', value => $competition->id}
+    {input address class => 'form-control input-hidden'}
+    {input category_id_hidden class => 'form-control input-hidden'}
+
+    <div class="col-lg-12">
+        <div class="form-group">
+            {label name}{/label}
+			{input name class => 'form-control'}
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="form-group">
+            {label surname}{/label}
+			{input surname class => 'form-control'}
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="form-group">
+            {label year_of_birth}{/label}
+			{input year_of_birth class => 'form-control'}
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="form-group">
+            {label sex}{/label}
+			{input sex class => 'form-control'}
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="form-group">
+            {label distance_id}{/label}
+			{input distance_id class => 'form-control'}
+            <small id="distance-info">Osoby mladší 18ti let nemohou startovat na trati půlmaratonu.</small>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="form-group">
+            {label category_id}{/label}
+			{input category_id class => 'form-control'}
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="form-group">
+            {label team}{/label}
+			{input team class => 'form-control'}
+            <small>Toto pole je volitelné</small>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="form-group">
+            {label email}{/label}
+			{input email class => 'form-control'}
+            <small>Váš email nebude nikde zveřejněn.<br>Využijeme jej pouze pro zaslání diplomu či v případě nutnosti Vás kontaktovat.</small>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="form-group agree-checkbox">
+            {input agree class => 'form-control, required'}
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="form-group d-inline-flex flex-column flex-md-row">
+            {input submit class => 'btn btn-primary'}
+
+            {input reset class => 'btn btn-default mt-4 mt-md-0'}
+        </div>
+    </div>
+{/form}
+
+
+{block #scripts}
+    	<script type="text/javascript">
+    		var signUpForm = document.getElementById('frm-signUpForm-{$competition->id}');
+    		var yearOfBirth = document.getElementById('frm-signUpForm-{$competition->id}-year_of_birth');
+    		var sex = document.getElementById('frm-signUpForm-{$competition->id}-sex');
+            var categoryId = document.getElementById('frm-signUpForm-{$competition->id}-category_id');
+            var categoryIdHidden = document.getElementById('frm-signUpForm-{$competition->id}-category_id_hidden');
+    		var currentYear = new Date().getFullYear();
+
+    		signUpForm.addEventListener('input', () => {
+    			{ifset $categories}
+                    var age = currentYear - yearOfBirth.value;
+                    {foreach $categories as $category}
+                        if (age >= {$category->age_from} && age <= {$category->age_to}) {
+                            if (sex.value === {$category->sex}) {
+                                categoryId.value = {$category->id};
+                                categoryIdHidden.value = {$category->id};
+                            } else if (age <= 10) {
+                                categoryId.value = 1;
+                                categoryIdHidden.value = 1;
+                            }
+                        }
+                    {/foreach}
+    			{/ifset}
+    		});
+    	</script>
+{/block}

@@ -1,0 +1,67 @@
+{block #title}
+    Seznam přihlášených závodníků - {$competition->name} {$competition->year}
+{/block}
+
+{block #buttons}
+    <a n:if="$competition" n:href=":Front:Event:startlist $competition->slug" class="btn btn-info" target="_blank">
+        Zobrazit na webu
+    </a>
+    <a n:href="default" class="btn btn-light">
+        Zpět
+    </a>
+{/block}
+
+{block content}
+    {ifset $competition}
+        <div class="datagrid-responsive table-responsive">
+            {control "adminStartlistGrid-$competition->id"}
+        </div>
+    {else}
+        <h4>Startovní listina nenalezena</h4>
+        <p>Vraťe se prosím zpět na stránku závodů.</p>
+        <a n:href="default" class="btn btn-light">
+            Vrátit se zpět
+        </a>
+    {/ifset}
+{/block}
+
+{block #head}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/happy-inputs@2.0.4/src/happy.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ublaboo-datagrid@6.2.13/assets/datagrid.css">
+
+    <!-- Use this css for ajax spinners -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ublaboo-datagrid@6.2.13/assets/datagrid-spinners.css">
+
+    <!-- Include this css when using FilterMultiSelect (silviomoreto.github.io/bootstrap-select) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.15/dist/css/bootstrap-select.css">
+
+    <!-- FONT AWESOME -->
+    <script src="https://kit.fontawesome.com/150cafc137.js" crossorigin="anonymous"></script>
+{/block}
+
+{block #scripts}
+    <script src="https://cdn.jsdelivr.net/npm/happy-inputs@2.1.0/src/nomodule-es5-fallback.js"></script>
+    <script>
+        var happy = new Happy;
+
+        happy.init();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-ui-sortable@1.0.0/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nette.ajax.js@2.3.0/nette.ajax.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ublaboo-datagrid@6.2.13/assets/datagrid.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nette-forms@3.0.4/src/assets/netteForms.min.js"></script>
+
+    <!-- It is recommended to include this JS file with just a few bits. It refreshes URL on non ajax request -->
+    <script src="https://cdn.jsdelivr.net/npm/ublaboo-datagrid@6.2.13/assets/datagrid-instant-url-refresh.js"></script>
+
+    <!-- Use this little extension for ajax spinners -->
+    <script src="https://cdn.jsdelivr.net/npm/ublaboo-datagrid@6.2.13/assets/datagrid-spinners.js"></script>
+
+    <!-- Include bootstrap-select.js when using FilterMultiSelect (silviomoreto.github.io/bootstrap-select) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.15/dist/js/bootstrap-select.js"></script>
+{/block}

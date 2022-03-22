@@ -10,12 +10,23 @@ class CompetitionModel extends BaseModel
 
 	protected string $table = 'competition';
 
-	public function getCompetitionById($id): ActiveRow
-	{
-		return $this->getTable()->where('id', $id)->fetch();
-	}
+    public function getCompetitionById($id): ActiveRow
+    {
+        return $this->getTable()->where('id', $id)->fetch();
+    }
 
-	public function getSelectedCompetition($slug): ActiveRow
+    public function getCompetitionByIdAndYear($id, $year): ?ActiveRow
+    {
+        return $this->getTable()->where('id', $id)->where('year', $year)->fetch();
+    }
+
+    public function getLatestCompetition($event_id): ActiveRow
+    {
+        return $this->getTable()->where('event_id', $event_id)->order('year DESC')->limit(1)->fetch();
+    }
+
+
+    public function getSelectedCompetition($slug): ActiveRow
 	{
 		return $this->getTable()->where('slug', $slug)->fetch();
 	}

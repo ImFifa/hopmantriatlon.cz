@@ -1,6 +1,6 @@
 {block #content}
 	{block #og}
-		<meta property="og:title" content="{$event->name} - startovní listina | HOPMAN">
+		<meta property="og:title" content="{$competition->name} - startovní listina | HOPMAN">
 		<meta property="og:url" content="{$baseUrl}{plink this}" />
 		<meta property="og:type" content="website">
 		<meta property="og:image" content="{$baseUrl}/{ifset $event->og_image}{$event->og_image}{else}{$vars->og_image}{/ifset}">
@@ -18,105 +18,13 @@
 	<section class="page-section results-page">
 		<div class="container">
 			<a n:href="Event: $event->slug" class="btn btn-nobg-secondary mb-3"><i class="fas fa-angle-left"></i> Zpět na stránku závodu</a>
-			<h1 n:block="title">{$event->name}</h1>
+			<h1 n:block="title">{$competition->name}</h1>
 			<h3>Startovní listina</h3>
 			{if !$event->startlist_active}
-				<h3>Stránka je právě v tvorbě</h3>
+				<h3>Startovní listina není aktivní.</h3>
 			{else}
-
-{*				<div class="startlist-filters">*}
-{*					<div n:ifset="$distances">*}
-{*						<h6>Závod:</h6>*}
-{*						<select name="distances" id="distance-select" class="form-control">*}
-{*							<option value="">-- Zvolte závod --</option>*}
-{*							{foreach $distances as $distance}*}
-{*								<option value="{$distance->distance}">{$distance->distance}</option>*}
-{*							{/foreach}*}
-{*							<option n:ifset="$relays" value="Štafety">Štafety</option>*}
-{*						</select>*}
-{*					</div>*}
-
-{*					<div n:ifset="$categories">*}
-{*						<h6>Kategorie:</h6>*}
-{*						<select name="categories" id="category-select" class="form-control">*}
-{*							<option value="">-- Zvolte kategorii --</option>*}
-{*							{foreach $categories as $category}*}
-{*								<option value="{$category->name}">{$category->name}</option>*}
-{*							{/foreach}*}
-{*						</select>*}
-{*					</div>*}
-
-{*					<div>*}
-{*						<h6>Pohlaví:</h6>*}
-{*						<select name="sex" id="sex-select" class="form-control">*}
-{*							<option value="">-- Zvolte pohlaví --</option>*}
-{*							<option value="M">Muži</option>*}
-{*							<option value="Ž">Ženy</option>*}
-{*						</select>*}
-{*					</div>*}
-{*				</div>*}
-
-				<div n:ifset="$competitors" class="table-responsive-lg">
-					<table class="table table-hover table-bordered">
-						<thead>
-						<tr>
-							<th scope="col">Příjmení</th>
-							<th scope="col">Jméno</th>
-							<th scope="col">Rok narození</th>
-							<th scope="col">Pohlaví</th>
-							<th scope="col">Oddíl/město</th>
-							<th scope="col">Kategorie</th>
-{*							<th scope="col">Vzdálenost</th>*}
-						</tr>
-						</thead>
-						<tbody>
-						{foreach $competitors as $competitor}
-							<tr n:if="$iterator->first || $competitor->distance != $lastDistance">
-								<td colspan="7"><strong>{$competitor->distance}</strong></td>
-							</tr>
-							{var $lastDistance = $competitor->distance}
-
-							<tr>
-								<td>{$competitor->surname}</td>
-								<td>{$competitor->name}</td>
-								<td>{$competitor->year_of_birth}</td>
-								<td>{$competitor->sex}</td>
-								<td>{$competitor->team}</td>
-								<td>{($competitor->category_id) ? $competitor->category->name : '---'}</td>
-{*								<td><span style="color: {if $competitor->paid}green{else}red{/if}; font-weight: 700">{if $competitor->paid}ANO{else}NE{/if}</span></td>*}
-							</tr>
-						{/foreach}
-						</tbody>
-					</table>
-					<p>Celkový počet registrovaných závodníků: <strong>{$competitors|length}</strong></p>
-				</div>
-
-				<div n:ifset="$relays" class="table-responsive-lg">
-					<table class="table table-hover table-bordered">
-						<thead>
-						<tr>
-							<th scope="col">Název štafety</th>
-							<th scope="col">Závodník 1</th>
-							<th scope="col">Závodník 2</th>
-							<th scope="col">Závodník 3</th>
-							<th scope="col">Zaplaceno</th>
-						</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td colspan="7"><strong>Štafety</strong></td>
-							</tr>
-							{foreach $relays as $relay}
-								<tr>
-									<td>{$relay->name}</td>
-									<td>{$relay->competitor1}</td>
-									<td>{$relay->competitor2}</td>
-									<td>{$relay->competitor3}</td>
-									<td><span style="color: {if $relay->paid}green{else}red{/if}; font-weight: 700">{if $relay->paid}ANO{else}NE{/if}</span></td>
-								</tr>
-							{/foreach}
-						</tbody>
-					</table>
+				<div class="datagrid-responsive table-responsive">
+                	{control "startlistGrid-$competition->id"}
 				</div>
 			{/if}
 		</div>

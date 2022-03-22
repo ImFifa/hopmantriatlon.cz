@@ -1,3 +1,6 @@
+session:
+	autoStart: true
+
 php:
 	date.timezone: Europe/Prague
 	output_buffering: 4096
@@ -11,17 +14,19 @@ services:
 	router: App\RouterFactory::createRouter()
 	repository: App\Service\ProjectModelRepository
 	# Grids
+	- K2D\Core\Models\LogModel
 	- App\AdminModule\Grid\MemberGridFactory
 	- App\AdminModule\Grid\EventGalleryGridFactory
 	- App\Model\EventModel
-	- App\Model\MemberModel
 	- App\Model\CompetitionModel
+	- App\Model\CategoryModel
+	- App\Model\DistanceModel
+
 	- App\Model\CompetitorModel
 	- App\Model\RelayModel
-	- App\Model\EventCategoryModel
+
+	- App\Model\MemberModel
 	- App\Model\EventGalleryModel
-	- App\Model\EventRecordModel
-	- App\Model\EventStatusModel
 	- App\Model\ZateckyCyklistaModel
 	admin.dashboard.eventpanel: App\AdminModule\Dashboard\EventPanel\EventPanelFactory
 
@@ -41,6 +46,7 @@ parameters:
 extensions:
     dateFilterExtension: h4kuna\DateFilter\DI\DateFilterExtension
     recaptcha: Contributte\ReCaptcha\DI\ReCaptchaExtension
+    dibi: Dibi\Bridges\Nette\DibiExtension22
 
 migrations:
 	driver: mysql

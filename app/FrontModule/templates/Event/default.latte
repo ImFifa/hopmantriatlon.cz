@@ -71,7 +71,7 @@
 							{/if}</p>
 						{ifset $competitions}
 							{foreach $competitions as $competition}
-								<a n:href="Event:registration $competition->slug" class="btn btn-primary mb-2">On-line registrace</a>
+								<a n:href="Event:registration $competition->slug" class="btn btn-primary mb-2"><i class="fa-solid fa-file-signature"></i> On-line registrace</a>
 							{/foreach}
 						{/ifset}
 					{else}
@@ -100,13 +100,13 @@
 							</p>
 							{case 5}
 							<p>
-								Muži: <strong>{$men}</strong><br>
-								Ženy: <strong>{$women}</strong><br>
-								Celkem je přihlášeno <strong>{$participants}</strong> závodníků. Z toho {$participantsMan} <i class="fa-solid fa-mars"></i> a {$participantsWoman} <i class="fa-solid fa-venus"></i>.
+								Muži: <strong>{$participantsMan}</strong><br>
+								Ženy: <strong>{$participantsWoman}</strong><br>
+								Celkem je přihlášeno <strong>{$participants}</strong> závodníků.
 							</p>
 						{/switch}
 
-						<a n:href="Event:startlist $event->slug" class="btn btn-primary">Startovní listina</a>
+						<a n:href="Event:startlist $event->slug" class="btn btn-primary"><i class="fa-solid fa-users"></i> Startovní listina</a>
 					{else}
 						<p>Startovní listina aktuálně není dostupná.</p>
 					{/if}
@@ -142,7 +142,7 @@
 								{/foreach}
 							</div>
 						</div>
-						<a n:href="Event:gallery $event->slug" class="mt-4 btn btn-primary">Zobrazit celou galerii</a>
+						<a n:href="Event:gallery $event->slug" class="mt-4 btn btn-primary"><i class="fa-solid fa-images"></i> Zobrazit celou galerii</a>
 					{else}
 						<p>V přípravě</p>
 					{/ifset}

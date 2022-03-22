@@ -736,13 +736,26 @@ article {
 #scrollTopBtn {
 	display: none;
 	position: fixed;
-	bottom: 2rem;
-	right: 2rem;
+	bottom: 5rem;
+	right: 1rem;
 	z-index: 1000;
+	background: $white;
+	border-radius: 50%;
+	transition: bottom .3s, box-shadow 0s ease-in-out;
 
 	i {
 		color: $primary;
 		font-size: 2.5rem;
+		transition: .15s ease-in-out;
+	}
+
+	&:hover {
+		bottom: 5.3rem;
+		box-shadow: 2px 2px 5px 2px rgba($gray-600, 0.2);
+
+		i {
+			font-size: 2.8rem;
+		}
 	}
 }
 
@@ -1096,4 +1109,13 @@ footer.main-footer {
 	div {
 		margin: .5rem;
 	}
+}
+
+.datagrid-responsive {
+	border-radius: $border-radius;
+	background-color: $white;
+}
+
+.disable-select {
+	user-select: none;
 }

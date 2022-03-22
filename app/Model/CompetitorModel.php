@@ -4,16 +4,21 @@ namespace App\Model;
 
 use K2D\Core\Models\BaseModel;
 use Nette\Database\Table\ActiveRow;
-use Nette\Database\Table\Selection;
 
 class CompetitorModel extends BaseModel
 {
 
 	protected string $table = 'competitor';
 
-	public function getCompetitors($competition_id): Selection
-	{
-		return $this->getTable()->where('competition_id', $competition_id)->order('distance DESC')->order('surname ASC');
+
+    public function getCompetitor(int $id): ActiveRow
+    {
+        return $this->getTable()->where('id', $id)->fetch();
+    }
+
+	public function getCompetitors(int $competition_id): array
+    {
+		return $this->getTable()->where('competition_id', $competition_id)->fetchAll();
 	}
 
 	public function getRegisteredCompetitors($competition_id): int
@@ -31,58 +36,34 @@ class CompetitorModel extends BaseModel
 		return $this->getTable()->where('competition_id', $competition_id)->where('sex', 'Ž')->count();
 	}
 
-
-	// pulmaraton
-	public function getRegisteredKidsRun($competition_id): int
+	public function getRegisteredKids($competition_id): int
 	{
-		return $this->getTable()->where('competition_id', $competition_id)->where('distance', 'Dětský běh')->count();
+		return $this->getTable()->where('competition_id', $competition_id)->where('category_id', 1)->count();
 	}
+
+    // pulmaraton
 	public function getRegistered10Run($competition_id): int
 	{
-		return $this->getTable()->where('competition_id', $competition_id)->where('distance', 'Desítka')->count();
+		return $this->getTable()->where('competition_id', $competition_id)->where('distance_id', 2)->count();
 	}
 	public function getRegistered21Run($competition_id): int
 	{
-		return $this->getTable()->where('competition_id', $competition_id)->where('distance', 'Půlmaraton')->count();
+		return $this->getTable()->where('competition_id', $competition_id)->where('distance_id', 1)->count();
 	}
-
 
 	// triatlon
-	public function getRegisteredKidsTriatlon($competition_id): int
-	{
-		return $this->getTable()->where('competition_id', $competition_id)->where('distance', 'Dětský triatlon')->count();
-	}
 	public function getRegisteredSprintTriathlon($competition_id): int
 	{
-		return $this->getTable()->where('competition_id', $competition_id)->where('distance', 'Sprint triatlon')->count();
+		return $this->getTable()->where('competition_id', $competition_id)->where('distance_id', 5)->count();
 	}
 	public function getRegisteredOlympicTriathlon($competition_id): int
 	{
-		return $this->getTable()->where('competition_id', $competition_id)->where('distance', 'Olympijský triatlon')->count();
+		return $this->getTable()->where('competition_id', $competition_id)->where('distance_id', 4)->count();
 	}
 
 	// advent
-	public function getRegisteredKidsAdvent($competition_id): int
-	{
-		return $this->getTable()->where('competition_id', $competition_id)->where('distance', '400m')->count();
-	}
 	public function getRegisteredJuniorsAdvent($competition_id): int
 	{
-		return $this->getTable()->where('competition_id', $competition_id)->where('distance', '1000m')->count();
+		return $this->getTable()->where('competition_id', $competition_id)->where('distance_id', 9)->count();
 	}
-	public function getRegisteredWomenAdvent($competition_id): int
-	{
-		return $this->getTable()->where('competition_id', $competition_id)->where('sex', 'Ž')->count();
-	}
-	public function getRegisteredMenAdvent($competition_id): int
-	{
-		return $this->getTable()->where('competition_id', $competition_id)->where('sex', 'M')->count();
-	}
-
-//
-//	public function getEvent(string $slug): ?ActiveRow
-//	{
-//		return $this->getTable()->where('slug', $slug)->fetch();
-//	}
-
 }

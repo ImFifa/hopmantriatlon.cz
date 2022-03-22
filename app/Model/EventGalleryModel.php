@@ -8,7 +8,7 @@ use Nette\Database\Table\Selection;
 
 class EventGalleryModel extends BaseModel
 {
-	protected string $table = 'event_gallery';
+	protected string $table = 'competition_gallery';
 
 	public function getPublicEventGalleries(): Selection
 	{

@@ -2,18 +2,23 @@
 
 namespace App\AdminModule\Presenters;
 
+use App\Model\CategoryModel;
 use App\Model\CompetitionModel;
 use App\Model\CompetitorModel;
+use App\Model\DistanceModel;
 use App\Model\EventModel;
+use Dibi\Connection;
 use K2D\Core\AdminModule\Presenter\BasePresenter;
-use Nette\Utils\Html;
-use Ublaboo\DataGrid\Column\ColumnText;
+use Nette\Application\UI\Multiplier;
 use Ublaboo\DataGrid\DataGrid;
 use Ublaboo\DataGrid\Localization\SimpleTranslator;
 
 class EventPresenter extends BasePresenter
 {
-	/** @inject */
+    /** @inject */
+    public Connection $dibi;
+
+    /** @inject */
 	public EventModel $eventModel;
 
 	/** @inject */
@@ -22,7 +27,13 @@ class EventPresenter extends BasePresenter
 	/** @inject */
 	public CompetitionModel $competitionModel;
 
-	public function renderDefault(): void
+    /** @inject DistanceModel */
+    public DistanceModel $distanceModel;
+
+    /** @inject DistanceModel */
+    public CategoryModel $categoryModel;
+
+    public function renderDefault(): void
 	{
 		$this->template->events = $this->eventModel->getActiveEvents();
 		$currYear = date('Y');
@@ -34,95 +45,133 @@ class EventPresenter extends BasePresenter
 		$this->template->event = $this->eventModel->getEvent($slug);
 	}
 
-	public function renderRegistered(int $competition_id): void
-	{
-		$this->template->competition = $this->competitionModel->getCompetitionById($competition_id);
-		bdump($competition_id);
-		bdump($this->competitorModel->getCompetitors($competition_id));
+    public function renderRegistered(int $competition_id): void
+    {
+        $this->template->competition = $this->competitionModel->getCompetitionById($competition_id);
+    }
 
-	}
+    // render startlist page
+    public function renderStartlist(int $competition_id): void
+    {
+        $this->template->competition = $this->competitionModel->getCompetitionById($competition_id);
+    }
 
-	public function createComponentGrid($id): DataGrid
-	{
-		$grid = new DataGrid;
+    // render startlist table
+    public function createComponentAdminStartlistGrid(): Multiplier
+    {
+        return new Multiplier(function ($competition_id) {
 
-		$grid->setDataSource($this->competitorModel->getCompetitors($id));
+            $grid = new DataGrid();
 
-		$grid->setItemsPerPageList([30, 50, 100]);
+            $competition_id = (int)$competition_id;
 
-		$grid->addColumnNumber('id', 'ID')
-			->setSortable()
-			->setAlign('center');
+            $grid->setDefaultSort('id');
 
-		// prijmeni
-		$grid->addColumnText('surname', 'Příjmení')
-			->setSortable()
-			->setFilterText();
+            $grid->setDataSource($this->competitorModel->getCompetitors($competition_id));
 
-		// jmeno
-		$grid->addColumnText('name', 'Jméno')
-			->setSortable()
-			->setFilterText();
+            $grid->setItemsPerPageList([25, 50, 100, 250], true);
 
-		// email
-		$grid->addColumnText('email', 'Email')
-			->setSortable()
-			->setFilterText();
+            $grid->addColumnText('id', 'ID')
+                ->setSortable();
 
-		$inlineEdit = $grid->addInlineEdit();
+            $grid->addColumnText('surname', 'Příjmení')
+                ->setSortable()
+                ->setEditableCallback(function ($id, $value): void {
+                    $this->flashMessage(sprintf('Id: %s, new value: %s', $id, $value));
+                    $competitior = $this->competitorModel->getCompetitor($id);
+                    $competitior->update(['surname' => $value]);
+                    $this->redrawControl('flashes');
+                });
 
-		$inlineEdit->onControlAdd[] = function($container) {
-			$container->addText('name', '')
-				->setRequired('aaa');
-		};
+            $grid->addColumnText('name', 'Jméno')
+                ->setSortable()
+                ->setEditableCallback(function ($id, $value): void {
+                    $this->flashMessage(sprintf('Id: %s, new value: %s', $id, $value));
+                    $competitior = $this->competitorModel->getCompetitor($id);
+                    $competitior->update(['name' => $value]);
+                    $this->redrawControl('flashes');
+                });
 
-		$inlineEdit->onSetDefaults[] = function(Container $container, Row $row) {
-			$container->setDefaults([
-				'id' => $row['id'],
-				'name' => $row['name'],
-			]);
-		};
+            $grid->addColumnText('year_of_birth', 'Rok narození')
+                ->setAlign('center')
+                ->setFitContent()
+                ->setSortable()
+                ->setEditableCallback(function ($id, $value): void {
+                    $this->flashMessage(sprintf('Id: %s, new value: %s', $id, $value));
+                    $competitior = $this->competitorModel->getCompetitor($id);
+                    $competitior->update(['year_of_birth' => $value]);
+                    $this->redrawControl('flashes');
+                });
 
-		$inlineEdit->onSubmit[] = function($id, $values) {
-			$this->flashMessage('Record was updated! (not really)', 'success');
-			$this->redrawControl('flashes');
-		};
+            $grid->addColumnText('team', 'Oddíl')
+                ->setSortable()
+                ->setEditableCallback(function ($id, $value): void {
+                    $this->flashMessage(sprintf('Id: %s, new value: %s', $id, $value));
+                    $competitior = $this->competitorModel->getCompetitor($id);
+                    $competitior->update(['team' => $value]);
+                    $this->redrawControl('flashes');
+                });
 
-		$inlineEdit->setShowNonEditingColumns();
+            $grid->addColumnText('sex', 'Pohlaví')
+                ->setAlign('center')
+                ->setFitContent();
 
-		$columnSurname = new ColumnText($grid, 'surname', 'surname', 'Příjmení');
-		$columnName = new ColumnText($grid, 'name', 'name', 'Jméno');
+            $grid->addColumnText('distance_id', 'Trať')
+                ->setReplacement($this->distanceModel->getForSelect())
+                ->setFilterSelect(['' => ''] + $this->distanceModel->getDistancesByCompetition($competition_id));
 
-		$grid->addExportCsv('Csv export', 'startlist-2021.csv')
-			->setTitle('Csv export')
-			->setColumns([
-				$columnName,
-				$columnSurname,
-			]);
+            $grid->addColumnText('category_id', 'Kategorie')
+                ->setSortable()
+                ->setReplacement($this->categoryModel->getForSelect())
+                ->setFilterSelect(['' => ''] + $this->categoryModel->getForSelect());
 
-		// translate
-		$translator = new SimpleTranslator([
-			'ublaboo_datagrid.no_item_found_reset' => 'Žádné položky nenalezeny. Filtr můžete vynulovat',
-			'ublaboo_datagrid.no_item_found' => 'Žádné položky nenalezeny.',
-			'ublaboo_datagrid.here' => 'zde',
-			'ublaboo_datagrid.items' => 'Položky',
-			'ublaboo_datagrid.all' => 'všechny',
-			'ublaboo_datagrid.from' => 'z',
-			'ublaboo_datagrid.reset_filter' => 'Resetovat filtr',
-			'ublaboo_datagrid.group_actions' => 'Hromadné akce',
-			'ublaboo_datagrid.show_all_columns' => 'Zobrazit všechny sloupce',
-			'ublaboo_datagrid.hide_column' => 'Skrýt sloupec',
-			'ublaboo_datagrid.action' => 'Akce',
-			'ublaboo_datagrid.previous' => 'Předchozí',
-			'ublaboo_datagrid.next' => 'Další',
-			'ublaboo_datagrid.choose' => 'Vyberte',
-			'ublaboo_datagrid.execute' => 'Provést',
-		]);
+            $grid->addColumnStatus('paid', 'Status')
+                ->setSortable()
+                ->setCaret(true)
+                ->addOption(1, 'Zaplaceno')
+                    ->setIcon('check')
+                    ->setClass('btn-success')
+                    ->endOption()
+                ->addOption(0, 'Nezaplaceno')
+                    ->setIcon('close')
+                    ->setClass('btn-danger')
+                    ->endOption()
+                ->onChange[] = [$this, 'updatePaymentStatus'];
 
-		$grid->setTranslator($translator);
+            $translator = new SimpleTranslator([
+                'ublaboo_datagrid.no_item_found_reset' => 'Žádné záznamy nenalezeny. Filtr můžete vynulovat',
+                'ublaboo_datagrid.no_item_found' => 'Žádné záznamy nenalezeny.',
+                'ublaboo_datagrid.here' => 'zde',
+                'ublaboo_datagrid.items' => 'Záznamy',
+                'ublaboo_datagrid.all' => 'všechny',
+                'ublaboo_datagrid.from' => 'z',
+                'ublaboo_datagrid.reset_filter' => 'Resetovat filtr',
+                'ublaboo_datagrid.group_actions' => 'Hromadné akce',
+                'ublaboo_datagrid.show_all_columns' => 'Zobrazit všechny sloupce',
+                'ublaboo_datagrid.hide_column' => 'Skrýt sloupec',
+                'ublaboo_datagrid.action' => 'Akce',
+                'ublaboo_datagrid.previous' => 'Předchozí',
+                'ublaboo_datagrid.next' => 'Další',
+                'ublaboo_datagrid.choose' => 'Vyberte',
+                'ublaboo_datagrid.execute' => 'Provést',
+            ]);
 
-		return $grid;
-	}
+            $grid->setTranslator($translator);
 
+            return $grid;
+        });
+    }
 
+    public function updatePaymentStatus($id, $status)
+    {
+        $competitor = $this->competitorModel->getCompetitor($id);
+        $competitor->update(['paid' => $status]);
+
+        $status_text = ['nezaplaceno', 'zaplaceno'][$status];
+
+        $this->flashMessage("Status řádku $id byl změněm na $status_text.", "success");
+
+        $this->redrawControl('flashes');
+        $this->redirect('this');
+    }
 }

@@ -10,9 +10,9 @@ class EventGalleryModel extends BaseModel
 {
 	protected string $table = 'competition_gallery';
 
-	public function getPublicEventGalleries(): Selection
+	public function getPublicEventGalleries($event_id): Selection
 	{
-		return $this->getTable()->where('public', 1)->order('year DESC')->order('id DESC');
+		return $this->getTable()->where('public', 1)->where('event_id', $event_id)->order('year DESC')->order('id DESC');
 	}
 
 	public function getPublicEventGalleriesFromYear(int $event_id, int $year): Selection

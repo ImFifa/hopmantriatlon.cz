@@ -20,15 +20,6 @@ abstract class BasePresenter extends FrontBasePresenter
 	public function beforeRender(): void
 	{
 		parent::beforeRender();
-		$vars = $this->configuration->getAllVars();
-		$desc = $vars['description'];
-		$ig = $vars['instagram'];
-		$fb = $vars['facebook'];
-		$yt = $vars['youtube'];
-		$this->template->desc = $desc;
-		$this->template->ig = $ig;
-		$this->template->fb = $fb;
-		$this->template->yt = $yt;
 	}
 
 	public function flashMessage($message, string $type = 'success'): stdClass
@@ -40,5 +31,4 @@ abstract class BasePresenter extends FrontBasePresenter
 	{
 		return $this->boxFactory->create();
 	}
-
 }

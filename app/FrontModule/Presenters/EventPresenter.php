@@ -25,20 +25,20 @@ use Ublaboo\DataGrid\Localization\SimpleTranslator;
 
 class EventPresenter extends BasePresenter
 {
-	/** @inject */
-	public EventModel $eventModel;
+    /** @inject */
+    public EventModel $eventModel;
 
-	/** @inject */
-	public CompetitorModel $competitorModel;
+    /** @inject */
+    public CompetitorModel $competitorModel;
 
-	/** @inject */
-	public RelayModel $relayModel;
+    /** @inject */
+    public RelayModel $relayModel;
 
-	/** @inject */
-	public CompetitionModel $competitionModel;
+    /** @inject */
+    public CompetitionModel $competitionModel;
 
-	/** @inject */
-	public EventGalleryModel $eventGalleryModel;
+    /** @inject */
+    public EventGalleryModel $eventGalleryModel;
 
     /** @inject */
     public CategoryModel $categoryModel;
@@ -47,95 +47,95 @@ class EventPresenter extends BasePresenter
     public DistanceModel $distanceModel;
 
     /** @inject */
-	public ImageModel $imageModel;
+    public ImageModel $imageModel;
 
-	/** @inject */
-	public FileModel $fileModel;
+    /** @inject */
+    public FileModel $fileModel;
 
     /** @inject */
     public LogModel $logModel;
 
     // render event default page with all info
-	public function renderDefault($slug): void
-	{
-		// event
-		$event = $this->eventModel->getEvent($slug);
-		if (!$event) {
-			$this->error();
-		} else {
-			$this->template->event = $event;
-		}
+    public function renderDefault($slug): void
+    {
+        // event
+        $event = $this->eventModel->getEvent($slug);
+        if (!$event) {
+            $this->error();
+        } else {
+            $this->template->event = $event;
+        }
 
-		// competition
-		if ($event->registration_active) {
-			$currYear = date('Y');
-			$this->template->competitions = $this->competitionModel->getThisYearsActiveCompetitionsById($event->id, $currYear);
-		}
+        // competition
+        if ($event->registration_active) {
+            $currYear = date('Y');
+            $this->template->competitions = $this->competitionModel->getThisYearsActiveCompetitionsById($event->id, $currYear);
+        }
 
-		// startlist
-		if($event->startlist_active) {
-			$this->template->participants = $this->competitorModel->getRegisteredCompetitors($event->competition_id);
-			$this->template->participantsMan = $this->competitorModel->getRegisteredMan($event->competition_id);
-			$this->template->participantsWoman = $this->competitorModel->getRegisteredWoman($event->competition_id);
+        // startlist
+        if($event->startlist_active) {
+            $this->template->participants = $this->competitorModel->getRegisteredCompetitors($event->competition_id);
+            $this->template->participantsMan = $this->competitorModel->getRegisteredMan($event->competition_id);
+            $this->template->participantsWoman = $this->competitorModel->getRegisteredWoman($event->competition_id);
 
-			switch ($event->id) {
-				case 1:
-					$this->template->kids = $this->competitorModel->getRegisteredKids($event->competition_id);
-					$this->template->t10k = $this->competitorModel->getRegistered10Run($event->competition_id);
-					$this->template->halfmarathon = $this->competitorModel->getRegistered21Run($event->competition_id);
-					break;
-				case 3:
-					$this->template->kids = $this->competitorModel->getRegisteredKids($event->competition_id);
-					$this->template->sprint = $this->competitorModel->getRegisteredSprintTriathlon($event->competition_id);
-					$this->template->olympic = $this->competitorModel->getRegisteredOlympicTriathlon($event->competition_id);
-					$this->template->relays = $this->relayModel->getRegisteredRelays($event->competition_id + 1);
-					break;
-			}
-		}
+            switch ($event->id) {
+                case 1:
+                    $this->template->kids = $this->competitorModel->getRegisteredKids($event->competition_id);
+                    $this->template->t10k = $this->competitorModel->getRegistered10Run($event->competition_id);
+                    $this->template->halfmarathon = $this->competitorModel->getRegistered21Run($event->competition_id);
+                    break;
+                case 3:
+                    $this->template->kids = $this->competitorModel->getRegisteredKids($event->competition_id);
+                    $this->template->sprint = $this->competitorModel->getRegisteredSprintTriathlon($event->competition_id);
+                    $this->template->olympic = $this->competitorModel->getRegisteredOlympicTriathlon($event->competition_id);
+                    $this->template->relays = $this->relayModel->getRegisteredRelays($event->competition_id + 1);
+                    break;
+            }
+        }
 
-		// results
-		$this->template->results = $this->repository->getFilesDESC($event->results_folder_id);
+        // results
+        $this->template->results = $this->repository->getFilesDESC($event->results_folder_id);
 
-		// maps
-		if($event->maps_folder_id != NULL) {
-			$this->template->maps = $this->imageModel->getImagesByGallery($event->maps_folder_id);
-		}
+        // maps
+        if($event->maps_folder_id != NULL) {
+            $this->template->maps = $this->imageModel->getImagesByGallery($event->maps_folder_id);
+        }
 
-		// event gallery
-		if($event->gallery_id != NULL) {
-			$this->template->images = $this->imageModel->getImagesByGallery($event->gallery_id);
-		}
+        // event gallery
+        if($event->gallery_id != NULL) {
+            $this->template->images = $this->imageModel->getImagesByGallery($event->gallery_id);
+        }
 
-		// event last year gallery
-		if ($event->gallery_year != NULL) {
-			$this->template->galleries = $this->eventGalleryModel->getPublicEventGalleriesFromYear($event->id, $event->gallery_year);
-		}
-	}
+        // event last year gallery
+        if ($event->gallery_year != NULL) {
+            $this->template->galleries = $this->eventGalleryModel->getPublicEventGalleriesFromYear($event->id, $event->gallery_year);
+        }
+    }
 
     // render event gallery
-	public function renderGallery($slug): void
-	{
-		$event = $this->eventModel->getEvent($slug);
-		if (!$event) {
-			$this->error();
-		} else {
-			$this->template->event = $event;
-			if ($event->gallery_year != NULL) {
-				$this->template->galleries = $this->eventGalleryModel->getPublicEventGalleries($event->id);
-			}
-		}
-	}
+    public function renderGallery($slug): void
+    {
+        $event = $this->eventModel->getEvent($slug);
+        if (!$event) {
+            $this->error();
+        } else {
+            $this->template->event = $event;
+            if ($event->gallery_year != NULL) {
+                $this->template->galleries = $this->eventGalleryModel->getPublicEventGalleries($event->id);
+            }
+        }
+    }
 
     // render registration page (without form)
-	public function renderRegistration($slug): void
-	{
-		$event = $this->eventModel->getEvent($slug);
-		if (!$event) {
-			$this->error();
-		} else {
-			$urlPath = explode('/', $_SERVER['REQUEST_URI']);
-			$currYear = date('Y');
-			$this->template->event = $event;
+    public function renderRegistration($slug): void
+    {
+        $event = $this->eventModel->getEvent($slug);
+        if (!$event) {
+            $this->error();
+        } else {
+            $urlPath = explode('/', $_SERVER['REQUEST_URI']);
+            $currYear = date('Y');
+            $this->template->event = $event;
             $categories = $this->categoryModel->getCategories();
 
             // set categories
@@ -146,27 +146,27 @@ class EventPresenter extends BasePresenter
             }
 
             $this->template->categories = $categories;
-			$this->template->competition = $this->competitionModel->getSelectedCompetition($urlPath[1]);
-			$this->template->competitions = $this->competitionModel->getThisYearsActiveCompetitionsById($event->id, $currYear);
+            $this->template->competition = $this->competitionModel->getCompetitionById($event->competition_id);
+            $this->template->competitions = $this->competitionModel->getThisYearsActiveCompetitionsById($event->id, $currYear);
 
-		}
-	}
+        }
+    }
 
     // render startlist page (without startlist table)
-	public function renderStartlist($slug): void
-	{
-		$event = $this->eventModel->getEvent($slug);
-		if (!$event) {
-			$this->error();
-		} else {
-            $competition = $this->competitionModel->getLatestCompetition($event->id);
+    public function renderStartlist($slug): void
+    {
+        $event = $this->eventModel->getEvent($slug);
+        if (!$event) {
+            $this->error();
+        } else {
+            $competition = $this->competitionModel->getCompetitionById($event->competition_id);
             $this->template->competition = $competition;
             $this->template->event = $event;
-		}
-	}
+        }
+    }
 
     // render registration forms for individual competitions
-	protected function createComponentSignUpForm(): Multiplier
+    protected function createComponentSignUpForm(): Multiplier
     {
         return new Multiplier(function ($competition_id) {
 
@@ -197,13 +197,13 @@ class EventPresenter extends BasePresenter
                 ->addRule(Form::MIN, 'Vážně je Vám víc než 100 let? :-)', $currentYear - 100)
                 // pokud je trat detsky beh
                 ->addConditionOn($form['distance_id'], $form::IS_IN, [3,6,10])
-                    ->addRule(Form::MIN,'Na dětské závody se mohou přihlásit pouze děti do 14 (na triatlonu do 10) let', $currentYear - 14)
+                ->addRule(Form::MIN,'Na dětské závody se mohou přihlásit pouze děti do 14 (na triatlonu do 10) let', $currentYear - 14)
                 // pokud je trat desitka
                 ->addConditionOn($form['distance_id'], $form::IS_IN, [2,5])
-                    ->addRule(Form::MAX,'Na tuto trať se mohou přihlásit pouze závodníci, který je alespoň 15 let', $currentYear - 15)
+                ->addRule(Form::MAX,'Na tuto trať se mohou přihlásit pouze závodníci, který je alespoň 15 let', $currentYear - 15)
                 // pokud je trat pulmaraton
                 ->addConditionOn($form['distance_id'], $form::IS_IN, [3,6,10])
-                    ->addRule(Form::MAX,'Na tuto trať se mohou přihlásit pouze závodníci, který je alespoň 18 let', $currentYear - 18)
+                ->addRule(Form::MAX,'Na tuto trať se mohou přihlásit pouze závodníci, který je alespoň 18 let', $currentYear - 18)
                 ->setRequired('Musíte uvést Váš rok narození');
 
             $form->addSelect('sex', 'Pohlaví')
@@ -259,7 +259,7 @@ class EventPresenter extends BasePresenter
                     // chybny vek
                     $distance = $this->distanceModel->getDistanceById($values['distance_id']);
                     if ($distance->min_age != NULL && $distance->min_age > ($currentYear - $values['year_of_birth'])) {
-                        throw new \InvalidArgumentException($values['name'] . ' ' . $values['surname'] . ' se pokusil přihlásit na '.$distance->name.' jako ročník '.$values['year_of_birth'].'.');
+                        throw new \InvalidArgumentException($values['name'] . ' ' . $values['surname'] . ' se pokusil přihlásit na trať '.$distance->name.' jako ročník '.$values['year_of_birth'].'.');
                     }
 
                     $values['category_id'] = $values['category_id_hidden'];
@@ -279,20 +279,23 @@ class EventPresenter extends BasePresenter
 
                     $this->flashMessage('Jsi zaregistrován/a na závod '.$competition->name.'! Na adresu '. $values['email'] .' ti byl právě odeslán potvrzovací email s vyplněnými údaji a informacemi k platbě.');
                     $this->logModel->log('Úspěšná registrace', $competition->name . ' - ' . $values['name'] . ' ' . $values['surname'] . ' se právě zaregistroval.', 'info');
-                    $this->redirect('this?odeslano=1');
+
+                    $this->payload->isModal = TRUE;
+                    //$this->redirect('this?odeslano=1');
 
                 } catch (SmtpException $e) {
                     $this->flashMessage('Registrace se nezdařila, protože nebylo možné odeslat potvrzovací email. Zadali jste správnou adresu? Pokud ano, kontaktujte prosím správce webu na info@hopmantriatlon.cz.', 'danger');
-                    $this->logModel->log('Nezdařená registrace', $competition->name . ' - ' . $e->getMessage(), 'error', $e->getFile());
+                    $this->logModel->log('Nezdařená registrace', $competition->name . ' - ' . $e->getMessage(), 'error');
                 } catch (\InvalidArgumentException $e) {
+                    $competition = $this->competitionModel->getCompetitionById($values['competition_id']);
                     $this->flashMessage('V tomto věku nelze startovat na zvolené trati.', 'danger');
-                    $this->logModel->log('Nezdařená registrace', $competition->name . ' - ' . $e->getMessage(), 'error', $e->getFile());
+                    $this->logModel->log('Nezdařená registrace', $competition->name . ' - ' . $e->getMessage(), 'error');
                 }
             };
 
             return $form;
         });
-	}
+    }
 
     private function sendConfirmationMail(array $values): void
     {
@@ -389,7 +392,7 @@ class EventPresenter extends BasePresenter
                     '' => '',
                     'M' => 'M',
                     'Ž' => 'Ž'
-                    ]);
+                ]);
 
             $grid->addColumnText('distance_id', 'Trať')
                 ->setSortable()
@@ -403,7 +406,6 @@ class EventPresenter extends BasePresenter
 
             $grid->addColumnText('paid', 'Status')
                 ->setSortable()
-                ->setAlign('center')
                 ->setReplacement([
                     0 => 'Nezaplaceno',
                     1 => 'Zaplaceno'

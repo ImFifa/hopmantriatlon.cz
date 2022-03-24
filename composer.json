@@ -23,10 +23,6 @@
 		{
 			"type": "git",
 			"url": "git@github.com:K2D-CZ/gallery.git"
-		},
-		{
-			"type": "git",
-			"url": "git@github.com:K2D-CZ/analytics.git"
 		}
 	],
 	"require": {
@@ -37,13 +33,11 @@
 		"ext-simplexml": "*",
 		"ext-xmlwriter": "*",
 		"contributte/recaptcha": "^v3.3.1",
-		"dibi/dibi": "^4.2",
 		"endroid/qr-code": "^4.1",
 		"h4kuna/date-filter": "^1.0",
 		"nette/nette": "^3.0.0",
 		"orisai/nette-di": "^1.0.0",
 		"rikudou/czqrpayment": "^5.0",
-		"simple-cms/analytics-module": "dev-master",
 		"simple-cms/box-module": "dev-master",
 		"simple-cms/core-module": "dev-master",
 		"simple-cms/file-module": "dev-master",

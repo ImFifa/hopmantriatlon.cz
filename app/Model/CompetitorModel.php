@@ -4,6 +4,7 @@ namespace App\Model;
 
 use K2D\Core\Models\BaseModel;
 use Nette\Database\Table\ActiveRow;
+use Nette\Database\Table\Selection;
 
 class CompetitorModel extends BaseModel
 {
@@ -16,9 +17,9 @@ class CompetitorModel extends BaseModel
         return $this->getTable()->where('id', $id)->fetch();
     }
 
-	public function getCompetitors(int $competition_id): array
+	public function getCompetitors(int $competition_id): Selection
     {
-		return $this->getTable()->where('competition_id', $competition_id)->fetchAll();
+		return $this->getTable()->where('competition_id', $competition_id);
 	}
 
 	public function getRegisteredCompetitors($competition_id): int

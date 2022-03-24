@@ -6,6 +6,7 @@ use App\Model\EventModel;
 use K2D\Gallery\Models\GalleryModel;
 use K2D\Gallery\Models\ImageModel;
 use K2D\News\Models\NewModel;
+use Nette\Application\UI\Form;
 
 class HomepagePresenter extends BasePresenter
 {

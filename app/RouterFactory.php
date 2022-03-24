@@ -13,9 +13,9 @@ class RouterFactory
 	public static function createRouter(): Nette\Routing\Router
 	{
 		$router = new RouteList();
-        $router->withModule('Admin')->addRoute('admin/<presenter>/<action>[/<competition_id>][/<competition_year>][/<id>]', 'Homepage:default');
+        $router->withModule('Admin')->addRoute('admin/<presenter>/<action>[/<competition_id>][/<id>]', 'Homepage:default');
 
-		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]', 'Homepage:default');
+        $router->withModule('Front')->addRoute('[<lang=cs (cs)>/]', 'Homepage:default');
 		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]team', 'Homepage:team');
 		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]kontakt', 'Homepage:contact');
 		$router->withModule('Front')->addRoute('[<lang=cs (cs)>/]archiv', 'Homepage:archive');

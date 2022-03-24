@@ -53,7 +53,7 @@
 					<a class="footer-brand" n:href="Homepage:">
 						<img src="{$basePath}/dist/img/hopman_logo.png" alt="Hopman - logo">
 					</a>
-					<p n:ifset="$desc">{$desc|noescape}</p>
+					<p n:ifset="$vars->description">{$vars->description|noescape}</p>
 					<ul>
 						<li><a n:href="Event:default pulmaraton">Žatecký půlmaraton</a></li>
 						<li><a n:href="Event:default triatlon">Hopman triatlon</a></li>
@@ -107,9 +107,9 @@
 			<section class="footer-socials">
 				<h4>Jsme na sociálních sítích</h4>
 				<ul>
-					<li n:ifset="$fb"><a href="{$fb}"><i class="fab fa-facebook"></i> Facebook</a></li>
-					<li n:ifset="$ig"><a href="{$ig}"><i class="fab fa-instagram"></i> Instagram</a></li>
-					<li n:ifset="$yt"><a href="{$yt}"><i class="fab fa-youtube"></i> YouTube</a></li>
+					<li n:ifset="$vars->facebook"><a href="{$vars->facebook}"><i class="fab fa-facebook"></i> Facebook</a></li>
+					<li n:ifset="$vars->instagram"><a href="{$vars->instagram}"><i class="fab fa-instagram"></i> Instagram</a></li>
+					<li n:ifset="$vars->youtube"><a href="{$vars->youtube}"><i class="fab fa-youtube"></i> YouTube</a></li>
 				</ul>
 			</section>
 		</div>
@@ -131,7 +131,6 @@
 		</footer>
 	</section>
 	<noscript><style>.gdpr { display:none }</style></noscript>
-{/block}
 
 {block #head}
 	<link rel="apple-touch-icon" sizes="180x180" href="{$basePath}/dist/favicon/apple-touch-icon.png">

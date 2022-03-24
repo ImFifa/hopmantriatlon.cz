@@ -41,7 +41,6 @@ class Bootstrap
 		$configurator->addConfig(__DIR__ . '/../vendor/simple-cms/file-module/config/config.neon');
 		$configurator->addConfig(__DIR__ . '/../vendor/simple-cms/news-module/config/config.neon');
 		$configurator->addConfig(__DIR__ . '/../vendor/simple-cms/gallery-module/config/config.neon');
-		$configurator->addConfig(__DIR__ . '/../vendor/simple-cms/analytics-module/config/config.neon');
 
 		$configurator->addConfig(__DIR__ . '/config/config.neon');
 		$configurator->addConfig(__DIR__ . '/config/datefilter.neon');

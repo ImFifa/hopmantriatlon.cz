@@ -46,7 +46,6 @@ parameters:
 extensions:
     dateFilterExtension: h4kuna\DateFilter\DI\DateFilterExtension
     recaptcha: Contributte\ReCaptcha\DI\ReCaptchaExtension
-    dibi: Dibi\Bridges\Nette\DibiExtension22
 
 migrations:
 	driver: mysql

@@ -3,48 +3,62 @@
 {/block}
 
 {block #buttons}
-	{ifset $events}
-		{foreach $events as $event}
-			<a n:href="Event:edit $event->slug" class="ml-2 btn btn-success">
-				<i class="icon mdi mdi-{$event->icon}"></i> {$event->name}
-			</a>
-		{/foreach}
-	{else}
-		<h3>V databázi neexistuje jediný závod.</h3>
-	{/ifset}
+{*	{ifset $events}*}
+{*		{foreach $events as $event}*}
+{*			<a n:href="Event:edit $event->slug" class="ml-2 btn btn-success">*}
+{*				<i class="icon mdi mdi-{$event->icon}"></i> {$event->name}*}
+{*			</a>*}
+{*		{/foreach}*}
+{*	{else}*}
+{*		<h3>V databázi neexistuje jediný závod.</h3>*}
+{*	{/ifset}*}
 {/block}
 
 {block content}
 	<div class="m-4 card-group">
 	{foreach $events as $event}
 		<div class="card m-2" style="max-width: 400px;">
-			<img src="{$basePath}/dist/img/header/{$event->header_image}" class="card-img-top" style="height: 300px; object-fit: cover" alt="{$event->name}">
+			<img src="{$basePath}/dist/img/header/{$event->header_image}" class="card-img-top" style="height: 150px; object-fit: cover; padding: 1rem" alt="{$event->name}">
 			<div class="card-body">
 				<h4 class="card-title"><i class="icon mdi mdi-{$event->icon}"></i> {$event->name}</h4>
-				<p class="card-text">{$event->description}</p>
+				<a n:if="$event->startlist_active" n:href="Event:startlist $event->competition_id" class="btn btn-primary mb-4">
+					<i class="fa-solid fa-users"></i> Startovní listina
+				</a>
+				{form "eventForm-$event->id"}
+					<div n:snippet="setupForm" class="row">
+						<div class="col-lg-12">
+							<div class="form-group">
+								{label competition_id}{/label}
+								{input competition_id class => 'form-control'}
+							</div>
+						</div>
+						<div class="col-lg-12 form-group">
+							<div class="custom-control custom-checkbox">
+								<input n:name="propositions_active" class="custom-control-input">
+								<label n:name="propositions_active" class="custom-control-label"><i class="fa-solid fa-file"></i> Aktivovat propozice</label>
+							</div>
+						</div>
+						<div class="col-lg-12 form-group">
+							<div class="custom-control custom-checkbox">
+								<input n:name="registration_active" class="custom-control-input">
+								<label n:name="registration_active" class="custom-control-label"><i class="fa-solid fa-file-signature"></i> Aktivovat registrace</label>
+							</div>
+						</div>
+						<div class="col-lg-12 form-group">
+							<div class="custom-control custom-checkbox">
+								<input n:name="startlist_active" class="custom-control-input">
+								<label n:name="startlist_active" class="custom-control-label"><i class="fa-solid fa-users"></i> Aktivovat startovní listinu</label>
+							</div>
+						</div>
+						<div class="col-lg-12">
+							<div class="form-group">
+								{input save class => 'btn btn-success btn-sm'}
+							</div>
+						</div>
+					</div>
+				{/form}
 			</div>
-			<ul class="list-group list-group-flush">
-				<li n:class="$event->propositions_active ? text-success : text-danger, list-group-item"><i class="fas fa-file"></i> Propozice: <i class="fas fa-{($event->propositions_active)?"check":"times"}"></i></li>
-				<li n:class="$event->registration_active ? text-success : text-danger, list-group-item"><i class="fas fa-file-signature"></i> Registrace: <i class="fas fa-{($event->registration_active)?"check":"times"}"></i>
-					<ul>
-						{foreach $competitions as $competition}
-							<li n:class="!$competition->registration_active ? text-danger" n:if="$competition->event_id === $event->id">{$competition->name}</li>
-						{/foreach}
-					</ul>
-				</li>
-				<li n:class="$event->startlist_active ? text-success : text-danger, list-group-item"><i class="fas fa-users"></i> Startovní listina: <i class="fas fa-{($event->startlist_active)?"check":"times"}"></i>
-					<ul>
-						{foreach $competitions as $competition}
-							<li n:if="$competition->event_id === $event->id">
-								<a n:href="Event:startlist $competition->id" class="card-link">{$competition->name}</a>
-							</li>
-						{/foreach}
-					</ul>
-				</li>
-			</ul>
-			<div class="card-body">
-				<a n:href="Event:edit $event->slug" class="card-link"><i class="far fa-edit"></i> Upravit závod</a>
-			</div>
+
 			<div class="card-footer">
 				<small>Poslední úprava: {$event->updated|dateTime}</small>
 			</div>

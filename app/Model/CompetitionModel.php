@@ -40,10 +40,10 @@ class CompetitionModel extends BaseModel
 	{
 		return $this->getTable()->where('year', $year)->order('id ASC')->fetchAll();
 	}
-//
-//	public function getEvent(string $slug): ?ActiveRow
-//	{
-//		return $this->getTable()->where('slug', $slug)->fetch();
-//	}
+
+    public function getForSelectById(int $event_id, string $key = 'id', string $var = 'name'): array
+    {
+        return $this->getTable()->where('event_id', $event_id)->order('year DESC')->fetchPairs($key, $var);
+    }
 
 }

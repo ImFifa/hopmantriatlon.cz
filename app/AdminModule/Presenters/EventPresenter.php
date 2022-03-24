@@ -7,8 +7,8 @@ use App\Model\CompetitionModel;
 use App\Model\CompetitorModel;
 use App\Model\DistanceModel;
 use App\Model\EventModel;
-use Dibi\Connection;
 use K2D\Core\AdminModule\Presenter\BasePresenter;
+use Nette\Application\UI\Form;
 use Nette\Application\UI\Multiplier;
 use Ublaboo\DataGrid\DataGrid;
 use Ublaboo\DataGrid\Localization\SimpleTranslator;
@@ -16,16 +16,13 @@ use Ublaboo\DataGrid\Localization\SimpleTranslator;
 class EventPresenter extends BasePresenter
 {
     /** @inject */
-    public Connection $dibi;
+    public EventModel $eventModel;
 
     /** @inject */
-	public EventModel $eventModel;
+    public CompetitorModel $competitorModel;
 
-	/** @inject */
-	public CompetitorModel $competitorModel;
-
-	/** @inject */
-	public CompetitionModel $competitionModel;
+    /** @inject */
+    public CompetitionModel $competitionModel;
 
     /** @inject DistanceModel */
     public DistanceModel $distanceModel;
@@ -34,16 +31,16 @@ class EventPresenter extends BasePresenter
     public CategoryModel $categoryModel;
 
     public function renderDefault(): void
-	{
-		$this->template->events = $this->eventModel->getActiveEvents();
-		$currYear = date('Y');
-		$this->template->competitions = $this->competitionModel->getThisYearsCompetitions($currYear);
-	}
+    {
+        $this->template->events = $this->eventModel->getActiveEvents();
+        $currYear = date('Y');
+        $this->template->competitions = $this->competitionModel->getThisYearsCompetitions($currYear);
+    }
 
-	public function renderEdit(string $slug): void
-	{
-		$this->template->event = $this->eventModel->getEvent($slug);
-	}
+    public function renderEdit(string $slug): void
+    {
+        $this->template->event = $this->eventModel->getEvent($slug);
+    }
 
     public function renderRegistered(int $competition_id): void
     {
@@ -129,14 +126,16 @@ class EventPresenter extends BasePresenter
                 ->setSortable()
                 ->setCaret(true)
                 ->addOption(1, 'Zaplaceno')
-                    ->setIcon('check')
-                    ->setClass('btn-success')
-                    ->endOption()
+                ->setIcon('check')
+                ->setClass('btn-success')
+                ->endOption()
                 ->addOption(0, 'Nezaplaceno')
-                    ->setIcon('close')
-                    ->setClass('btn-danger')
-                    ->endOption()
+                ->setIcon('close')
+                ->setClass('btn-danger')
+                ->endOption()
                 ->onChange[] = [$this, 'updatePaymentStatus'];
+
+            $grid->addGroupAction('Smazat')->onSelect[] = [$this, 'groupDelete'];
 
             $translator = new SimpleTranslator([
                 'ublaboo_datagrid.no_item_found_reset' => 'Žádné záznamy nenalezeny. Filtr můžete vynulovat',
@@ -162,6 +161,41 @@ class EventPresenter extends BasePresenter
         });
     }
 
+    public function createComponentEventForm(): Multiplier
+    {
+        return new Multiplier(function ($event_id) {
+
+            $event_id = (int)$event_id;
+            $form = new Form();
+
+            $form->setHtmlAttribute('class', 'ajax');
+
+            $form->addSelect('competition_id', 'Aktuální ročník')
+                ->setItems($this->competitionModel->getForSelectById($event_id));
+
+            $form->addCheckbox('propositions_active', 'Propozice');
+
+            $form->addCheckbox('registration_active', 'Registrace');
+
+            $form->addCheckbox('startlist_active', 'Startovní listina');
+
+            $form->addSubmit('save', 'Uložit změny');
+
+            $form->setDefaults($this->eventModel->getEventById($event_id));
+
+            $form->onSubmit[] = function (Form $form) use ($event_id) {
+                $values = $form->getValues(true);
+                if($this->eventModel->getTable()->where('id', $event_id)->update($values)) {
+                    $this->flashMessage('Změny byly uloženy!', 'success');
+                } else {
+                    $this->flashMessage('K žádným změnám nedošlo!', 'warning');
+                }
+            };
+
+            return $form;
+        });
+    }
+
     public function updatePaymentStatus($id, $status)
     {
         $competitor = $this->competitorModel->getCompetitor($id);
@@ -171,7 +205,29 @@ class EventPresenter extends BasePresenter
 
         $this->flashMessage("Status řádku $id byl změněm na $status_text.", "success");
 
-        $this->redrawControl('flashes');
-        $this->redirect('this');
+        if ($this->isAjax()) {
+            $this['adminStartlistGrid-' . $competitor->competition_id]->reload();
+        } else {
+            $this->redirect('this');
+        }
+    }
+
+    public function groupDelete($id, $status)
+    {
+
+        $competitor = $this->competitorModel->getCompetitor($id[0]);
+
+        if ($this->competitorModel->getTable()->where('id', $id)->delete()) {
+            $this->flashMessage("Vybrané záznamy byly úspěšně odstraněny.", "success");
+        } else {
+            $this->flashMessage("Vybrané záznamy se nepodařilo odstranit odstraněny.", "warning");
+        }
+
+        if ($this->isAjax()) {
+            $this->redrawControl('flashes');
+            $this['adminStartlistGrid-' . $competitor->competition_id]->reload();
+        } else {
+            $this->redirect('this');
+        }
     }
 }

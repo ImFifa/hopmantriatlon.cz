@@ -148,7 +148,6 @@ class EventPresenter extends BasePresenter
             $this->template->categories = $categories;
             $this->template->competition = $this->competitionModel->getCompetitionById($event->competition_id);
             $this->template->competitions = $this->competitionModel->getThisYearsActiveCompetitionsById($event->id, $currYear);
-
         }
     }
 
@@ -293,7 +292,6 @@ class EventPresenter extends BasePresenter
                     $this->logModel->log('Úspěšná registrace', $competition->name . ' - ' . $values['name'] . ' ' . $values['surname'] . ' se právě zaregistroval.', 'info');
 
                     $this->redirect('Event:registrationSent', $competition->event->slug);
-
 
                 } catch (SmtpException $e) {
                     $this->flashMessage('Registrace se nezdařila, protože nebylo možné odeslat potvrzovací email. Zadali jste správnou adresu? Pokud ano, kontaktujte prosím správce webu na info@hopmantriatlon.cz.', 'danger');

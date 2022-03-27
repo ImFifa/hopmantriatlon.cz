@@ -1,0 +1,27 @@
+{block #content}
+	<header class="secondary-header" style="background-image: url('{$basePath}/dist/img/header/{$event->header_image}')">
+	</header>
+
+	<section class="page-section registration-page">
+		<div class="container">
+			<a n:href="Event: $event->slug" class="btn btn-nobg-secondary mb-3"><i class="fas fa-angle-left"></i> Zpět na stránku závodu</a>
+            {snippet registrationFormFlashes}
+                {foreach $flashes as $flash}
+                    <div class="alert alert-{$flash->type} alert-dismissible fade show" style="max-width: 700px" role="alert">
+                        <h4 class="alert-title">
+                        {if ($flash->type === success)}Registrace proběhla úspěšně!{else}Registraci se nepodařilo dokončit{/if}</h4>
+                        {$flash->message}
+                        <hr>
+                        <div class="alert-btns">
+                            <a n:if="$event->startlist_active" n:href="Event:startlist $competition->slug" class="btn btn-primary mb-2 mr-2">Zobrazit startovní listinu</a>
+                            <a n:href="Event:registration $competition->slug" class="btn btn-secondary mb-2 mr-2">Přejít k další registraci</a>
+                        </div>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {/foreach}
+            {/snippet}
+		</div>
+	</section>
+{/block}

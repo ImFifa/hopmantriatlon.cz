@@ -152,6 +152,19 @@ class EventPresenter extends BasePresenter
         }
     }
 
+
+    // render registration confirmation page
+    public function renderRegistrationSent($slug): void
+    {
+        $event = $this->eventModel->getEvent($slug);
+        if (!$event) {
+            $this->error();
+        } else {
+            $this->template->event = $event;
+            $this->template->competition = $this->competitionModel->getCompetitionById($event->competition_id);
+        }
+    }
+
     // render startlist page (without startlist table)
     public function renderStartlist($slug): void
     {
@@ -244,7 +257,6 @@ class EventPresenter extends BasePresenter
                     $currentYear = date("Y");
                     $values = $form->getValues(true);
 
-                    bdump($values);
                     // anti-spam
                     if (!empty($values['address'])) {
                         $this->flashMessage('Boti se do našeho závodu registrovat nemohou. Zkuste to znovu jako člověk.', 'warning');
@@ -280,8 +292,8 @@ class EventPresenter extends BasePresenter
                     $this->flashMessage('Jsi zaregistrován/a na závod '.$competition->name.'! Na adresu '. $values['email'] .' ti byl právě odeslán potvrzovací email s vyplněnými údaji a informacemi k platbě.');
                     $this->logModel->log('Úspěšná registrace', $competition->name . ' - ' . $values['name'] . ' ' . $values['surname'] . ' se právě zaregistroval.', 'info');
 
-                    $this->payload->isModal = TRUE;
-                    //$this->redirect('this?odeslano=1');
+                    $this->redirect('Event:registrationSent', $competition->event->slug);
+
 
                 } catch (SmtpException $e) {
                     $this->flashMessage('Registrace se nezdařila, protože nebylo možné odeslat potvrzovací email. Zadali jste správnou adresu? Pokud ano, kontaktujte prosím správce webu na info@hopmantriatlon.cz.', 'danger');

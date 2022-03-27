@@ -8,7 +8,7 @@ import "bootstrap/js/dist/alert";
 import "bootstrap/js/dist/modal";
 
 import "nette.ajax.js/nette.ajax";
-
+import naja from "naja";
 import "lightbox2/dist/css/lightbox.css";
 
 // datagrid
@@ -21,6 +21,8 @@ import lightbox from "lightbox2/dist/js/lightbox";
 // import "@/front/cookie";
 
 import Nette from "@/front/netteForms";
+Nette.initOnLoad();
+window.Nette = Nette;
 
 // on scroll events
 const $nav = document.querySelector("#navbar");
@@ -42,17 +44,8 @@ function runOnScroll() {
 
 }
 
-Nette.initOnLoad();
-window.Nette = Nette;
-
 document.addEventListener("DOMContentLoaded", () => {
-	// modal after registration
-	const queryString = window.location.search;
-	const urlParams = new URLSearchParams(queryString);
-	var odeslano = urlParams.get("odeslano");
-	if(odeslano){
-		$("#registeredModal").modal("show");
-	}
+	naja.initialize();
 
 	//gdpr
 	$(".gdpr button").click(function() {

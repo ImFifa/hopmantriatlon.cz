@@ -132,6 +132,35 @@
 	</section>
 	<noscript><style>.gdpr { display:none }</style></noscript>
 
+	{snippet modal}
+		{if $presenter->isAjax()}
+			{ifset #modal}
+				<div class="modal fade modal-ajax">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								{block modalHeader}
+									<h3 class="modal-title">
+										{block|striptags}{include #modalTitle}{/block}
+									</h3>
+								{/block}
+							</div>
+							<div class="modal-body">
+								{include #modal}
+							</div>
+							{ifset #modalFooter}
+								<div class="modal-footer">
+									{include #modalFooter}
+								</div>
+							{/ifset}
+						</div>
+					</div>
+				</div>
+			{/ifset}
+		{/if}
+	{/snippet}
+
 {block #head}
 	<link rel="apple-touch-icon" sizes="180x180" href="{$basePath}/dist/favicon/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="{$basePath}/dist/favicon/favicon-32x32.png">

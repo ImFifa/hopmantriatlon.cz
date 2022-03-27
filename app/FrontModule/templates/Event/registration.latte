@@ -29,36 +29,38 @@
 			</div>
 
 			<!-- Modal -->
-			{foreach $flashes as $flash}
-				{if $flash->type === 'success'}
-					<div class="modal fade" id="registeredModal" tabindex="-1" role="dialog" aria-labelledby="registeredModalTitle" aria-hidden="true">
-						<div class="modal-dialog modal-dialog-centered" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h4 class="modal-title" id="registeredModalLongTitle">Registrace proběhla úspěšně!</h4>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div class="modal-body">
-									{$flash->message}
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary" data-dismiss="modal">Zpět k formuláři</button>
-									<a n:if="$event->startlist_active" n:href="Event:startlist $competition->slug" class="btn btn-primary">Zobrazit startovní listinu</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				{else}
-					<div class="alert alert-{$flash->type} alert-dismissible fade show" style="max-width: 600px" role="alert">
-						{$flash->message}
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-				{/if}
-			{/foreach}
+			{snippet registrationFormFlash}
+                {foreach $flashes as $flash}
+                    {if $flash->type === 'success'}
+                        <div class="modal fade" id="registeredModal" tabindex="-1" role="dialog" aria-labelledby="registeredModalTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="registeredModalLongTitle">Registrace proběhla úspěšně!</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        {$flash->message}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Zpět k formuláři</button>
+                                        <a n:if="$event->startlist_active" n:href="Event:startlist $competition->slug" class="btn btn-primary">Zobrazit startovní listinu</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {else}
+                        <div class="alert alert-{$flash->type} alert-dismissible fade show" style="max-width: 600px" role="alert">
+                            {$flash->message}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {/if}
+                {/foreach}
+            {/snippet}
 
 			<h1 n:block="title">{$competition->name}</h1>
 			<h3>Registrace k závodu</h3>
@@ -70,9 +72,9 @@
 			{/if}
 		</div>
 	</section>
-{/block}
 
 {block #scripts}
-	<script src="https://www.google.com/recaptcha/api.js?render=explicit"></script>
+{*    <script src="{$basePath}/scripts/netteForms.js"></script>*}
+    <script src="https://www.google.com/recaptcha/api.js?render=explicit"></script>
 	<script src="{$basePath}/scripts/invisibleRecaptcha.js"></script>
 {/block}

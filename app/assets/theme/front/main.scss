@@ -76,6 +76,10 @@
 	}
 }
 
+#submitSpinner {
+	display: none;
+}
+
 .btn-nobg-info {
 	color: rgba($info, 0.9);
 	transition: color .1s ease-in-out;

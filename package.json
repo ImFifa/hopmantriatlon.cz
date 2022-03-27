@@ -30,6 +30,7 @@
 		"jquery": "^3.3.1",
 		"lightbox2": "^2.11.1",
 		"mini-css-extract-plugin": "^0.4.4",
+		"naja": "^2.3.0",
 		"nette.ajax.js": "^2.3.0",
 		"node-sass": "^4.9.4",
 		"optimize-css-assets-webpack-plugin": "^5.0.1",

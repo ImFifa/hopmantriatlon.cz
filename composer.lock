@@ -2690,19 +2690,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/orisai/nette-auth.git",
-                "reference": "ae7ab06b9f6d3d73464aa50c9c60d4ec50ccd37e"
+                "reference": "5693293c26c4318f38088166f212e4f5305b3dab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orisai/nette-auth/zipball/ae7ab06b9f6d3d73464aa50c9c60d4ec50ccd37e",
-                "reference": "ae7ab06b9f6d3d73464aa50c9c60d4ec50ccd37e",
+                "url": "https://api.github.com/repos/orisai/nette-auth/zipball/5693293c26c4318f38088166f212e4f5305b3dab",
+                "reference": "5693293c26c4318f38088166f212e4f5305b3dab",
                 "shasum": ""
             },
             "require": {
                 "nette/http": "^3.0.1",
                 "orisai/auth": "^1.0.0",
                 "orisai/exceptions": "^1.0.0",
-                "orisai/nette-di": "^1.0.3",
+                "orisai/nette-di": "^1.0.7",
                 "php": ">=7.4.0 <8.2.0"
             },
             "require-dev": {
@@ -2716,7 +2716,8 @@
                 "phpstan/phpstan-phpunit": "^1.0.0",
                 "phpstan/phpstan-strict-rules": "^1.0.0",
                 "phpunit/phpunit": "^9.5.0",
-                "staabm/annotate-pull-request-from-checkstyle": "^1.7.0"
+                "staabm/annotate-pull-request-from-checkstyle": "^1.7.0",
+                "tracy/tracy": "^2.8.0"
             },
             "default-branch": true,
             "type": "library",
@@ -2749,20 +2750,20 @@
                 "issues": "https://github.com/orisai/nette-auth/issues",
                 "source": "https://github.com/orisai/nette-auth/tree/v1.x"
             },
-            "time": "2022-03-03T21:34:35+00:00"
+            "time": "2022-03-27T14:09:53+00:00"
         },
         {
             "name": "orisai/nette-di",
-            "version": "1.0.6",
+            "version": "1.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orisai/nette-di.git",
-                "reference": "c7d73c0beb60b775ce37e443ec7ac3060f1ec6cb"
+                "reference": "72c36d9bebdefff0f49914d236c99c9337aa2d49"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orisai/nette-di/zipball/c7d73c0beb60b775ce37e443ec7ac3060f1ec6cb",
-                "reference": "c7d73c0beb60b775ce37e443ec7ac3060f1ec6cb",
+                "url": "https://api.github.com/repos/orisai/nette-di/zipball/72c36d9bebdefff0f49914d236c99c9337aa2d49",
+                "reference": "72c36d9bebdefff0f49914d236c99c9337aa2d49",
                 "shasum": ""
             },
             "require": {
@@ -2802,7 +2803,7 @@
                     "homepage": "https://github.com/mabar"
                 }
             ],
-            "description": "Configure your Orisai CMF/Nette application",
+            "description": "Configure your Nette application",
             "homepage": "https://github.com/orisai/nette-di",
             "keywords": [
                 "bootstrap",
@@ -2813,15 +2814,9 @@
             ],
             "support": {
                 "issues": "https://github.com/orisai/nette-di/issues",
-                "source": "https://github.com/orisai/nette-di/tree/1.0.6"
+                "source": "https://github.com/orisai/nette-di/tree/1.0.7"
             },
-            "funding": [
-                {
-                    "url": "https://github.com/mabar",
-                    "type": "github"
-                }
-            ],
-            "time": "2022-01-24T17:39:07+00:00"
+            "time": "2022-03-26T22:19:35+00:00"
         },
         {
             "name": "orisai/nette-http-client",
@@ -3413,16 +3408,16 @@
         },
         {
             "name": "rikudou/iban",
-            "version": "v1.1.1",
+            "version": "v1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RikudouSage/IBAN.git",
-                "reference": "1aa7ccc4858859a5bb939e1c9eee56d1dfd62bb6"
+                "reference": "b48e38e3b915471f4de2bdfa492a09ab742fc94d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RikudouSage/IBAN/zipball/1aa7ccc4858859a5bb939e1c9eee56d1dfd62bb6",
-                "reference": "1aa7ccc4858859a5bb939e1c9eee56d1dfd62bb6",
+                "url": "https://api.github.com/repos/RikudouSage/IBAN/zipball/b48e38e3b915471f4de2bdfa492a09ab742fc94d",
+                "reference": "b48e38e3b915471f4de2bdfa492a09ab742fc94d",
                 "shasum": ""
             },
             "require": {
@@ -3457,9 +3452,19 @@
             ],
             "support": {
                 "issues": "https://github.com/RikudouSage/IBAN/issues",
-                "source": "https://github.com/RikudouSage/IBAN/tree/v1.1.1"
+                "source": "https://github.com/RikudouSage/IBAN/tree/v1.1.2"
             },
-            "time": "2021-05-10T12:28:06+00:00"
+            "funding": [
+                {
+                    "url": "https://ko-fi.com/dominik_ch",
+                    "type": "ko_fi"
+                },
+                {
+                    "url": "https://liberapay.com/dominik_ch",
+                    "type": "liberapay"
+                }
+            ],
+            "time": "2022-04-01T10:51:40+00:00"
         },
         {
             "name": "rikudou/qr-payment-interface",
@@ -3594,7 +3599,7 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:K2D-CZ/core.git",
-                "reference": "8828147e39d54eabdcce36c6f80d296d58f187c2"
+                "reference": "dbc674d1cc415e2e65159019f6e919f89882ecfc"
             },
             "require": {
                 "contributte/console": "^0.8.0|^0.9.0",
@@ -3637,7 +3642,7 @@
                 "cms",
                 "nette"
             ],
-            "time": "2022-03-06T02:34:24+00:00"
+            "time": "2022-03-27T16:11:46+00:00"
         },
         {
             "name": "simple-cms/file-module",
@@ -5923,5 +5928,5 @@
     "platform-overrides": {
         "php": "7.4"
     },
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.0.0"
 }

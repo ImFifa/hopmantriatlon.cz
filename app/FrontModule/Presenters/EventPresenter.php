@@ -294,6 +294,7 @@ class EventPresenter extends BasePresenter
                     $this->redirect('Event:registrationSent', $competition->event->slug);
 
                 } catch (SmtpException $e) {
+					$competition = $this->competitionModel->getCompetitionById($values['competition_id']);
                     $this->flashMessage('Registrace se nezdařila, protože nebylo možné odeslat potvrzovací email. Zadali jste správnou adresu? Pokud ano, kontaktujte prosím správce webu na info@hopmantriatlon.cz.', 'danger');
                     $this->logModel->log('Nezdařená registrace', $competition->name . ' - ' . $e->getMessage(), 'error');
                 } catch (\InvalidArgumentException $e) {

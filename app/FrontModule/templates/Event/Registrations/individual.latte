@@ -70,7 +70,10 @@
 
     <div class="col-lg-6">
         <div class="form-group d-inline-flex flex-column flex-md-row">
-            {input submit class => 'btn btn-primary'}
+			<div class="spinner-border mr-3" style="display: none;" role="status">
+				<span class="sr-only">Loading...</span>
+			</div>
+            {input submit class => 'btn btn-primary', id => 'submitForm'}
             {input reset class => 'btn btn-default mt-4 mt-md-0'}
         </div>
     </div>
@@ -79,7 +82,10 @@
 
 {block #scripts}
     	<script type="text/javascript">
-    		var signUpForm = document.getElementById('frm-signUpForm-{$competition->id}');
+			var signUpForm = document.getElementById('frm-signUpForm-{$competition->id}');
+			var submitBtn = signUpForm.querySelector('#submitForm');
+			var spinner = signUpForm.querySelector('.spinner-border');
+
     		var yearOfBirth = document.getElementById('frm-signUpForm-{$competition->id}-year_of_birth');
     		var sex = document.getElementById('frm-signUpForm-{$competition->id}-sex');
             var categoryId = document.getElementById('frm-signUpForm-{$competition->id}-category_id');
@@ -102,5 +108,14 @@
                     {/foreach}
     			{/ifset}
     		});
+
+			signUpForm.addEventListener('submit', () => {
+				submitBtn.disabled = true;
+				spinner.style.display = 'block';
+				setTimeout(() => {
+					submitBtn.disabled = false;
+					spinner.style.display = 'none';
+				}, 2000);
+			});
     	</script>
 {/block}

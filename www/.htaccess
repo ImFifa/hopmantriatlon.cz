@@ -8,13 +8,13 @@
 # enable cool URL
 <IfModule mod_rewrite.c>
 	RewriteEngine On
-#	RewriteBase /
-#
-#	RewriteCond %{HTTPS} off
-#	RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-#
-#	RewriteCond %{HTTP_HOST} !^www\. [NC]
-#	RewriteRule .* https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+	RewriteBase /
+
+	RewriteCond %{HTTPS} off
+	RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+	RewriteCond %{HTTP_HOST} !^www\. [NC]
+	RewriteRule .* https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 	# prevents files starting with dot to be viewed by browser
 	RewriteRule /\.|^\. - [F]

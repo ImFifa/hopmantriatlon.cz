@@ -21,6 +21,7 @@ services:
 	- App\Model\CompetitionModel
 	- App\Model\CategoryModel
 	- App\Model\DistanceModel
+	- App\Model\StatusModel
 
 	- App\Model\CompetitorModel
 	- App\Model\RelayModel

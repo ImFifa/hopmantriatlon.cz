@@ -4,14 +4,14 @@
 		"url": "https://www.k2d.cz"
 	},
 	"dependencies": {
-		"@babel/core": "^7.17.8",
+		"@babel/core": "^7.17.9",
 		"@babel/plugin-syntax-dynamic-import": "^7.0.0",
 		"@babel/plugin-syntax-object-rest-spread": "^7.0.0",
 		"@babel/plugin-transform-async-to-generator": "^7.16.8",
 		"@babel/preset-env": "^7.16.11",
 		"@mdi/font": "^4.2.95",
 		"autoprefixer": "^9.8.8",
-		"babel-loader": "^8.2.3",
+		"babel-loader": "^8.2.4",
 		"bootstrap": "^4.6.1",
 		"bootstrap-colorpicker": "^3.1.2",
 		"bootstrap-select": "^1.13.10",

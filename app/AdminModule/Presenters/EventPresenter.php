@@ -7,6 +7,7 @@ use App\Model\CompetitionModel;
 use App\Model\CompetitorModel;
 use App\Model\DistanceModel;
 use App\Model\EventModel;
+use App\Model\StatusModel;
 use K2D\Core\AdminModule\Presenter\BasePresenter;
 use Nette\Application\UI\Form;
 use Nette\Application\UI\Multiplier;
@@ -17,6 +18,9 @@ class EventPresenter extends BasePresenter
 {
     /** @inject */
     public EventModel $eventModel;
+
+    /** @inject */
+    public StatusModel $statusModel;
 
     /** @inject */
     public CompetitorModel $competitorModel;
@@ -122,6 +126,16 @@ class EventPresenter extends BasePresenter
                 ->setReplacement($this->categoryModel->getForSelect())
                 ->setFilterSelect(['' => ''] + $this->categoryModel->getForSelect());
 
+            $grid->addColumnText('email', 'Email')
+                ->setSortable()
+                ->setEditableCallback(function ($id, $value): void {
+                    $this->flashMessage(sprintf('Id: %s, new value: %s', $id, $value));
+                    $competitior = $this->competitorModel->getCompetitor($id);
+                    $competitior->update(['email' => $value]);
+                    $this->redrawControl('flashes');
+                });
+
+
             $grid->addColumnStatus('paid', 'Status')
                 ->setSortable()
                 ->setCaret(true)
@@ -134,6 +148,9 @@ class EventPresenter extends BasePresenter
                 ->setClass('btn-danger')
                 ->endOption()
                 ->onChange[] = [$this, 'updatePaymentStatus'];
+
+            $grid->addExportCsv('Csv export', 'startovka-all.csv')
+                ->setTitle('Export CSV');
 
 			$grid->addGroupAction('Smazat')->onSelect[] = [$this, 'groupDelete'];
 
@@ -174,6 +191,9 @@ class EventPresenter extends BasePresenter
 
             $form->addSelect('competition_id', 'Aktuální ročník')
                 ->setItems($this->competitionModel->getForSelectById($event_id));
+
+            $form->addSelect('status_id', 'Status závodu')
+                ->setItems($this->statusModel->getForSelect('id', 'value'));
 
             $form->addCheckbox('propositions_active', 'Propozice');
 

@@ -78,7 +78,7 @@ class EventPresenter extends BasePresenter
             $grid->addColumnText('surname', 'Příjmení')
                 ->setSortable()
                 ->setEditableCallback(function ($id, $value): void {
-                    $this->flashMessage(sprintf('Id: %s, new value: %s', $id, $value));
+                    $this->flashMessage(sprintf('Změna u řádku ID: %s, Nové příjmení: %s', $id, $value));
                     $competitior = $this->competitorModel->getCompetitor($id);
                     $competitior->update(['surname' => $value]);
                     $this->redrawControl('flashes');
@@ -87,7 +87,7 @@ class EventPresenter extends BasePresenter
             $grid->addColumnText('name', 'Jméno')
                 ->setSortable()
                 ->setEditableCallback(function ($id, $value): void {
-                    $this->flashMessage(sprintf('Id: %s, new value: %s', $id, $value));
+                    $this->flashMessage(sprintf('Změna u řádku ID: %s, Nové jméno: %s', $id, $value));
                     $competitior = $this->competitorModel->getCompetitor($id);
                     $competitior->update(['name' => $value]);
                     $this->redrawControl('flashes');
@@ -98,7 +98,7 @@ class EventPresenter extends BasePresenter
                 ->setFitContent()
                 ->setSortable()
                 ->setEditableCallback(function ($id, $value): void {
-                    $this->flashMessage(sprintf('Id: %s, new value: %s', $id, $value));
+                    $this->flashMessage(sprintf('Změna u řádku ID: %s, Nový rok narození: %s', $id, $value));
                     $competitior = $this->competitorModel->getCompetitor($id);
                     $competitior->update(['year_of_birth' => $value]);
                     $this->redrawControl('flashes');
@@ -107,7 +107,7 @@ class EventPresenter extends BasePresenter
             $grid->addColumnText('team', 'Oddíl')
                 ->setSortable()
                 ->setEditableCallback(function ($id, $value): void {
-                    $this->flashMessage(sprintf('Id: %s, new value: %s', $id, $value));
+                    $this->flashMessage(sprintf('Změna u řádku ID: %s, Nový název města/oddílu: %s', $id, $value));
                     $competitior = $this->competitorModel->getCompetitor($id);
                     $competitior->update(['team' => $value]);
                     $this->redrawControl('flashes');
@@ -152,7 +152,9 @@ class EventPresenter extends BasePresenter
             $grid->addExportCsv('Csv export', 'startovka-all.csv')
                 ->setTitle('Export CSV');
 
-            $grid->addGroupAction('Smazat')->onSelect[] = [$this, 'groupDelete'];
+			$grid->addGroupAction('Smazat')->onSelect[] = [$this, 'groupDelete'];
+
+			$grid->addGroupAction('Změnit status platby')->onSelect[] = [$this, 'groupPaid'];
 
             $translator = new SimpleTranslator([
                 'ublaboo_datagrid.no_item_found_reset' => 'Žádné záznamy nenalezeny. Filtr můžete vynulovat',
@@ -223,7 +225,7 @@ class EventPresenter extends BasePresenter
 
         $status_text = ['nezaplaceno', 'zaplaceno'][$status];
 
-        $this->flashMessage("Status řádku $id byl změněm na $status_text.", "success");
+        $this->flashMessage("Status řádku $id byl změněn na $status_text.", "success");
 
         if ($this->isAjax()) {
             $this['adminStartlistGrid-' . $competitor->competition_id]->reload();
@@ -232,22 +234,46 @@ class EventPresenter extends BasePresenter
         }
     }
 
-    public function groupDelete($id, $status)
-    {
+	public function groupDelete($id, $status)
+	{
 
-        $competitor = $this->competitorModel->getCompetitor($id[0]);
+		$competitor = $this->competitorModel->getCompetitor($id[0]);
 
-        if ($this->competitorModel->getTable()->where('id', $id)->delete()) {
-            $this->flashMessage("Vybrané záznamy byly úspěšně odstraněny.", "success");
-        } else {
-            $this->flashMessage("Vybrané záznamy se nepodařilo odstranit odstraněny.", "warning");
-        }
+		if ($this->competitorModel->getTable()->where('id', $id)->delete()) {
+			$this->flashMessage("Vybrané záznamy byly úspěšně odstraněny.", "success");
+		} else {
+			$this->flashMessage("Vybrané záznamy se nepodařilo odstranit odstraněny.", "warning");
+		}
 
-        if ($this->isAjax()) {
-            $this->redrawControl('flashes');
-            $this['adminStartlistGrid-' . $competitor->competition_id]->reload();
-        } else {
-            $this->redirect('this');
-        }
-    }
+		if ($this->isAjax()) {
+			$this->redrawControl('flashes');
+			$this['adminStartlistGrid-' . $competitor->competition_id]->reload();
+		} else {
+			$this->redirect('this');
+		}
+	}
+
+
+	public function groupPaid($id, $status)
+	{
+		$competitor = $this->competitorModel->getCompetitor($id[0]);
+		foreach ($id as $i) {
+			$competitor = $this->competitorModel->getCompetitor($i);
+			if ($competitor->paid)
+				$status = 0;
+			else
+				$status = 1;
+
+			$competitor->update(['paid' => $status]);
+			$status_text = ['nezaplaceno', 'zaplaceno'][$status];
+			$this->flashMessage("Status platby u řádku ID $competitor->id byl změněn na $status_text.", "success");
+		}
+
+		if ($this->isAjax()) {
+			$this->redrawControl('flashes');
+			$this['adminStartlistGrid-' . $competitor->competition_id]->reload();
+		} else {
+			$this->redirect('this');
+		}
+	}
 }

@@ -65,7 +65,7 @@
 			<h1 n:block="title">{$competition->name}</h1>
 			<h3>Registrace k závodu</h3>
 
-			{if !$competition->registration_active && !$competition->id}
+			{if !$event->registration_active}
 				<h4>Online registrace na tento závod není aktivní.</h4>
 			{else}
 				{include 'Registrations/' . $competition->type . '.latte'}

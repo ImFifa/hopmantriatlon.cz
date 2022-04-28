@@ -75,7 +75,14 @@
 							{/foreach}
 						{/ifset}
 					{else}
-						<p>Online registrace je <strong>uzavřena</strong>.</p>
+                        {switch $event->id}
+                            {case 1}
+                            <p>Online registrace je <strong>uzavřena</strong>.</p>
+                            {case 3}
+                            <p>Online registrace na triatlon a štafety <strong>bude spuštěna začátkem května!</strong></p>
+                            {case 5}
+                            <p>Online registrace <strong>bude spuštěna začátkem listopadu!</strong></p>
+                        {/switch}
 					{/if}
 				</section>
 
@@ -108,7 +115,14 @@
 
 						<a n:href="Event:startlist $event->slug" class="btn btn-primary"><i class="fa-solid fa-users"></i> Startovní listina</a>
 					{else}
-						<p>Startovní listina je <strong>uzavřena</strong>.</p>
+					    {switch $event->id}
+                            {case 1}
+                            <p>Startovní listina je <strong>uzavřena</strong>.</p>
+                            {case 3}
+                            <p>Startovní listina <strong>bude otevřena začátkem května!</strong></p>
+                            {case 5}
+                            <p>Startovní listina <strong>bude otevřena začátkem listopadu!</strong></p>
+                        {/switch}
 					{/if}
 				</section>
 

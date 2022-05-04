@@ -1,0 +1,104 @@
+<div class="registration-grid mt-4">
+    <div class="registration-form">
+        <h3>Registrace k závodu</h3>
+        {form "childrenSignUpForm-$competition->id", class => 'signUpForm row'}
+            {input competition_id class => 'form-control input-hidden', value => $competition->id}
+            {input address class => 'form-control input-hidden'}
+
+            <div class="col-lg-12">
+                <div class="form-group">
+                    {label name}{/label}
+			{input name class => 'form-control'}
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group">
+                    {label surname}{/label}
+			{input surname class => 'form-control'}
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="form-group">
+                    {label year_of_birth}{/label}
+			{input year_of_birth class => 'form-control'}
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="form-group">
+                    {label sex}{/label}
+			{input sex class => 'form-control'}
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group">
+                    {label team}{/label}
+			{input team class => 'form-control'}
+                    <small>Toto pole je volitelné</small>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group">
+                    {label email}{/label}
+			{input email class => 'form-control'}
+                    <small>Váš email nebude nikde zveřejněn.<br>Využijeme jej pouze pro zaslání diplomu či v případě nutnosti Vás kontaktovat.</small>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group">
+                    {label size}{/label}
+			{input size class => 'form-control'}
+                    <small>Součástí startovného je účastnické tričko. Vyberte prosím velikost. <a href="https://www.inetprint.cz/detske-tricko-adler-malfini-basic---rtx_kt1018/?tab=techinfo" target="_blank"">Odkaz na tabulku velikostí</a></small>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group agree-checkbox">
+                    {input agree class => 'form-control, required'}
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="form-group d-inline-flex flex-column flex-md-row">
+                    <div class="spinner-border mr-3" style="display: none;" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    {input submit class => 'btn btn-primary', id => 'submitForm'}
+            {input reset class => 'btn btn-default mt-4 mt-md-0'}
+                </div>
+            </div>
+        {/form}
+    </div>
+    <div class="shirt-preview">
+        <h3>Dětská účastnická trička 2022</h3>
+        <p>Při včasné registraci je pro děti účastnické tričko v ceně startovného.</p>
+        <a href="{$basePath}/dist/img/tshirts/children.jpeg" data-lightbox="gallery" data-name="Hopman triatlon - účastnické tričko (děti)">
+            <img src="{$basePath}/dist/img/tshirts/children.jpeg" class="lazyload" alt="Hopman triatlon - účastnické tričko (děti)">
+        </a>
+        <a href="{$basePath}/dist/img/tshirts/tabulka.jpg" data-lightbox="gallery" data-name="Hopman triatlon - velikostní tabulka">
+            <img src="{$basePath}/dist/img/tshirts/tabulka.jpg" class="lazyload" alt="Hopman triatlon - velikostní tabulka">
+        </a>
+    </div>
+</div>
+
+{block #scripts}
+    <script type="text/javascript">
+        var childrenSignUpForm = document.getElementById('frm-childrenSignUpForm-{$competition->id}');
+        var submitBtn = childrenSignUpForm.querySelector('#submitForm');
+        var spinner = childrenSignUpForm.querySelector('.spinner-border');
+
+        childrenSignUpForm.addEventListener('submit', () => {
+            submitBtn.disabled = true;
+            spinner.style.display = 'block';
+            setTimeout(() => {
+                submitBtn.disabled = false;
+                spinner.style.display = 'none';
+            }, 2000);
+        });
+    </script>
+{/block}

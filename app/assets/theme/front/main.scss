@@ -218,9 +218,23 @@ h1, h2, h3 {
 	}
 }
 
-.signUpForm {
-	max-width: 600px;
+.registration-grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-gap: 3rem;
 
+	.registration-form {
+	}
+
+	.shirt-preview {
+		img {
+			max-width: 250px;
+			height: auto;
+		}
+	}
+}
+
+.signUpForm {
 	#distance-info {
 		display: none;
 	}
@@ -236,6 +250,7 @@ h1, h2, h3 {
 			display: grid;
 			grid-template-columns: 16px auto;
 			grid-column-gap: .6rem;
+			align-items: center;
 
 			.invalid-feedback {
 				grid-column-start: 1;
@@ -1053,6 +1068,7 @@ footer.main-footer {
 
 .choose-form-btns {
 	display: flex;
+	gap: 1.5rem;
 	flex-direction: column;
 
 	.active {
@@ -1063,7 +1079,6 @@ footer.main-footer {
 		width: 100%;
 		height: auto;
 		min-height: 100px;
-		margin-bottom: .7rem;
 		padding: 1rem;
 		max-height: 200px;
 		border-radius: $border-radius;

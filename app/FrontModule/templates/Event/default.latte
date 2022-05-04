@@ -71,7 +71,7 @@
 							{/if}</p>
 						{ifset $competitions}
 							{foreach $competitions as $competition}
-								<a n:href="Event:registration $competition->slug" class="btn btn-primary mb-2"><i class="fa-solid fa-file-signature"></i> On-line registrace</a>
+								<a n:if="$iterator->isFirst()" n:href="Event:registration $competition->slug" class="btn btn-primary mb-2"><i class="fa-solid fa-file-signature"></i>On-line registrace</a>
 							{/foreach}
 						{/ifset}
 					{else}
@@ -103,7 +103,7 @@
 								Sprint triatlon: <strong>{$sprint}</strong><br>
 								Dětský triatlon: <strong>{$kids}</strong><br>
 								<span n:ifset="$relays">Štafety: <strong>{$relays}</strong><br></span><br>
-								Celkem je přihlášeno <strong>{$participants}</strong> závodníků. Z toho {$participantsMan} <i class="fa-solid fa-mars"></i> a {$participantsWoman} <i class="fa-solid fa-venus"></i>.
+								Celkem je přihlášeno <strong>{$participants}</strong> závodníků.
 							</p>
 							{case 5}
 							<p>

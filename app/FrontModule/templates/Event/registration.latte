@@ -20,7 +20,7 @@
 
 			<a n:href="Event: $event->slug" class="btn btn-nobg-secondary mb-3"><i class="fas fa-angle-left"></i> Zpět na stránku závodu</a>
 
-			<div n:if="sizeof($competitions) > 1" class="choose-form-btns mb-3">
+			<div n:if="sizeof($competitions) > 1" class="choose-form-btns mb-5">
 				{foreach $competitions as $comp}
 				<a n:href="Event:registration $comp->slug" class="{if $comp->slug === $competition->slug}active {/if}chooseForm" {ifset $comp->cover}style='background: url("../{$comp->cover|noescape}") no-repeat; background-size: cover; background-position: top;'{/ifset}>
 					<h4>{$comp->name}</h4>
@@ -63,8 +63,6 @@
             {/snippet}
 
 			<h1 n:block="title">{$competition->name}</h1>
-			<h3>Registrace k závodu</h3>
-
 			{if !$event->registration_active}
 				<h4>Online registrace na tento závod není aktivní.</h4>
 			{else}

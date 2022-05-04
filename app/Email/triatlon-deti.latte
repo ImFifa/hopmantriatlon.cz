@@ -1,7 +1,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Účastníte se štafetového závodu Hopman triatlon 2022!</title>
+	<title>Účastníš se závodu Hopman dětský triatlon 2022!</title>
 
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Nunito&family=Varela+Round&display=swap" rel="stylesheet">
@@ -100,22 +100,16 @@
 	</header>
 
 	<article>
-		<h1>Účastníte se štafetového závodu Hopman triatlon 2022!</h1>
-		<p>Vaše štafeta <strong>{$name}</strong> byla úspěšně zaregistrována do závodu!</p>
+		<h1>Registrace na závod Hopman dětský triatlon 2022 proběhla úspěšně!</h1>
 
 		<div class="submitted-data">
 			<h4>Pro kontrolu zde zasíláme tebou vyplněné údaje:</h4>
 			<p>
-				{='Název štafety:'|padRight: 25, ' '}<strong>{$name}</strong><br><br>
-				{='Závodník 1:'|padRight: 25, ' '}<strong>{$competitor1}</strong><br>
-				{='Pohlaví:'|padRight: 25, ' '}<strong>{$sex1}</strong><br>
-				{='Tričko:'|padRight: 25, ' '}<strong>{$shirt1}</strong><br><br>
-				{='Závodník 2:'|padRight: 25, ' '}<strong>{$competitor2}</strong><br>
-				{='Pohlaví:'|padRight: 25, ' '}<strong>{$sex2}</strong><br>
-				{='Tričko:'|padRight: 25, ' '}<strong>{$shirt2}</strong><br><br>
-				{='Závodník 3:'|padRight: 25, ' '}<strong>{$competitor3}</strong><br>
-				{='Pohlaví:'|padRight: 25, ' '}<strong>{$sex3}</strong><br>
-				{='Tričko:'|padRight: 25, ' '}<strong>{$shirt3}</strong><br>
+				{='Jméno a příjmení:'|padRight: 25, ' '}<strong>{$name} {$surname}</strong><br>
+				{='Rok narození:'|padRight: 25, ' '}<strong>{$birth_year}</strong><br>
+				{='Pohlaví:'|padRight: 25, ' '}<strong>{$sex}</strong><br>
+				{='Oddíl/město:'|padRight: 25, ' '}<strong n:if="$team != NULL">{$team}</strong><br>
+				{='Tričko:'|padRight: 25, ' '}<strong n:if="$size != NULL">{$size} {if $size === 4}roky{else}let{/if}</strong><br>
 			</p>
 			<p>Pokud by náhodou něco nesouhlasilo, dej nám vědět a hned to opravíme.<br>
 				(stačí odpovědět na tento email)</p>
@@ -135,12 +129,12 @@
 		</div>
 
 		<div class="race-info">
-			<h4>Důležité předzávodní informace:</h4>
-			<ul>
-				<li>Hákování stejně jako minulý rok je povoleno, ale oproti loňsku je z důvodu bezpečnosti <strong>zakázané startovat s časovkářskými speciály a dlouhými hrazdami!</strong><br>
-					Závodníci s časovkou nebo dlouhou hrazdou nebudou vpuštěni do depa.
-				</li>
-			</ul>
+{*			<h4>Důležité předzávodní informace:</h4>*}
+{*			<ul>*}
+{*				<li>Hákování stejně jako minulý rok je povoleno, ale oproti loňsku je z důvodu bezpečnosti <strong>zakázané startovat s časovkářskými speciály a dlouhými hrazdami!</strong><br>*}
+{*				Závodníci s časovkou nebo dlouhou hrazdou nebudou vpuštěni do depa.*}
+{*				</li>*}
+{*			</ul>*}
 			<p>Pro aktuální informace sledujte náš <a href="https://www.facebook.com/hopmantriatlon" target="_blank">Facebook</a> a aktuality na webových stránkách <a href="https://www.hopmantriatlon.cz/" target="_blank">hopmantriatlon.cz</a></p>
 		</div>
 

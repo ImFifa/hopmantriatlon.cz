@@ -18,13 +18,17 @@
 	<section class="page-section results-page">
 		<div class="container">
 			<a n:href="Event: $event->slug" class="btn btn-nobg-secondary mb-3"><i class="fas fa-angle-left"></i> Zpět na stránku závodu</a>
-			<h1 n:block="title">{$competition->name}</h1>
-			<h3>Startovní listina</h3>
+			<h1 n:block="title">Startovní listina</h1>
 			{if !$event->startlist_active}
 				<h3>Startovní listina není aktivní.</h3>
 			{else}
 				<div class="datagrid-responsive table-responsive">
-                	{control "startlistGrid-$competition->id"}
+					<h3 class="mt-3 ml-3">Olympijský/sprint triatlon</h3>
+                	{control "startlistGrid-7"}
+                	<h3 class="mt-3 ml-3">Štafety</h3>
+                	{control "relayStartlistGrid-8"}
+                	<h3 class="mt-3 ml-3">Dětský triatlon</h3>
+                	{control "startlistGrid-9"}
 				</div>
 			{/if}
 		</div>

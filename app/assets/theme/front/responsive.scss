@@ -85,6 +85,7 @@
 
 	.choose-form-btns {
 		flex-direction: row;
+		gap: 2rem;
 
 		.chooseForm {
 			padding-left: 2rem;
@@ -93,12 +94,6 @@
 
 			h4 {
 				font-size: 1.8rem;
-			}
-		}
-
-		a {
-			&:first-child {
-				margin-right: 1rem;
 			}
 		}
 	}
@@ -244,6 +239,10 @@
 }
 
 @include media-breakpoint-up(lg) {
+
+	.registration-grid {
+		grid-template-columns: 600px 1fr;
+	}
 
 	.event-galleries {
 		.galerie {

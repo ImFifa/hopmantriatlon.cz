@@ -129,8 +129,20 @@ class EventPresenter extends BasePresenter
     // render registration page (without form)
     public function renderRegistration($slug): void
     {
-        $event = $this->eventModel->getEvent($slug);
-        if (!$event) {
+        $slug = explode('-', $slug);
+        $event = $this->eventModel->getEvent($slug[0]);
+
+        if (sizeof($slug) > 1) {
+            if ($slug[1] === 'deti') {
+                $competition = $this->competitionModel->getCompetitionById(9);
+            } else {
+                $competition = $this->competitionModel->getCompetitionById(8);
+            }
+        } else {
+            $competition = $this->competitionModel->getCompetitionById(7);
+        }
+
+        if (!$competition) {
             $this->error();
         } else {
             $urlPath = explode('/', $_SERVER['REQUEST_URI']);
@@ -146,7 +158,7 @@ class EventPresenter extends BasePresenter
             }
 
             $this->template->categories = $categories;
-            $this->template->competition = $this->competitionModel->getCompetitionById($event->competition_id);
+            $this->template->competition = $competition;
             $this->template->competitions = $this->competitionModel->getThisYearsActiveCompetitionsById($event->id, $currYear);
         }
     }
@@ -155,12 +167,16 @@ class EventPresenter extends BasePresenter
     // render registration confirmation page
     public function renderRegistrationSent($slug): void
     {
+
+        $competition = $this->competitionModel->getSelectedCompetition($slug);
+        $slug = explode('-', $slug)[0];
         $event = $this->eventModel->getEvent($slug);
-        if (!$event) {
+
+        if (!$competition) {
             $this->error();
         } else {
             $this->template->event = $event;
-            $this->template->competition = $this->competitionModel->getCompetitionById($event->competition_id);
+            $this->template->competition = $competition;
         }
     }
 
@@ -183,12 +199,12 @@ class EventPresenter extends BasePresenter
         return new Multiplier(function ($competition_id) {
 
             $competition_id = (int)$competition_id;
+            $competition = $this->competitionModel->getCompetitionById($competition_id);
             $currentYear = date("Y");
             $form = new Form();
 
             $form->addText('competition_id', 'ID události');
             $form->addText('address', 'Ochrana proti botům');
-            $form->addInteger('category_id_hidden', 'Skryté ID kategorie');
 
             $form->addText('name', 'Jméno')
                 ->addRule(Form::MAX_LENGTH, 'Maximálné délka je %s znaků', 100)
@@ -201,21 +217,16 @@ class EventPresenter extends BasePresenter
             $form->addSelect('distance_id', 'Trať')
                 ->setPrompt('-------')
                 ->setRequired('Musíte si zvolit trať')
-                ->setItems($this->distanceModel->getDistancesByCompetition($competition_id));
+                ->setItems([
+                    12 => 'Sprint triatlon',
+                    11 => 'Olympijský triatlon'
+                ]);
 
 
             $form->addInteger('year_of_birth', 'Rok narození')
                 ->addRule(Form::LENGTH, 'Požadovaná délka jsou %s znaky', 4)
+                ->addRule(Form::MAX, 'Pro start v hlavním závodě ti musí být alespoň 15 let', $currentYear - 15)
                 ->addRule(Form::MIN, 'Vážně je Vám víc než 100 let? :-)', $currentYear - 100)
-                // pokud je trat detsky beh
-                ->addConditionOn($form['distance_id'], $form::IS_IN, [3,6,10])
-                ->addRule(Form::MIN,'Na dětské závody se mohou přihlásit pouze děti do 14 (na triatlonu do 10) let', $currentYear - 14)
-                // pokud je trat desitka
-                ->addConditionOn($form['distance_id'], $form::IS_IN, [2,5])
-                ->addRule(Form::MAX,'Na tuto trať se mohou přihlásit pouze závodníci, který je alespoň 15 let', $currentYear - 15)
-                // pokud je trat pulmaraton
-                ->addConditionOn($form['distance_id'], $form::IS_IN, [3,6,10])
-                ->addRule(Form::MAX,'Na tuto trať se mohou přihlásit pouze závodníci, který je alespoň 18 let', $currentYear - 18)
                 ->setRequired('Musíte uvést Váš rok narození');
 
             $form->addSelect('sex', 'Pohlaví')
@@ -226,17 +237,25 @@ class EventPresenter extends BasePresenter
                     'Ž' => 'Žena'
                 ]);
 
-            $form->addSelect('category_id', 'Kategorie')
-                ->setPrompt('-------')
-                ->setDisabled()
-                ->setItems($this->categoryModel->getForSelect());
-
             $form->addText('team', 'Oddíl/město')
                 ->addRule(Form::MAX_LENGTH, 'Maximálné délka je %s znaků', 150);
 
             $form->addEmail('email', 'Emailová adresa')
                 ->addRule(Form::MAX_LENGTH, 'Maximálné délka je %s znaků', 200)
                 ->setRequired('Musíte uvést Vaši emailovou adresu');
+
+            $form->addSelect('size', 'Tričko')
+                ->setPrompt('-------')
+                ->setRequired('Musíte uvést, jestli chcete účastnické tričko.')
+                ->setItems([
+                    'Ne' => 'Nechci tričko',
+                    'XS' => 'XS (+200Kč)',
+                    'S' => 'S (+200Kč)',
+                    'M' => 'M (+200Kč)',
+                    'L' => 'L (+200Kč)',
+                    'XL' => 'XL (+200Kč)',
+                    'XXL' => 'XXL (+200Kč)'
+                ]);
 
             $form->addCheckbox('agree', 'Souhlasím s využitím osobních údajů za účelem zpracování výsledků závodu.')
                 ->setHtmlAttribute('class', 'form-control')
@@ -256,15 +275,28 @@ class EventPresenter extends BasePresenter
                     $currentYear = date("Y");
                     $values = $form->getValues(true);
 
+                    // set category
+                    if ($currentYear - $values['year_of_birth'] < 18) {
+                        if ($values['sex'] === 'M')
+                            $values['category_id'] = 4;
+                        else
+                            $values['category_id'] = 5;
+                    } elseif ($currentYear - $values['year_of_birth'] < 40) {
+                        if ($values['sex'] === 'M')
+                            $values['category_id'] = 6;
+                        else
+                            $values['category_id'] = 7;
+                    } else {
+                        if ($values['sex'] === 'M')
+                            $values['category_id'] = 8;
+                        else
+                            $values['category_id'] = 9;
+                    }
+
                     // anti-spam
                     if (!empty($values['address'])) {
                         $this->flashMessage('Boti se do našeho závodu registrovat nemohou. Zkuste to znovu jako člověk.', 'warning');
                         $this->redirect('this?bot=1');
-                    }
-
-                    // chybi category_id
-                    if (empty($values['category_id_hidden'])) {
-                        throw new \InvalidArgumentException('Chybějící hodnota v poli ID kategorie.');
                     }
 
                     // chybny vek
@@ -273,8 +305,6 @@ class EventPresenter extends BasePresenter
                         throw new \InvalidArgumentException($values['name'] . ' ' . $values['surname'] . ' se pokusil přihlásit na trať '.$distance->name.' jako ročník '.$values['year_of_birth'].'.');
                     }
 
-                    $values['category_id'] = $values['category_id_hidden'];
-                    unset($values['category_id_hidden']);
                     unset($values['reset']);
                     unset($values['agree']);
                     unset($values['address']);
@@ -308,8 +338,119 @@ class EventPresenter extends BasePresenter
         });
     }
 
+    // render registration forms for individual competitions
+    protected function createComponentChildrenSignUpForm(): Multiplier
+    {
+        return new Multiplier(function ($competition_id) {
+
+            $currentYear = date("Y");
+            $form = new Form();
+
+            $form->addText('competition_id', 'ID události');
+            $form->addText('address', 'Ochrana proti botům');
+
+            $form->addText('name', 'Jméno')
+                ->addRule(Form::MAX_LENGTH, 'Maximálné délka je %s znaků', 100)
+                ->setRequired('Musíte uvést Vaše jméno');
+
+            $form->addText('surname', 'Příjmení')
+                ->addRule(Form::MAX_LENGTH, 'Maximálné délka je %s znaků', 100)
+                ->setRequired('Musíte uvést Vaše příjmení');
+
+            $form->addInteger('year_of_birth', 'Rok narození')
+                ->addRule(Form::LENGTH, 'Požadovaná délka jsou %s znaky', 4)
+                ->addRule(Form::MIN, 'Na dětský triatlon se mohou přihlásit pouze děti do 10 let.', $currentYear - 10)
+                ->setRequired('Musíte uvést Váš rok narození');
+
+            $form->addSelect('sex', 'Pohlaví')
+                ->setPrompt('-------')
+                ->setRequired('Musíte uvést Vaše pohlaví')
+                ->setItems([
+                    'M' => 'Muž',
+                    'Ž' => 'Žena'
+                ]);
+
+            $form->addText('team', 'Oddíl/město')
+                ->addRule(Form::MAX_LENGTH, 'Maximálné délka je %s znaků', 150);
+
+            $form->addEmail('email', 'Emailová adresa')
+                ->addRule(Form::MAX_LENGTH, 'Maximálné délka je %s znaků', 200)
+                ->setRequired('Musíte uvést Vaši emailovou adresu');
+
+            $form->addSelect('size', 'Tričko')
+                ->setPrompt('-------')
+                ->setRequired('Musíte uvést velikost účastnického trička.')
+                ->setItems([
+                    '4' => '110cm / 4 roky',
+                    '6' => '122cm / 6 let',
+                    '8' => '134cm / 8 let',
+                    '10' => '146cm / 10 let',
+                    '12' => '158cm / 12 let',
+                ]);
+
+            $form->addCheckbox('agree', 'Souhlasím s využitím osobních údajů za účelem zpracování výsledků závodu.')
+                ->setHtmlAttribute('class', 'form-control')
+                ->setRequired('Je potřeba souhlasit s podmínkami');
+
+            $form->addInvisibleReCaptcha('recaptcha')
+                ->setMessage('Jste opravdu člověk?');
+
+            $form->addSubmit('submit', 'Odeslat přihlášku');
+
+            $form->addButton('reset')
+                ->setHtmlAttribute('type', 'reset')
+                ->setCaption('Restartovat formulář');
+
+            $form->onSubmit[] = function (Form $form) {
+                try {
+                    $currentYear = date("Y");
+                    $values = $form->getValues(true);
+
+                    $values['distance_id'] = 13;
+                    $values['category_id'] = 1;
+
+                    // anti-spam
+                    if (!empty($values['address'])) {
+                        $this->flashMessage('Boti se do našeho závodu registrovat nemohou. Zkuste to znovu jako člověk.', 'warning');
+                        $this->redirect('this?bot=1');
+                    }
+
+                    unset($values['reset']);
+                    unset($values['agree']);
+                    unset($values['address']);
+
+                    // insert to database
+                    $values['id'] = $this->competitorModel->insert($values)->id;
+
+                    // send confirmation mail
+                    $this->sendConfirmationMail($values);
+
+                    // get competition name
+                    $competition = $this->competitionModel->getCompetitionById($values['competition_id']);
+
+                    $this->flashMessage('Jsi zaregistrován/a na závod '.$competition->name.'! Na adresu '. $values['email'] .' ti byl právě odeslán potvrzovací email s vyplněnými údaji a informacemi k platbě.');
+                    $this->logModel->log('Úspěšná registrace', $competition->name . ' - ' . $values['name'] . ' ' . $values['surname'] . ' se právě zaregistroval.', 'info');
+
+                    $this->redirect('Event:registrationSent', $competition->event->slug);
+
+                } catch (SmtpException $e) {
+                    $competition = $this->competitionModel->getCompetitionById($values['competition_id']);
+                    $this->flashMessage('Registrace se nezdařila, protože nebylo možné odeslat potvrzovací email. Zadali jste správnou adresu? Pokud ano, kontaktujte prosím správce webu na info@hopmantriatlon.cz.', 'danger');
+                    $this->logModel->log('Nezdařená registrace', $competition->name . ' - ' . $e->getMessage(), 'error');
+                } catch (\InvalidArgumentException $e) {
+                    $competition = $this->competitionModel->getCompetitionById($values['competition_id']);
+                    $this->flashMessage('V tomto věku nelze startovat na zvolené trati.', 'danger');
+                    $this->logModel->log('Nezdařená registrace', $competition->name . ' - ' . $e->getMessage(), 'error');
+                }
+            };
+
+            return $form;
+        });
+    }
+
     private function sendConfirmationMail(array $values): void
     {
+        bdump($values);
         $category = $this->categoryModel->getCategoryById($values['category_id']);
         $competition = $this->competitionModel->getCompetitionById($values['competition_id']);
         $distance = $this->distanceModel->getDistanceById($values['distance_id']);
@@ -320,8 +461,12 @@ class EventPresenter extends BasePresenter
             $price -= 50;
         }
 
-        $variableSymbol = str_pad((string)$values['id'], 5, "0", STR_PAD_LEFT);
-        $variableSymbol = 1 . $variableSymbol;
+        if ($competition->event_id === 3 && $values['category_id'] != 1 && $values['size'] != 'Ne') {
+            $price += 200;
+        }
+
+        $variableSymbol = str_pad((string)$values['id'], 3, "0", STR_PAD_LEFT);
+        $variableSymbol = 101 . $variableSymbol;
 
         $message = $values['name'] . ' ' . $values['surname'] . ' (' . $values['year_of_birth'] . ')';
         // send mail
@@ -339,6 +484,12 @@ class EventPresenter extends BasePresenter
             'variableSymbol' => $variableSymbol,
             'message' => $message
         ];
+
+        if ($competition->event_id === 3) {
+            $params = $params + [
+                'size' => ($values['size'] === 'Ne') ? 'Nechci tričko' : 'Velikost ' . $values['size']
+                ];
+        }
 
         $mail = new Message();
 
@@ -448,7 +599,7 @@ class EventPresenter extends BasePresenter
 
 
     // render registration forms for relays
-    protected function createComponentRelaySignUpForm(): Form
+    protected function createComponentTriathlonRelaySignUpForm(): Form
     {
         $form = new Form();
 
@@ -464,13 +615,76 @@ class EventPresenter extends BasePresenter
             ->addRule(Form::MAX_LENGTH, 'Maximálné délka je %s znaků', 160)
             ->setRequired('Musíte uvést jméno 1. závodníka');
 
+        $form->addSelect('sex1', 'Pohlaví')
+            ->setPrompt('-------')
+            ->setRequired('Musíte uvést pohlaví 1. závodníka')
+            ->setItems([
+                'M' => 'Muž',
+                'Ž' => 'Žena'
+            ]);
+
+        $form->addSelect('shirt1', 'Tričko')
+            ->setPrompt('-------')
+            ->setRequired('Musíte uvést, jestli chcete tričko pro 1. závodníka')
+            ->setItems([
+                'Ne' => 'Nechci tričko',
+                'XS' => 'XS (+200Kč)',
+                'S' => 'S (+200Kč)',
+                'M' => 'M (+200Kč)',
+                'L' => 'L (+200Kč)',
+                'XL' => 'XL (+200Kč)',
+                'XXL' => 'XXL (+200Kč)'
+            ]);
+
         $form->addText('competitor2', 'Závodník 2')
             ->addRule(Form::MAX_LENGTH, 'Maximálné délka je %s znaků', 160)
             ->setRequired('Musíte uvést jméno 2. závodníka');
 
+        $form->addSelect('sex2', 'Pohlaví')
+            ->setPrompt('-------')
+            ->setRequired('Musíte uvést pohlaví 2. závodníka')
+            ->setItems([
+                'M' => 'Muž',
+                'Ž' => 'Žena'
+            ]);
+
+        $form->addSelect('shirt2', 'Tričko')
+            ->setPrompt('-------')
+            ->setRequired('Musíte uvést, jestli chcete tričko pro 2. závodníka')
+            ->setItems([
+                'Ne' => 'Nechci tričko',
+                'XS' => 'XS (+200Kč)',
+                'S' => 'S (+200Kč)',
+                'M' => 'M (+200Kč)',
+                'L' => 'L (+200Kč)',
+                'XL' => 'XL (+200Kč)',
+                'XXL' => 'XXL (+200Kč)'
+            ]);
+
         $form->addText('competitor3', 'Závodník 3')
             ->addRule(Form::MAX_LENGTH, 'Maximálné délka je %s znaků', 160)
             ->setRequired('Musíte uvést jméno 3. závodníka');
+
+        $form->addSelect('sex3', 'Pohlaví')
+            ->setPrompt('-------')
+            ->setRequired('Musíte uvést pohlaví 3. závodníka')
+            ->setItems([
+                'M' => 'Muž',
+                'Ž' => 'Žena'
+            ]);
+
+        $form->addSelect('shirt3', 'Tričko')
+            ->setPrompt('-------')
+            ->setRequired('Musíte uvést, jestli chcete tričko pro 2. závodníka')
+            ->setItems([
+                'Ne' => 'Nechci tričko',
+                'XS' => 'XS (+200Kč)',
+                'S' => 'S (+200Kč)',
+                'M' => 'M (+200Kč)',
+                'L' => 'L (+200Kč)',
+                'XL' => 'XL (+200Kč)',
+                'XXL' => 'XXL (+200Kč)'
+            ]);
 
         $form->addEmail('email', 'Kontaktní emailová adresa')
             ->addRule(Form::MAX_LENGTH, 'Maximálné délka je %s znaků', 200)
@@ -506,10 +720,22 @@ class EventPresenter extends BasePresenter
                     $event_slug = $competition->slug;
 
                     // payment
-                    $price = 600;
+                    $price = 750;
 
-                    $variableSymbol = str_pad((string)$values['id'], 5, "0", STR_PAD_LEFT);
-                    $variableSymbol = 2 . $variableSymbol;
+                    if ($values['shirt1'] != 'Ne') {
+                        $price += 200;
+                    }
+
+                    if ($values['shirt2'] != 'Ne') {
+                        $price += 200;
+                    }
+
+                    if ($values['shirt3'] != 'Ne') {
+                        $price += 200;
+                    }
+
+                    $variableSymbol = str_pad((string)$values['id'], 3, "0", STR_PAD_LEFT);
+                    $variableSymbol = 201 . $variableSymbol;
 
                     // send mail
                     $latte = new Engine;
@@ -521,7 +747,13 @@ class EventPresenter extends BasePresenter
                         'competitor3' => $values['competitor3'],
                         'price' => $price,
                         'variableSymbol' => $variableSymbol,
-                        'message' => 'Hopman triatlon - štafeta ' . $values['name']
+                        'message' => 'Hopman triatlon - štafeta ' . $values['name'],
+                        'shirt1' => ($values['shirt1'] === 'Ne') ? 'Nechci tričko' : 'Velikost ' . $values['shirt1'],
+                        'shirt2' => ($values['shirt2'] === 'Ne') ? 'Nechci tričko' : 'Velikost ' . $values['shirt2'],
+                        'shirt3' => ($values['shirt3'] === 'Ne') ? 'Nechci tričko' : 'Velikost ' . $values['shirt3'],
+                        'sex1' => $values['sex1'],
+                        'sex2' => $values['sex2'],
+                        'sex3' => $values['sex3'],
                     ];
 
                     $mail = new Message();
@@ -542,15 +774,80 @@ class EventPresenter extends BasePresenter
                     $mailer->send($mail);
                 }
 
-                $this->flashMessage('Registrace proběhla úspěšně!');
-                $this->redirect('this?odeslano=1');
 
-            } catch (DriverException $e) {
-                $this->flashMessage('Při pokusu o registraci nastala chyba a záznam nebyl uložen. Nejspíš je to naše chyba. Kontaktujte prosím správce webu na info@hopmantriatlon.cz a my se to pokusíme co nejrychleji opravit :-)', 'danger');
+                // get competition name
+                $competition = $this->competitionModel->getCompetitionById($values['competition_id']);
+
+                $this->flashMessage('Jsi zaregistrován/a na závod '.$competition->name.'! Na adresu '. $values['email'] .' ti byl právě odeslán potvrzovací email s vyplněnými údaji a informacemi k platbě.');
+                $this->logModel->log('Úspěšná registrace', $competition->name . ' - štafeta ' . $values['name'] . ' ' . ' se právě zaregistrovala.', 'info');
+
+                $this->redirect('Event:registrationSent', $competition->event->slug);
+
+            } catch (SmtpException $e) {
+                $competition = $this->competitionModel->getCompetitionById($values['competition_id']);
+                $this->flashMessage('Registrace se nezdařila, protože nebylo možné odeslat potvrzovací email. Zadali jste správnou adresu? Pokud ano, kontaktujte prosím správce webu na info@hopmantriatlon.cz.', 'danger');
+                $this->logModel->log('Nezdařená registrace', $competition->name . ' - ' . $e->getMessage(), 'error');
             }
         };
 
         return $form;
     }
 
+    // render startlist table
+    public function createComponentRelayStartlistGrid(): Multiplier
+    {
+        return new Multiplier(function ($competition_id) {
+
+            $grid = new DataGrid();
+
+            $competition_id = (int)$competition_id;
+
+            $grid->setDefaultSort(['name' => 'ASC']);
+
+            $grid->setDataSource($this->relayModel->getRelays($competition_id));
+
+            $grid->setItemsPerPageList([50, 100, 250], true);
+
+            $grid->addColumnText('name', 'Název štafety')
+                ->setSortable();
+
+            $grid->addColumnText('competitor1', 'Závodník 1')
+                ->setSortable();
+
+            $grid->addColumnText('competitor2', 'Závodník 2')
+                ->setSortable();
+
+            $grid->addColumnText('competitor3', 'Závodník 3')
+                ->setSortable();
+
+            $grid->addColumnText('paid', 'Status')
+                ->setSortable()
+                ->setReplacement([
+                    0 => 'Nezaplaceno',
+                    1 => 'Zaplaceno'
+                ]);
+
+            $translator = new SimpleTranslator([
+                'ublaboo_datagrid.no_item_found_reset' => 'Žádné záznamy nenalezeny. Filtr můžete vynulovat',
+                'ublaboo_datagrid.no_item_found' => 'Žádné záznamy nenalezeny.',
+                'ublaboo_datagrid.here' => 'zde',
+                'ublaboo_datagrid.items' => 'Záznamy',
+                'ublaboo_datagrid.all' => 'všechny',
+                'ublaboo_datagrid.from' => 'z',
+                'ublaboo_datagrid.reset_filter' => 'Resetovat filtr',
+                'ublaboo_datagrid.group_actions' => 'Hromadné akce',
+                'ublaboo_datagrid.show_all_columns' => 'Zobrazit všechny sloupce',
+                'ublaboo_datagrid.hide_column' => 'Skrýt sloupec',
+                'ublaboo_datagrid.action' => 'Akce',
+                'ublaboo_datagrid.previous' => 'Předchozí',
+                'ublaboo_datagrid.next' => 'Další',
+                'ublaboo_datagrid.choose' => 'Vyberte',
+                'ublaboo_datagrid.execute' => 'Provést',
+            ]);
+
+            $grid->setTranslator($translator);
+
+            return $grid;
+        });
+    }
 }

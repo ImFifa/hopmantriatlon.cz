@@ -71,11 +71,18 @@
 							{/if}</p>
 						{ifset $competitions}
 							{foreach $competitions as $competition}
-								<a n:href="Event:registration $competition->slug" class="btn btn-primary mb-2"><i class="fa-solid fa-file-signature"></i> On-line registrace</a>
+								<a n:if="$iterator->isFirst()" n:href="Event:registration $competition->slug" class="btn btn-primary mb-2"><i class="fa-solid fa-file-signature"></i>On-line registrace</a>
 							{/foreach}
 						{/ifset}
 					{else}
-						<p>Online registrace je <strong>uzavřena</strong>.</p>
+                        {switch $event->id}
+                            {case 1}
+                            <p>Online registrace je <strong>uzavřena</strong>.</p>
+                            {case 3}
+                            <p>Online registrace na triatlon a štafety <strong>bude spuštěna začátkem května!</strong></p>
+                            {case 5}
+                            <p>Online registrace <strong>bude spuštěna začátkem listopadu!</strong></p>
+                        {/switch}
 					{/if}
 				</section>
 
@@ -96,7 +103,7 @@
 								Sprint triatlon: <strong>{$sprint}</strong><br>
 								Dětský triatlon: <strong>{$kids}</strong><br>
 								<span n:ifset="$relays">Štafety: <strong>{$relays}</strong><br></span><br>
-								Celkem je přihlášeno <strong>{$participants}</strong> závodníků. Z toho {$participantsMan} <i class="fa-solid fa-mars"></i> a {$participantsWoman} <i class="fa-solid fa-venus"></i>.
+								Celkem je přihlášeno <strong>{$participants}</strong> závodníků.
 							</p>
 							{case 5}
 							<p>
@@ -108,7 +115,14 @@
 
 						<a n:href="Event:startlist $event->slug" class="btn btn-primary"><i class="fa-solid fa-users"></i> Startovní listina</a>
 					{else}
-						<p>Startovní listina je <strong>uzavřena</strong>.</p>
+					    {switch $event->id}
+                            {case 1}
+                            <p>Startovní listina je <strong>uzavřena</strong>.</p>
+                            {case 3}
+                            <p>Startovní listina <strong>bude otevřena začátkem května!</strong></p>
+                            {case 5}
+                            <p>Startovní listina <strong>bude otevřena začátkem listopadu!</strong></p>
+                        {/switch}
 					{/if}
 				</section>
 

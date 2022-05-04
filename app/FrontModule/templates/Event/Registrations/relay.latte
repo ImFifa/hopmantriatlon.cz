@@ -1,56 +1,114 @@
-{form triathlonRelaySignUpForm, class => 'signUpForm row'}
-	{input competition_id class => 'form-control input-hidden', value => $competition->id}
+<div class="registration-grid mt-4">
+	<div class="registration-form">
+		<h3>Registrace k závodu</h3>
+		{form triathlonRelaySignUpForm, class => 'signUpForm row'}
+		{input competition_id class => 'form-control input-hidden', value => $competition->id}
 
-	{input address class => 'form-control input-hidden'}
+		{input address class => 'form-control input-hidden'}
 
-	<div class="col-lg-12">
-		<div class="form-group">
-			{label name}{/label}
-			{input name class => 'form-control'}
+		<div class="col-lg-12">
+			<div class="form-group">
+				{label name}{/label}
+				{input name class => 'form-control'}
+			</div>
 		</div>
+
+		<div class="col-lg-12">
+			<div class="form-group">
+				{label competitor1}{/label}
+				{input competitor1 class => 'form-control'}
+			</div>
+		</div>
+
+		<div class="col-lg-6">
+			<div class="form-group">
+				{label sex1}{/label}
+				{input sex1 class => 'form-control'}
+			</div>
+		</div>
+
+		<div class="col-lg-6">
+			<div class="form-group">
+				{label shirt1}{/label}
+				{input shirt1 class => 'form-control'}
+			</div>
+		</div>
+
+		<div class="col-lg-12">
+			<div class="form-group">
+				{label competitor2}{/label}
+				{input competitor2 class => 'form-control'}
+			</div>
+		</div>
+
+		<div class="col-lg-6">
+			<div class="form-group">
+				{label sex2}{/label}
+				{input sex2 class => 'form-control'}
+			</div>
+		</div>
+
+		<div class="col-lg-6">
+			<div class="form-group">
+				{label shirt2}{/label}
+				{input shirt2 class => 'form-control'}
+			</div>
+		</div>
+
+		<div class="col-lg-12">
+			<div class="form-group">
+				{label competitor3}{/label}
+				{input competitor3 class => 'form-control'}
+			</div>
+		</div>
+
+		<div class="col-lg-6">
+			<div class="form-group">
+				{label sex3}{/label}
+				{input sex3 class => 'form-control'}
+			</div>
+		</div>
+
+		<div class="col-lg-6">
+			<div class="form-group">
+				{label shirt3}{/label}
+				{input shirt3 class => 'form-control'}
+			</div>
+		</div>
+
+		<div class="col-lg-12">
+			<div class="form-group">
+				{label email}{/label}
+				{input email class => 'form-control'}
+				<small>Váš email nebude nikde zveřejněn.<br>Využijeme jej pouze pro zaslání diplomu či v případě nutnosti Vás kontaktovat.</small>
+			</div>
+		</div>
+
+		<div class="col-lg-12">
+			<div class="form-group agree-checkbox">
+				{input agree class => 'form-control'}
+			</div>
+		</div>
+
+		<div class="col-lg-6">
+			<div class="form-group">
+				{input submit class => 'btn btn-primary', id => 'submitBtn'}
+			</div>
+		</div>
+	{/form}
 	</div>
 
-	<div class="col-lg-12">
-		<div class="form-group">
-			{label competitor1}{/label}
-			{input competitor1 class => 'form-control'}
-		</div>
+	<div class="shirt-preview">
+		<h3>Účastnická trička 2022</h3>
+		<p>Při včasné registraci je možné pro každého člena štafety zakoupit účastnické tričko v ceně 200,- Kč</p>
+		<a href="{$basePath}/dist/img/tshirts/man.jpeg" data-lightbox="gallery" data-name="Hopman triatlon - účastnické tričko (muži)">
+			<img src="{$basePath}/dist/img/tshirts/man.jpeg" class="lazyload" alt="Hopman triatlon - účastnické tričko (muži)">
+		</a>
+		<a href="{$basePath}/dist/img/tshirts/woman.jpeg" data-lightbox="gallery" data-name="Hopman triatlon - účastnické tričko (ženy)">
+			<img src="{$basePath}/dist/img/tshirts/woman.jpeg" class="lazyload" alt="Hopman triatlon - účastnické tričko (ženy)">
+		</a>
 	</div>
-
-	<div class="col-lg-12">
-		<div class="form-group">
-			{label competitor2}{/label}
-			{input competitor2 class => 'form-control'}
-		</div>
-	</div>
-
-	<div class="col-lg-12">
-		<div class="form-group">
-			{label competitor3}{/label}
-			{input competitor3 class => 'form-control'}
-		</div>
-	</div>
-
-	<div class="col-lg-12">
-		<div class="form-group">
-			{label email}{/label}
-			{input email class => 'form-control'}
-			<small>Váš email nebude nikde zveřejněn.<br>Využijeme jej pouze pro zaslání diplomu či v případě nutnosti Vás kontaktovat.</small>
-		</div>
-	</div>
-
-	<div class="col-lg-12">
-		<div class="form-group agree-checkbox">
-			{input agree class => 'form-control'}
-		</div>
-	</div>
-
-	<div class="col-lg-6">
-		<div class="form-group">
-			{input submit class => 'btn btn-primary', id => 'submitBtn'}
-		</div>
-	</div>
-{/form}
+</div>
 
 
 {block #scripts}

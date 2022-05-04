@@ -3,12 +3,12 @@
 		<meta property="og:title" content="{$competition->name} - registrace | HOPMAN">
 		<meta property="og:url" content="{$baseUrl}{plink this}" />
 		<meta property="og:type" content="website">
-		<meta property="og:image" content="{$baseUrl}/{ifset $event->og_image}{$event->og_image}{else}{$vars->og_image}{/ifset}">
+		<meta property="og:image" content="{$baseUrl}/{ifset $event->og_image}{$event->og_image}{else}{$og_image}{/ifset}">
 		<meta property="og:description" content="
 		{ifset $event->description}
 			{$event->description|truncate:100}
 		{else}
-			{$vars->description}
+			{$description}
 		{/ifset}">
 	{/block}
 
@@ -72,7 +72,7 @@
 	</section>
 
 {block #scripts}
-{*    <script src="{$basePath}/scripts/netteForms.js"></script>*}
+    <script src="{$basePath}/scripts/netteForms.js"></script>
     <script src="https://www.google.com/recaptcha/api.js?render=explicit"></script>
 	<script src="{$basePath}/scripts/invisibleRecaptcha.js"></script>
 {/block}

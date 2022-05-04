@@ -3,12 +3,12 @@
 		<meta property="og:title" content="{$event->name} | HOPMAN">
 		<meta property="og:url" content="{$baseUrl}{plink this}" />
 		<meta property="og:type" content="website">
-		<meta property="og:image" content="{$baseUrl}/{ifset $event->og_image}{$event->og_image}{else}{$vars->og_image}{/ifset}">
+		<meta property="og:image" content="{$baseUrl}/{ifset $event->og_image}{$event->og_image}{else}{$og_image}{/ifset}">
 		<meta property="og:description" content="
 		{ifset $event->description}
 			{$event->description|truncate:100}
 		{else}
-			{$vars->description}
+			{$description}
 		{/ifset}">
 	{/block}
 

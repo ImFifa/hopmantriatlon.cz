@@ -60,7 +60,7 @@
                 <div class="form-group">
                     {label size}{/label}
 			{input size class => 'form-control'}
-                    <small>K registraci je možné zakoupit účastnické tričko v ceně 200,- Kč</small>
+                    <small>Při registraci <strong>do 12.6.</strong> je možné objednat účastnické tričko v ceně 200,- Kč</small>
                 </div>
             </div>
 
@@ -83,7 +83,7 @@
     </div>
     <div class="shirt-preview">
         <h3>Účastnická trička 2022</h3>
-        <p>Při včasné registraci je možné pro každého člena štafety zakoupit účastnické tričko v ceně 200,- Kč</p>
+        <p>Při registraci <strong>do 12.6.</strong> je možné objednat účastnické tričko v ceně 200,- Kč</p>
         <a href="{$basePath}/dist/img/tshirts/man.jpeg" data-lightbox="gallery" data-name="Hopman triatlon - účastnické tričko (muži)">
             <img src="{$basePath}/dist/img/tshirts/man.jpeg" class="lazyload" alt="Hopman triatlon - účastnické tričko (muži)">
         </a>
@@ -98,29 +98,6 @@
 			var signUpForm = document.getElementById('frm-signUpForm-{$competition->id}');
 			var submitBtn = signUpForm.querySelector('#submitForm');
 			var spinner = signUpForm.querySelector('.spinner-border');
-
-    		{*var yearOfBirth = document.getElementById('frm-signUpForm-{$competition->id}-year_of_birth');*}
-    		{*var sex = document.getElementById('frm-signUpForm-{$competition->id}-sex');*}
-            {*var categoryId = document.getElementById('frm-signUpForm-{$competition->id}-category_id');*}
-            {*var categoryIdHidden = document.getElementById('frm-signUpForm-{$competition->id}-category_id_hidden');*}
-    		{*var currentYear = new Date().getFullYear();*}
-
-    		{*signUpForm.addEventListener('input', () => {*}
-    		{*	{ifset $categories}*}
-            {*        var age = currentYear - yearOfBirth.value;*}
-            {*        {foreach $categories as $category}*}
-            {*            if (age >= {$category->age_from} && age <= {$category->age_to}) {*}
-            {*                if (sex.value === {$category->sex}) {*}
-            {*                    categoryId.value = {$category->id};*}
-            {*                    categoryIdHidden.value = {$category->id};*}
-            {*                } else if (age <= 10) {*}
-            {*                    categoryId.value = 1;*}
-            {*                    categoryIdHidden.value = 1;*}
-            {*                }*}
-            {*            }*}
-            {*        {/foreach}*}
-    		{*	{/ifset}*}
-    		{*});*}
 
 			signUpForm.addEventListener('submit', () => {
 				submitBtn.disabled = true;

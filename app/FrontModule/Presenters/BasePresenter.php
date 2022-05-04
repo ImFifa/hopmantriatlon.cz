@@ -20,7 +20,13 @@ abstract class BasePresenter extends FrontBasePresenter
 	public function beforeRender(): void
 	{
 		parent::beforeRender();
-	}
+        $vars = $this->configuration->getAllVars();
+        $this->template->facebook = $vars['facebook'];
+        $this->template->instagram = $vars['instagram'];
+        $this->template->youtube = $vars['youtube'];
+        $this->template->description = $vars['description'];
+        $this->template->og_image = $vars['og_image'];
+    }
 
 	public function flashMessage($message, string $type = 'success'): stdClass
 	{

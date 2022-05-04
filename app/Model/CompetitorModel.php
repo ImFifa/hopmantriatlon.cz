@@ -55,11 +55,11 @@ class CompetitorModel extends BaseModel
 	// triatlon
 	public function getRegisteredSprintTriathlon($competition_id): int
 	{
-		return $this->getTable()->where('competition_id', $competition_id)->where('distance_id', 5)->count();
+		return $this->getTable()->where('competition_id', $competition_id)->where('distance_id', 12)->count();
 	}
 	public function getRegisteredOlympicTriathlon($competition_id): int
 	{
-		return $this->getTable()->where('competition_id', $competition_id)->where('distance_id', 4)->count();
+		return $this->getTable()->where('competition_id', $competition_id)->where('distance_id', 13)->count();
 	}
 
 	// advent

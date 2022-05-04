@@ -85,7 +85,7 @@ class EventPresenter extends BasePresenter
                     $this->template->halfmarathon = $this->competitorModel->getRegistered21Run($event->competition_id);
                     break;
                 case 3:
-                    $this->template->kids = $this->competitorModel->getRegisteredKids($event->competition_id);
+                    $this->template->kids = $this->competitorModel->getRegisteredKids($event->competition_id + 2);
                     $this->template->sprint = $this->competitorModel->getRegisteredSprintTriathlon($event->competition_id);
                     $this->template->olympic = $this->competitorModel->getRegisteredOlympicTriathlon($event->competition_id);
                     $this->template->relays = $this->relayModel->getRegisteredRelays($event->competition_id + 1);
@@ -521,10 +521,15 @@ class EventPresenter extends BasePresenter
 
             // set categories
             $categories = $this->categoryModel->getForSelect();
-            if ($this->competitionModel->getCompetitionById($competition_id)->slug === 'pulmaraton') {
-                unset($categories[8], $categories[9]);
-            } else {
-                unset($categories[10], $categories[11], $categories[12], $categories[13], $categories[14]);
+//            if ($this->competitionModel->getCompetitionById($competition_id)->slug === 'pulmaraton') {
+//                unset($categories[8], $categories[9]);
+//            } else {
+//                unset($categories[10], $categories[11], $categories[12], $categories[13], $categories[14]);
+//            }
+            if ($this->competitionModel->getCompetitionById($competition_id)->slug === 'triatlon') {
+                unset($categories[1], $categories[2],$categories[3],
+                    $categories[10], $categories[11],
+                    $categories[12], $categories[13], $categories[14]);
             }
 
             $grid->setDefaultSort(['surname' => 'ASC']);
@@ -559,7 +564,11 @@ class EventPresenter extends BasePresenter
             $grid->addColumnText('distance_id', 'Trať')
                 ->setSortable()
                 ->setReplacement($this->distanceModel->getForSelect())
-                ->setFilterSelect(['' => ''] + $this->distanceModel->getDistancesByCompetition($competition_id));
+                ->setFilterSelect([
+                    '' => '',
+                    11 => 'Olympijský triatlon',
+                    12 => 'Sprint triatlon'
+                ]);
 
             $grid->addColumnText('category_id', 'Kategorie')
                 ->setSortable()
